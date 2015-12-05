@@ -1,0 +1,7 @@
+coffee
+bin/log
+bin/publish
+test
+.build-tools.cson
+.gitignore
+*.log

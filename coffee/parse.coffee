@@ -15,9 +15,9 @@ inspect = require './inspect'
 
 parse = (s) ->
     
-    profile 'split'
+    # profile 'split'
     lines = s.split '\n'
-    profile 'traverse'
+    # profile 'traverse'
     stack = [
         o: []
         d: 0
@@ -92,9 +92,9 @@ parse = (s) ->
             # for i in [stack.length-1 .. 0]
             #     dbg "i:#{i} d:#{stack[i].d} l:#{str(stack[i].l)}\n", stack[i].o
             
-    profile "log"
-    dbg stack[0].o
-    profile ""
+    # profile "log"
+    # dbg stack[0].o
+    # profile ""
     stack[0].o
 
 module.exports = parse

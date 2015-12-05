@@ -4,6 +4,7 @@
   "description": "nother ordinary object notation",
   "main": "js/noon.js",
   "keywords": [
+    "nother",
     "ordinary",
     "object",
     "notation"
@@ -24,7 +25,8 @@
     "chalk": "^1.1.1",
     "lodash": "^3.10.1",
     "nomnom": "^1.8.1",
-    "performance-now": "^0.2.0"
+    "performance-now": "^0.2.0",
+    "sds": "^1.0.2"
   },
   "devDependencies": {
     "del": "^2.1.0",
