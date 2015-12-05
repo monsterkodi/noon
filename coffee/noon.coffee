@@ -104,6 +104,9 @@ parse = (s) ->
     insert = (t, k, v) ->
         if _.isArray t.o
             if not v?
+                if _.last(t.o) == '.'
+                    t.o.pop()
+                    t.o.push []
                 t.o.push k
             else
                 makeObject(t)[k] = v
@@ -115,9 +118,13 @@ parse = (s) ->
         o = []
         o = {} if v?
         if _.isArray t.o
-            l = _.last t.o
-            makeObject(t)
-            t.o[l] = o
+            if _.last(t.o) == '.'
+                t.o.pop()
+                t.o.push o
+            else
+                l = _.last t.o
+                makeObject(t)
+                t.o[l] = o                
         else
             t.o[t.l] = o
         if v?
@@ -129,22 +136,27 @@ parse = (s) ->
     for line in lines
         [d,k,v] = inspect line 
         if k?
-            top = _.last stack
-            if d > top.d
+            t = _.last stack
+            if d > t.d
                 dbg 'indent', k, v
                 stack.push
-                    o: indent top, k, v
+                    o: indent t, k, v
                     d: d
-            else if d < top.d
+            else if d < t.d
                 dbg 'outdent', k, v
-                while top.d > d
-                    dbg 'pop', top
+
+                if _.isArray(t.o) and _.last(t.o) == '.'
+                    t.o.pop()
+                    t.o.push []
+                
+                while t.d > d
+                    dbg 'pop', t
                     stack.pop()
-                    top = _.last stack
-                insert top, k, v
+                    t = _.last stack
+                insert t, k, v
             else
                 dbg 'insert', k, v
-                insert top, k, v
+                insert t, k, v
             
             for i in [stack.length-1 .. 0]
                 dbg "i:#{i} d:#{stack[i].d} l:#{str(stack[i].l)}\n", stack[i].o

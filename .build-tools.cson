@@ -7,7 +7,7 @@ providers: [
           project: "/Users/kodi/Projects/noon"
           source: "/Users/kodi/Projects/noon/.build-tools.cson"
           name: "noon"
-          command: "/usr/local/bin/node js/noon.js test/array.noon"
+          command: "/usr/local/bin/node js/noon.js test/mix.noon"
           wd: "/Users/kodi/Projects/noon/"
           env: {}
           modifier: {}
