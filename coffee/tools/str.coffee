@@ -6,13 +6,15 @@
 0000000      000     000   000
 ###
 
-_ = require 'lodash'
-strIndent = "    "
+_     = require 'lodash'
+chalk = require 'chalk'
+
+strIndent = "   "
 
 str = (o,indent="",visited=[]) ->
     if not o? 
         if o == null
-            return "<null>"
+            return chalk.gray "<null>"
         if o == undefined
             return "<undefined>"
         return "<0>"
@@ -22,7 +24,7 @@ str = (o,indent="",visited=[]) ->
     else if t == 'object'
         if o in visited
             if o.id? and typeof o.id == 'string' and o.localName? then return "<" + o.localName + "#" + o.id + ">"
-            return "<visited>"
+            return chalk.gray "<visited>"
         protoname = o.constructor.name
         if not protoname? or protoname == ""
             if o.id? and typeof o.id == 'string' and o.localName?
@@ -39,7 +41,11 @@ str = (o,indent="",visited=[]) ->
             if o._str?
                 return o._str()
             else
-                s = "<" + protoname + ">\n"
+                # s = chalk.gray "<" + protoname + ">\n"
+                switch protoname
+                    when 'Object' then s = "\n"
+                    when 'Array'  then s = chalk.gray ".\n"
+                    else s = chalk.gray "<" + protoname + ">\n"
                 visited.push o
                 s += ( indent+strIndent+k + ": " + str(o[k],indent+strIndent,visited) for k in Object.getOwnPropertyNames(o) when not _.isFunction o[k] ).join("\n")
         return s+"\n"
