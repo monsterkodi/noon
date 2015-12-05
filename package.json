@@ -1,0 +1,42 @@
+{
+  "name": "noon",
+  "version": "0.0.1",
+  "description": "nother ordinary object notation",
+  "main": "js/noon.js",
+  "keywords": [
+    "ordinary",
+    "object",
+    "notation"
+  ],
+  "author": "monsterkodi",
+  "license": "Unlicense",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/monsterkodi/noon"
+  },
+  "bugs": {
+    "url": "https://github.com/monsterkodi/noon/issues"
+  },
+  "bin": {
+    "noon": "./bin/noon"
+  },
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "lodash": "^3.10.1",
+    "nomnom": "^1.8.1",
+    "performance-now": "^0.2.0"
+  },
+  "devDependencies": {
+    "del": "^2.1.0",
+    "gulp": "^3.9.0",
+    "gulp-bump": "^1.0.0",
+    "gulp-coffee": "^2.3.1",
+    "gulp-debug": "^2.1.2",
+    "gulp-pepper": "^0.9.1",
+    "gulp-plumber": "^1.0.1",
+    "gulp-salt": "^0.1.4",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-util": "^3.0.7",
+    "path": "^0.12.7"
+  }
+}
