@@ -9,6 +9,7 @@
 fs      = require 'fs'
 chalk   = require 'chalk'
 _       = require 'lodash'
+str     = require './tools/str'
 log     = require './tools/log'
 profile = require './tools/profile'
 
@@ -82,38 +83,47 @@ parse = (s) ->
     stack = [
         o: []
         d: 0
-        k: null
     ]
+    
+    makeObject = (t) ->
+        log 'array -> object'
+        o = {}
+        for i in t.o
+            o[i] = null
+        t.l = _.last t.o
+        t.o = o
+        if stack.length > 1
+            b = stack[stack.length-2]
+            if _.isArray b.o
+                b.o.pop()
+                b.o.push o
+            else
+                b.o[b.l] = o
+        o
     
     insert = (t, k, v) ->
         if _.isArray t.o
             if not v?
                 t.o.push k
             else
-                log 'root array -> object'
-                o = {}
-                for i in t.o
-                    o[i] = null
-                stack['o'] = o
-                t.o = o
-                o[k] = v
+                makeObject(t)[k] = v
         else
             t.o[k] = v
             t.l = k
 
     indent = (t, k, v) ->
-        o = {}
+        o = []
+        o = {} if v?
         if _.isArray t.o
-            l = t.o.pop()
-            if v?
-                o[l] = {}
-                o[l][k] = v
-            else
-                o[l] = [k]
-            t.o.push o
+            l = _.last t.o
+            makeObject(t)
+            t.o[l] = o
         else
-            o[k] = v
             t.o[t.l] = o
+        if v?
+            o[k] = v
+        else
+            o.push k
         o
     
     for line in lines
@@ -121,25 +131,23 @@ parse = (s) ->
         if k?
             top = _.last stack
             if d > top.d
-                dbg 'indent', k, v, stack
+                dbg 'indent', k, v
                 stack.push
                     o: indent top, k, v
                     d: d
-                    k: k
-                    l: k
             else if d < top.d
-                dbg 'outdent', k, d
+                dbg 'outdent', k, v
                 while top.d > d
                     dbg 'pop', top
                     stack.pop()
                     top = _.last stack
-                dbg 'outden ', k, v, top
                 insert top, k, v
-                dbg 'outde2 ', k, v, stack
             else
+                dbg 'insert', k, v
                 insert top, k, v
             
-            dbg '----', stack[0].o
+            for i in [stack.length-1 .. 0]
+                dbg "i:#{i} d:#{stack[i].d} l:#{str(stack[i].l)}\n", stack[i].o
             
     profile "log"
     dbg stack.length

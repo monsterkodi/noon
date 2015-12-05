@@ -16,7 +16,7 @@ str = (o,indent="",visited=[]) ->
         if o == null
             return chalk.gray "<null>"
         if o == undefined
-            return "<undefined>"
+            return chalk.gray "<undefined>"
         return "<0>"
     t = typeof o
     if t == 'string'
@@ -33,10 +33,10 @@ str = (o,indent="",visited=[]) ->
                 protoname = "object"
 
         if protoname == 'Array'
-            s = '[\n'
+            s = chalk.gray '[\n'
             visited.push o
             s += (indent+strIndent + str(v,indent+strIndent,visited) for v in o).join("\n")
-            s += '\n'+indent+strIndent+']'
+            s += '\n'+indent+strIndent+ chalk.gray ']'
         else
             if o._str?
                 return o._str()
