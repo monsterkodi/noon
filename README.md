@@ -1,5 +1,5 @@
 # noon
-### nother ordinary object notation
+### 'nother ordinary object notation
 
 ![noon](https://raw.githubusercontent.com/monsterkodi/noon/master/img/noon.png)
 
