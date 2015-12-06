@@ -8,8 +8,6 @@
 
 _       = require 'lodash'
 chalk   = require 'chalk'
-profile = require './tools/profile'
-log     = require './tools/log'
 
 defaults =
     indent:   4      # number of spaces per indent level
@@ -18,14 +16,36 @@ defaults =
     sort:     false  # sort object keys alphabetically
     circular: false  # check for circular references (expensive!)
     colors:   false  # colorize output with ansi colors
+                     # true for default colors or custom dictionary
+
+defaultColors =
+    key:     chalk.bold.gray
+    null:    chalk.bold.blue
+    value:   chalk.bold.magenta
+    string:  chalk.bold.white
+    visited: chalk.bold.red
+    
+noop = (s) -> s
+noColors = 
+    key:     noop
+    null:    noop
+    value:   noop
+    string:  noop
+    visited: noop
 
 stringify = (obj, options={}) ->
 
     opt = _.assign defaults, options
-    # profile "noon"
     
     indstr = _.padRight ' ', opt.indent
     indval = _.padRight ' ', Math.max 2, opt.indent
+    
+    if opt.colors == true
+        colors = defaultColors
+    else if opt.colors == false
+        colors = noColors
+    else
+        colors = _.assign defaultColors, opt.colors
     
     pretty = (o, ind, visited) ->
         
@@ -46,7 +66,7 @@ stringify = (obj, options={}) ->
             else
                 ks = k
                 i  = ind+indstr
-            s += opt.colors and chalk.gray(ks) or ks
+            s += colors.key ks
             s += indval
             s += toStr v, i, false, visited
 
@@ -62,17 +82,17 @@ stringify = (obj, options={}) ->
     toStr = (o, ind='', arry=false, visited=[]) ->
         if not o? 
             if o == null
-                return ""
+                return colors.null "null"
             if o == undefined
-                return ""
-            return opt.colors and chalk.red("<?>") or "<?>"
+                return colors.null "undefined"
+            return colors.null '<?>'
         t = typeof o
-        if t == 'string' then return o
+        if t == 'string' then return colors.string o 
         else if t == 'object'
             
             if opt.circular
                 if o in visited
-                    return opt.colors and chalk.red("<v>") or "<v>"
+                    return colors.visited '<v>'
                 visited.push o
                 
             if o.constructor.name == 'Array'
@@ -84,11 +104,10 @@ stringify = (obj, options={}) ->
                 s += pretty o, ind, visited
             return s
         else
-            return String o # plain values
-        return opt.colors and chalk.bold.yellow("<???>") or "<???>"
+            return colors.value String o # plain values
+        return colors.null '<???>'
 
     s = toStr obj
-    # profile ''
     s
 
 module.exports = stringify
