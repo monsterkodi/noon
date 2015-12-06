@@ -47,7 +47,7 @@ stringify = (obj, options=defaults) ->
                 i  = ind+indstr
             s += options.colors and chalk.gray(ks) or ks
             s += indval
-            s += toStr v, i, visited
+            s += toStr v, i, false, visited
 
         if options.sort
             for k in _.keys(o).sort()
@@ -58,7 +58,7 @@ stringify = (obj, options=defaults) ->
             
         l.join '\n'
 
-    toStr = (o, ind='', visited=[]) ->
+    toStr = (o, ind='', arry=false, visited=[]) ->
         if not o? 
             if o == null
                 return ""
@@ -66,19 +66,20 @@ stringify = (obj, options=defaults) ->
                 return ""
             return options.colors and chalk.red("<?>") or "<?>"
         t = typeof o
-        if t == 'string'
-            return o
+        if t == 'string' then return o
         else if t == 'object'
             
             if options.circular
                 if o in visited
                     return options.colors and chalk.red("<v>") or "<v>"
                 visited.push o
+                
             if o.constructor.name == 'Array'
-                s = '\n'
-                s += (ind+toStr(v,ind+indstr,visited) for v in o).join '\n'
+                s = ind!='' and arry and '.' or ''
+                s += '\n' if o.length and ind!=''
+                s += (ind+toStr(v,ind+indstr,true,visited) for v in o).join '\n'
             else
-                s = '\n'
+                s = arry and '.\n' or '\n'
                 s += pretty o, ind, visited
             return s
         else
