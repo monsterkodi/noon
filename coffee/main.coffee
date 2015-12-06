@@ -1,3 +1,3 @@
 module.exports =
-    parse: require './parse'
+    parse:     require './parse'
     stringify: require './stringify' 

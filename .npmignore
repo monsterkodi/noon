@@ -2,6 +2,7 @@ coffee
 bin/log
 bin/publish
 test
+img
 .build-tools.cson
 .gitignore
 *.log
