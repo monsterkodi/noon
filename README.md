@@ -21,7 +21,7 @@ what's up?    ☺
 
 # { hello: 'world', 'what\'s up?': '☺' }
 
-stringifyDefaults =
+stringify_options =  # stringify's second argument, defaults are: 
     indent:   4      # number of spaces per indent level
     align:    true   # vertically align object values
     maxalign: 32     # maximal number of spaces when aligning
