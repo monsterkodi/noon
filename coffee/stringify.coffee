@@ -6,12 +6,23 @@
 0000000      000     000   000  000  000   000   0000000   000  000          000   
 ###
 
+_       = require 'lodash'
 profile = require './tools/profile'
 
 stringify = (obj, indent='    ') ->
-    profile 'json'
-    s = JSON.stringify obj    
+
     profile "noon"
+    
+    pretty = (o, ind, visited) ->
+        # (ind+k+indent+toStr(o[k],ind+indent,visited) for k in Object.getOwnPropertyNames(o) ).join '\n'
+        maxKey = 0
+        for k in Object.getOwnPropertyNames o
+            maxKey = Math.max maxKey, k.length
+        maxKey += indent.length
+        l = []
+        for k in Object.getOwnPropertyNames o
+            l.push ind + _.padRight(k, maxKey) + toStr(o[k],_.padRight(ind+indent,maxKey),visited)
+        l.join '\n'
 
     toStr = (o, ind='', visited=[]) ->
         if not o? 
@@ -31,7 +42,7 @@ stringify = (obj, indent='    ') ->
             if o.constructor.name == 'Array'
                 s += (ind+toStr(v,ind+indent,visited) for v in o).join '\n'
             else
-                s += (ind+k+indent+toStr(o[k],ind+indent,visited) for k in Object.getOwnPropertyNames(o) ).join '\n'
+                s += pretty o, ind, visited
             return s+"\n"
         else
             return String o # plain values
