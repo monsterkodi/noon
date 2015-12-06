@@ -7,13 +7,21 @@
 ###
 
 _       = require 'lodash'
-log     = require './tools/log'
 chalk   = require 'chalk'
 profile = require './tools/profile'
+log     = require './tools/log'
 
-stringify = (obj, options={indent:4,align:true,maxalign:32,sort:false,circular:false}) ->
+defaults =
+    indent:   4      # number of spaces per indent level
+    align:    true   # vertically align object values
+    maxalign: 32     # maximal number of spaces when aligning
+    sort:     false  # sort object keys alphabetically
+    circular: false  # check for circular references (expensive!)
+    colors:   false  # colorize output with ansi colors
 
-    profile "noon"
+stringify = (obj, options=defaults) ->
+
+    # profile "noon"
     
     indstr = _.padRight ' ', options.indent
     indval = _.padRight ' ', Math.max 2, options.indent
@@ -32,11 +40,12 @@ stringify = (obj, options={indent:4,align:true,maxalign:32,sort:false,circular:f
         keyValue = (k,v) ->
             s = ind
             if options.align
-                s += _.padRight k, maxKey
+                ks = _.padRight k, maxKey
                 i  = _.padRight ind+indstr,maxKey+options.indent
             else
-                s += k
+                ks = k
                 i  = ind+indstr
+            s += options.colors and chalk.gray(ks) or ks
             s += indval
             s += toStr v, i, visited
 
@@ -55,7 +64,7 @@ stringify = (obj, options={indent:4,align:true,maxalign:32,sort:false,circular:f
                 return ""
             if o == undefined
                 return ""
-            return "<?>"
+            return options.colors and chalk.red("<?>") or "<?>"
         t = typeof o
         if t == 'string'
             return o
@@ -63,7 +72,7 @@ stringify = (obj, options={indent:4,align:true,maxalign:32,sort:false,circular:f
             
             if options.circular
                 if o in visited
-                    return "<v>"
+                    return options.colors and chalk.red("<v>") or "<v>"
                 visited.push o
             if o.constructor.name == 'Array'
                 s = '\n'
@@ -74,11 +83,10 @@ stringify = (obj, options={indent:4,align:true,maxalign:32,sort:false,circular:f
             return s
         else
             return String o # plain values
-        return "<???>"
+        return options.colors and chalk.bold.yellow("<???>") or "<???>"
 
     s = toStr obj
-    
-    profile ''
+    # profile ''
     s
 
 module.exports = stringify

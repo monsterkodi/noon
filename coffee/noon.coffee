@@ -36,6 +36,7 @@ args = require "nomnom"
         indent:   { abbr: 'i', default: 4,  help: "indentation length, default:" }
         maxalign: { abbr: 'm', default: 32, help: "max align width, 0: no limit, default:" }
         noalign:  { abbr: 'n', flag: true,  help: "don't align values" }
+        colors:   { abbr: 'c', flag: true,  help: "output with ansi colors" }
         version:  { abbr: 'V', flag: true,  help: "show version", hidden: true }
     .parse()
 
@@ -67,9 +68,9 @@ if args.file
             align: not args.noalign
             indent: Math.max 1, args.indent
             maxalign: Math.max 0, args.maxalign
+            colors: args.colors
             sort: args.sort
 
-        console.log s.length
         console.log s
     else
         load args.file
