@@ -2,7 +2,7 @@
 cd "`dirname $0`/.."
 gulp bump
 git add .
-git commit -m "version `sds -rp version`" 
+git commit -m "v`sds -rp version`" 
 git push
 npm publish
 #npm install -g `sds -rp name`

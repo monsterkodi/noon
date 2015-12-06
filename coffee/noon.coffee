@@ -57,10 +57,6 @@ load = (p) ->
 
 if args.file
     if path.extname(args.file) == '.json'
-        log Object.keys sds
-        log sds.load
-        log args.file
-        r = sds.load(args.file)
-        log r
+        console.log stringify sds.load args.file
     else
         load args.file
