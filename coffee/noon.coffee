@@ -38,6 +38,7 @@ args = require "nomnom"
         unaligned: { abbr: 'u',  flag: true,  help: "don't align values" }
         colorless: { abbr: 'c',  flag: true,  help: "don't output with ansi colors" }
         version:   { abbr: 'V',  flag: true,  help: "show version", hidden: true }
+       .help chalk.blue("supported file types:\n   ") + sds.extnames.join '\n   '
     .parse()
 
 if args.version 

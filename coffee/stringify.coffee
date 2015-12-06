@@ -19,37 +19,38 @@ defaults =
     circular: false  # check for circular references (expensive!)
     colors:   false  # colorize output with ansi colors
 
-stringify = (obj, options=defaults) ->
+stringify = (obj, options={}) ->
 
+    opt = _.assign defaults, options
     # profile "noon"
     
-    indstr = _.padRight ' ', options.indent
-    indval = _.padRight ' ', Math.max 2, options.indent
+    indstr = _.padRight ' ', opt.indent
+    indval = _.padRight ' ', Math.max 2, opt.indent
     
     pretty = (o, ind, visited) ->
         
-        if options.align        
+        if opt.align        
             maxKey = 0
             for own k,v of o
                 maxKey = Math.max maxKey, k.length
-                if options.maxalign and maxKey > options.maxalign
-                    maxKey = options.maxalign
+                if opt.maxalign and maxKey > opt.maxalign
+                    maxKey = opt.maxalign
                     break
         l = []
         
         keyValue = (k,v) ->
             s = ind
-            if options.align
+            if opt.align
                 ks = _.padRight k, maxKey
-                i  = _.padRight ind+indstr,maxKey+options.indent
+                i  = _.padRight ind+indstr,maxKey+opt.indent
             else
                 ks = k
                 i  = ind+indstr
-            s += options.colors and chalk.gray(ks) or ks
+            s += opt.colors and chalk.gray(ks) or ks
             s += indval
             s += toStr v, i, false, visited
 
-        if options.sort
+        if opt.sort
             for k in _.keys(o).sort()
                 l.push keyValue k, o[k]
         else
@@ -64,14 +65,14 @@ stringify = (obj, options=defaults) ->
                 return ""
             if o == undefined
                 return ""
-            return options.colors and chalk.red("<?>") or "<?>"
+            return opt.colors and chalk.red("<?>") or "<?>"
         t = typeof o
         if t == 'string' then return o
         else if t == 'object'
             
-            if options.circular
+            if opt.circular
                 if o in visited
-                    return options.colors and chalk.red("<v>") or "<v>"
+                    return opt.colors and chalk.red("<v>") or "<v>"
                 visited.push o
                 
             if o.constructor.name == 'Array'
@@ -84,7 +85,7 @@ stringify = (obj, options=defaults) ->
             return s
         else
             return String o # plain values
-        return options.colors and chalk.bold.yellow("<???>") or "<???>"
+        return opt.colors and chalk.bold.yellow("<???>") or "<???>"
 
     s = toStr obj
     # profile ''
