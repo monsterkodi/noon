@@ -28,15 +28,13 @@ stringify = (obj, indent='    ') ->
                 return "<v>"
             s = '\n'
             visited.push o
-            protoname = o.constructor.name
-            
-            if protoname == 'Array'
-                s += (ind+ toStr(v,ind+indent,visited) for v in o).join("\n")
+            if o.constructor.name == 'Array'
+                s += (ind+toStr(v,ind+indent,visited) for v in o).join '\n'
             else
-                s += (ind+ k + indent  + toStr(o[k],ind+indent,visited) for k in Object.getOwnPropertyNames(o) ).join("\n")
+                s += (ind+k+indent+toStr(o[k],ind+indent,visited) for k in Object.getOwnPropertyNames(o) ).join '\n'
             return s+"\n"
         else
-            return String(o) # plain values
+            return String o # plain values
         return "<???>"
 
     s = toStr obj
