@@ -31,13 +31,13 @@ args = require "nomnom"
         file:
             position: 0
             help: "the file to convert"
-            list: false
-        sort:     { abbr: 's', flag: true,  help: "sort keys alphabetically" }
-        indent:   { abbr: 'i', default: 4,  help: "indentation length, default:" }
-        maxalign: { abbr: 'm', default: 32, help: "max align width, 0: no limit, default:" }
-        noalign:  { abbr: 'n', flag: true,  help: "don't align values" }
-        colors:   { abbr: 'c', flag: true,  help: "output with ansi colors" }
-        version:  { abbr: 'V', flag: true,  help: "show version", hidden: true }
+            list: false 
+        sort:      { abbr: 's',  flag: true,  help: "sort keys alphabetically" }
+        indent:    { abbr: 'i',  default: 4,  help: "indentation length, default:" }
+        maxalign:  { abbr: 'm',  default: 32, help: "max align width, 0: no limit, default:" }
+        unaligned: { abbr: 'u',  flag: true,  help: "don't align values" }
+        colorless: { abbr: 'c',  flag: true,  help: "don't output with ansi colors" }
+        version:   { abbr: 'V',  flag: true,  help: "show version", hidden: true }
     .parse()
 
 if args.version 
@@ -65,10 +65,10 @@ if args.file
 
         o = sds.load args.file
         s = stringify o,
-            align: not args.noalign
+            align: not args.unaligned
             indent: Math.max 1, args.indent
             maxalign: Math.max 0, args.maxalign
-            colors: args.colors
+            colors: not args.colorless
             sort: args.sort
 
         console.log s
