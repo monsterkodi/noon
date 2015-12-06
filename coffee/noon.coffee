@@ -32,7 +32,10 @@ args = require "nomnom"
             position: 0
             help: "the file to convert"
             list: false
-        version:{ abbr: 'V', flag: true, help: "show version", hidden: true }
+        indent:   { abbr: 'i', default: 4, help: "indentation length (>0)" }
+        maxalign: { abbr: 'm', default: 4, help: "max align characters (>=0)" }
+        noalign:  { abbr: 'n', flag: true, help: "don't align values" }
+        version:  { abbr: 'V', flag: true, help: "show version", hidden: true }
     .parse()
 
 if args.version 
@@ -56,7 +59,15 @@ load = (p) ->
     r
 
 if args.file
-    if path.extname(args.file) == '.json'
-        console.log stringify sds.load args.file
+    if path.extname(args.file) in sds.extnames
+
+        o = sds.load args.file
+        s = stringify o,
+            align: not args.noalign
+            indent: Math.max 1, args.indent
+            maxalign: Math.max 0, args.maxalign
+
+        console.log s.length
+        console.log s
     else
         load args.file
