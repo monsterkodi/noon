@@ -32,10 +32,11 @@ args = require "nomnom"
             position: 0
             help: "the file to convert"
             list: false
-        indent:   { abbr: 'i', default: 4, help: "indentation length (>0)" }
-        maxalign: { abbr: 'm', default: 4, help: "max align characters (>=0)" }
-        noalign:  { abbr: 'n', flag: true, help: "don't align values" }
-        version:  { abbr: 'V', flag: true, help: "show version", hidden: true }
+        sort:     { abbr: 's', flag: true,  help: "sort keys alphabetically" }
+        indent:   { abbr: 'i', default: 4,  help: "indentation length, default:" }
+        maxalign: { abbr: 'm', default: 32, help: "max align width, 0: no limit, default:" }
+        noalign:  { abbr: 'n', flag: true,  help: "don't align values" }
+        version:  { abbr: 'V', flag: true,  help: "show version", hidden: true }
     .parse()
 
 if args.version 
@@ -66,6 +67,7 @@ if args.file
             align: not args.noalign
             indent: Math.max 1, args.indent
             maxalign: Math.max 0, args.maxalign
+            sort: args.sort
 
         console.log s.length
         console.log s

@@ -11,7 +11,7 @@ log     = require './tools/log'
 chalk   = require 'chalk'
 profile = require './tools/profile'
 
-stringify = (obj, options={indent:4,align:true,maxalign:8,sort:false,circular:false}) ->
+stringify = (obj, options={indent:4,align:true,maxalign:32,sort:false,circular:false}) ->
 
     profile "noon"
     
@@ -22,21 +22,32 @@ stringify = (obj, options={indent:4,align:true,maxalign:8,sort:false,circular:fa
         
         if options.align        
             maxKey = 0
-            for own k, v of o
+            for own k,v of o
                 maxKey = Math.max maxKey, k.length
-                if maxKey > options.maxalign
+                if options.maxalign and maxKey > options.maxalign
                     maxKey = options.maxalign
                     break
-            l = []
-            for own k, v of o    
-                s = ind
+        l = []
+        
+        keyValue = (k,v) ->
+            s = ind
+            if options.align
                 s += _.padRight k, maxKey
-                s += indval
-                s += toStr o[k], _.padRight(ind+indstr,maxKey+options.indent), visited
-                l.push s
-            l.join '\n'
+                i  = _.padRight ind+indstr,maxKey+options.indent
+            else
+                s += k
+                i  = ind+indstr
+            s += indval
+            s += toStr v, i, visited
+
+        if options.sort
+            for k in _.keys(o).sort()
+                l.push keyValue k, o[k]
         else
-            (ind+k+indstr+toStr(o[k],ind+indstr,visited) for own k,v of o).join '\n'
+            for own k,v of o
+                l.push keyValue k, v
+            
+        l.join '\n'
 
     toStr = (o, ind='', visited=[]) ->
         if not o? 
@@ -49,16 +60,18 @@ stringify = (obj, options={indent:4,align:true,maxalign:8,sort:false,circular:fa
         if t == 'string'
             return o
         else if t == 'object'
-            s = '\n'
+            
             if options.circular
                 if o in visited
                     return "<v>"
                 visited.push o
             if o.constructor.name == 'Array'
+                s = '\n'
                 s += (ind+toStr(v,ind+indstr,visited) for v in o).join '\n'
             else
+                s = '\n'
                 s += pretty o, ind, visited
-            return s+"\n"
+            return s
         else
             return String o # plain values
         return "<???>"
