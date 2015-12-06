@@ -1,7 +1,7 @@
 {
   "name": "noon",
-  "version": "0.0.4",
-  "description": "nother ordinary object notation",
+  "version": "0.1.0",
+  "description": "'nother ordinary object notation",
   "main": "js/main.js",
   "keywords": [
     "nother",
@@ -26,7 +26,7 @@
     "lodash": "^3.10.1",
     "nomnom": "^1.8.1",
     "performance-now": "^0.2.0",
-    "sds": "^1.0.2"
+    "sds": "^1.0.4"
   },
   "devDependencies": {
     "del": "^2.1.0",
@@ -37,8 +37,6 @@
     "gulp-pepper": "^0.9.1",
     "gulp-plumber": "^1.0.1",
     "gulp-salt": "^0.1.4",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-util": "^3.0.7",
-    "path": "^0.12.7"
+    "gulp-util": "^3.0.7"
   }
 }
