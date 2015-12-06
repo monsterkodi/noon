@@ -19,7 +19,7 @@ hello         world
 what's up?    ☺
 """
 
-# { hello: 'world', 'what\'s up?"': '☺' }
+# { hello: 'world', 'what\'s up?': '☺' }
 
 stringifyDefaults =
     indent:   4      # number of spaces per indent level
