@@ -52,24 +52,20 @@ if args.version
     process.exit()
     
 if args.file
-    ext = path.extname(args.file)
-    if ext in sds.extnames
 
-        o = sds.load args.file
+    o = sds.load args.file
 
-        if args.output in sds.extnames
-            if args.output == '.noon'
-                s = stringify o,
-                    align: args.align
-                    indent: Math.max 1, args.indent
-                    maxalign: Math.max 0, args.maxalign
-                    colors: args.colors
-                    sort: args.sort
-            else
-                s = sds.stringify o, 
-                    ext: args.output
-            clog s
+    if args.output in sds.extnames
+        if args.output == '.noon'
+            s = stringify o,
+                align: args.align
+                indent: Math.max 1, args.indent
+                maxalign: Math.max 0, args.maxalign
+                colors: args.colors
+                sort: args.sort
         else
-            sds.save args.output, o
+            s = sds.stringify o, 
+                ext: args.output
+        clog s
     else
-        err "unknown file type: #{chalk.yellow.bold(ext)}. known types: #{chalk.white.bold(sds.extnames.join(', '))}"
+        sds.save args.output, o

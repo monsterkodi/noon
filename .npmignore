@@ -1,4 +1,5 @@
 coffee
+bin/run
 bin/log
 bin/publish
 test

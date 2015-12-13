@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+DIR="`dirname $0`/.."
+gulp --cwd "$DIR" coffee
+"$DIR/bin/`sds $DIR/package.json -rp name`" $@
