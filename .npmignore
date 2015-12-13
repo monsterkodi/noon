@@ -6,3 +6,4 @@ img
 .build-tools.cson
 .gitignore
 *.log
+gulpfile.coffee
