@@ -23,7 +23,7 @@ gulp.task 'coffee_release', ->
     gulp.src ['coffee/**/*.coffee'], base: './coffee'
         .pipe plumber()
         .pipe pepper
-            stringify: (info) -> '""'
+            stringify: -> '""'
             paprika: 
                 dbg: 'log'
         .pipe coffee(bare: true).on 'error', onError
@@ -32,7 +32,6 @@ gulp.task 'coffee_release', ->
 gulp.task 'salt', ->
     gulp.src ['coffee/**/*.coffee'], base: '.'
         .pipe plumber()
-        # .pipe debug title: 'salt'
         .pipe salt()
         .pipe gulp.dest '.'
 
@@ -42,11 +41,11 @@ gulp.task 'bump', ->
         .pipe gulp.dest '.'
 
 gulp.task 'clean', (cb) ->
-    del [ 'js' ]
+    del.sync [ 'js' ]
     cb()
 
 gulp.task 'release', ['clean', 'salt', 'coffee_release']
 
 gulp.task 'default', ->
                 
-    gulp.watch 'coffee/**/*.coffee', ['coffee']
+    gulp.watch 'coffee/**/*.coffee', ['salt']
