@@ -12,10 +12,10 @@ str     = require './tools/str'
 log     = require './tools/log'
 profile = require './tools/profile'
 inspect = require './inspect'
+undense = require './undense'
 
 parse = (s) ->
     
-    # profile 'split'
     lines = s.split '\n'
     # profile 'traverse'
     stack = [
@@ -70,11 +70,11 @@ parse = (s) ->
             o.push k
         o
     
-    for line in lines
-        [d,k,v] = inspect line 
+    addLine = (d,k,v) ->
         if k?
             t = _.last stack
-            if d > t.d
+            [undensed, t.undensed] = [t.undensed, false]
+            if d > t.d and not undensed
                 stack.push
                     o: indent t, k, v
                     d: d
@@ -88,12 +88,28 @@ parse = (s) ->
                 insert t, k, v
             else
                 insert t, k, v
+                        
+    i = 0
+    for line in lines
+        [d,k,v] = inspect line 
+
+        if v? and v.startsWith '. '
+            addLine d, k
+
+            ud = _.last(stack).d
+
+            for e in undense d, v
+                [dd,dk,dv] = inspect e 
+                addLine dd, dk, dv
+
+            while _.last(stack).d > ud+1
+                stack.pop()
+            _.last(stack).undensed = true
             
-            # for i in [stack.length-1 .. 0]
-            #     dbg "i:#{i} d:#{stack[i].d} l:#{str(stack[i].l)}\n", stack[i].o
-            
-    # profile "log"
-    # dbg stack[0].o
+        else
+            addLine d, k, v
+        i += 1
+                        
     # profile ""
     stack[0].o
 
