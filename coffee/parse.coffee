@@ -73,7 +73,7 @@ parse = (s) ->
     addLine = (d,k,v) ->
         if k?
             t = _.last stack
-            [undensed, t.undensed] = [t.undensed, false]
+            [undensed, t.undensed] = [t.undensed, false]            
             if d > t.d and not undensed
                 stack.push
                     o: indent t, k, v
@@ -87,6 +87,8 @@ parse = (s) ->
                     t = _.last stack
                 insert t, k, v
             else
+                if undensed
+                    t.d = d
                 insert t, k, v
                         
     i = 0

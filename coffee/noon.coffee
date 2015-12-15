@@ -43,6 +43,7 @@ args = require "nomnom"
     .parse()
 
 clog = console.log
+
 err = (msg) ->
     clog chalk.red("\n"+msg+"\n")
     process.exit()
@@ -53,7 +54,11 @@ if args.version
     
 if args.file
 
-    o = sds.load args.file
+    ext = path.extname args.file
+    if ext == '.noon' or ext not in sds.extnames
+        o = parse fs.readFileSync args.file, 'utf8'
+    else
+        o = sds.load args.file
 
     if args.output in sds.extnames
         if args.output == '.noon'

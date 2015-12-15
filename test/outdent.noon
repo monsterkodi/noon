@@ -1,0 +1,4 @@
+outdent  . foo . bar
+    correct
+    wrong
+    
