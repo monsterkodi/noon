@@ -35,7 +35,7 @@ noColors =
 
 stringify = (obj, options={}) ->
 
-    opt = _.assign defaults, options
+    opt = _.assign _.clone(defaults), options
     
     indstr = _.padRight ' ', opt.indent
     indval = _.padRight ' ', Math.max 2, opt.indent
@@ -45,7 +45,7 @@ stringify = (obj, options={}) ->
     else if opt.colors == false
         colors = noColors
     else
-        colors = _.assign defaultColors, opt.colors
+        colors = _.assign _.clone(defaultColors), opt.colors
     
     pretty = (o, ind, visited) ->
         
