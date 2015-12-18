@@ -16,6 +16,7 @@ log       = require './tools/log'
 profile   = require './tools/profile'
 stringify = require './stringify'
 parse     = require './parse'
+save      = require './save'
 
 ###
  0000000   00000000    0000000    0000000
@@ -73,4 +74,12 @@ if args.file
                 ext: args.output
         clog s
     else
-        sds.save args.output, o
+        if path.extname(args.output) == '.noon'
+            save args.output, o,
+                align: args.align
+                indent: Math.max 1, args.indent
+                maxalign: Math.max 0, args.maxalign
+                colors: false
+                sort: args.sort
+        else
+            sds.save args.output, o

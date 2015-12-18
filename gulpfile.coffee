@@ -9,7 +9,7 @@ onError = (err) -> util.log err
 gulp.task 'coffee', ->
     gulp.src ['coffee/**/*.coffee'], base: './coffee'
         .pipe plumber()
-        # .pipe debug title: 'coffee'
+        .pipe debug title: 'coffee'
         .pipe pepper
             stringify: (info) -> 'chalk.blue("'+info.class + info.type + info.method + ' ► ")'
             paprika: 
@@ -22,6 +22,7 @@ gulp.task 'coffee', ->
 gulp.task 'coffee_release', ->
     gulp.src ['coffee/**/*.coffee'], base: './coffee'
         .pipe plumber()
+        .pipe debug title: 'coffee_release'
         .pipe pepper
             stringify: -> '""'
             paprika: 

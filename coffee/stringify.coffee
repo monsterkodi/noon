@@ -38,8 +38,8 @@ stringify = (obj, options={}) ->
 
     opt = _.assign _.clone(defaults), options
     
-    indstr = _.padRight ' ', opt.indent
-    indval = _.padRight ' ', Math.max 2, opt.indent
+    indstr = _.padRight '', opt.indent
+    indval = _.padRight '', Math.max 2, opt.indent
     
     if opt.colors == true
         colors = defaultColors
@@ -53,7 +53,8 @@ stringify = (obj, options={}) ->
         if opt.align        
             maxKey = 0
             for own k,v of o
-                maxKey = Math.max maxKey, k.length
+                kl = parseInt(Math.ceil((k.length+2)/opt.indent)*opt.indent)
+                maxKey = Math.max maxKey, kl
                 if opt.maxalign and maxKey > opt.maxalign
                     maxKey = opt.maxalign
                     break
@@ -63,12 +64,11 @@ stringify = (obj, options={}) ->
             s = ind
             if opt.align
                 ks = _.padRight k, maxKey
-                i  = _.padRight ind+indstr,maxKey+opt.indent
+                i  = _.padRight ind+indstr, maxKey
             else
                 ks = k
                 i  = ind+indstr
             s += colors.key ks
-            s += indval
             s += toStr v, i, false, visited
 
         if opt.sort
