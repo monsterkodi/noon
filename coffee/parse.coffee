@@ -95,7 +95,7 @@ parse = (s) ->
     for line in lines
         [d,k,v] = inspect line 
 
-        if v? and v.startsWith '. '
+        if v? and v.startsWith '. ' # dense value
             addLine d, k
 
             ud = _.last(stack).d

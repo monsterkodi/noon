@@ -8,7 +8,10 @@
 
 _ = require 'lodash'
 
-undense = (d, s) ->
+# undenses string s at depth d
+# returns list of padded lines
+
+undense = (d, s) -> 
     sl = s.length
     sd = d
 
@@ -21,8 +24,13 @@ undense = (d, s) ->
         p += 1
     
     l = ''
+    key = true
     while p < sl and not (s[p] == '.' and p < sl+1 and (s[p+1] in ['.', ' '])) # add to line until first dotdot or dotspace
         l += s[p]
+        if key and s[p] == ' '
+            if p < sl+1 and s[p+1] != ' '
+                l += ' '
+            key = false
         p += 1
         
     ld = _.pad('', d)+l # pad line with spaces
