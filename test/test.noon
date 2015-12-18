@@ -3,7 +3,7 @@ how to
         subtree                                ⌘→
         all                                    ⌥⌘→
     collapse 
-        subtree                                ⌘←           
+        subtree                                ⌘←
         all                                    ⌥⌘←
         
     speed up scrolling
@@ -17,17 +17,17 @@ how to
         key paths                              ⌘F
         values                                 ⌘G
         
-    clear the search                       
+    clear the search
                                                ⌘K 
                                                Esc (when search has focus)
                                                
-    switch focus from search to tree           ↓ or Tab      
+    switch focus from search to tree           ↓ or Tab
     
     find by path
-        all "foo" leaves                       **.foo     
+        all "foo" leaves                       **.foo
         all "foo" or "bla" leaves              **.foo|bla
         all "foo" leaves below "bar" objects   bar.**.foo
-        all "foo" items on level 4             *.*.*.foo    
+        all "foo" items on level 4             *.*.*.foo
         all items on level 3                   *.*.*
         first 50 array items                   array.[1-4]?\d
         
