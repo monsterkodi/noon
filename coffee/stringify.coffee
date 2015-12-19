@@ -63,7 +63,7 @@ stringify = (obj, options={}) ->
         keyValue = (k,v) ->
             s = ind
             if opt.align
-                ks = _.padRight k, maxKey
+                ks = _.padRight k, Math.max maxKey, k.length+2
                 i  = _.padRight ind+indstr, maxKey
             else
                 ks = k
