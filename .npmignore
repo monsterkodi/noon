@@ -8,3 +8,4 @@ img
 .gitignore
 *.log
 gulpfile.coffee
+Icon?
