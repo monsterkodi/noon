@@ -31,6 +31,6 @@ l7           . level1b .. level2b . level1c .. level2c ... level3c
    l9        . level1b .. level2b . level1c .. level2c ... level3c
       lx     . level1b .. level2b . level1c .. level2c ... level3c
          ly  . level1b .. level2b . level1c .. level2c ... level3c
-         lz  . i1 . ib . i3 . i4. i5
+         lz  . i1 . ib . i3 . i4 . i5
 
 simple   . a 1 . b 2 . c 3

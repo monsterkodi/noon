@@ -38,17 +38,27 @@ parse = (s) ->
                 b.o[b.l] = o
         o
     
+    values = 
+        'null': null
+        'true': true
+        'false': false
+    value = (v) ->
+        if values[v] != undefined then return values[v]
+        if not isNaN(parseFloat v) then return parseFloat v
+        if not isNaN(parseInt v) then return parseInt v
+        v
+    
     insert = (t, k, v) ->
         if _.isArray t.o
             if not v?
                 if _.last(t.o) == '.'
                     t.o.pop()
                     t.o.push []
-                t.o.push k
+                t.o.push value k
             else
-                makeObject(t)[k] = v
+                makeObject(t)[k] = value v
         else
-            t.o[k] = v
+            t.o[k] = value v
             t.l = k
 
     indent = (t, k, v) ->
@@ -65,7 +75,7 @@ parse = (s) ->
         else
             t.o[t.l] = o
         if v?
-            o[k] = v
+            o[k] = value v
         else
             o.push k
         o

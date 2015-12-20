@@ -15,7 +15,7 @@ defaults =
     maxalign: 32     # maximal number of spaces when aligning
     sort:     false  # sort object keys alphabetically
     circular: false  # check for circular references (expensive!)
-    null:     false  # output null values
+    null:     false  # output null dictionary values
     colors:   false  # colorize output with ansi colors
                      # true for default colors or custom dictionary
 
@@ -83,7 +83,7 @@ stringify = (obj, options={}) ->
     toStr = (o, ind='', arry=false, visited=[]) ->
         if not o? 
             if o == null
-                return opt.null and colors.null("null") or ''
+                return opt.null or arry and colors.null("null") or ''
             if o == undefined
                 return colors.null "undefined"
             return colors.null '<?>'
