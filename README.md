@@ -3,6 +3,54 @@
 
 ![noon](https://raw.githubusercontent.com/monsterkodi/noon/master/img/noon.png)
 
+### format
+
+- **hierarchy is expressed by indentation with spaces**.
+      grandpa
+          parent
+              child
+              sibling
+          uncle
+- **two or more spaces mark the end of a dictionary key**, therefore ...
+- **keys and list items can have single spaces in them** but ...
+- **only dictionary values can contain consecutive spaces**:
+      key 1    value 1
+      key 2    value 2 contains    spaces
+- **objects inside lists** are expressed like this:
+      .
+        a  1
+      .
+        b  2
+- **dense notation**:
+      key  . a .. b . c
+  is equivalent to
+      key
+         a
+            b
+         c
+
+#### advantages
+
+- easy to read
+- easy to write
+- fast to parse 
+- no need to escape characters
+
+#### disadvantages
+
+* non-string values and their string representation are indistinguishable 
+
+     > e.g. the number **42** and the string **"42"** are both represented as **42**  
+     > the same holds for other values, e.g. **true**, **false**, **null**, etc.
+  
+* some limitations on keys and values
+
+     * leading and trailing spaces are ignored:
+     > e.g. it is not possible to represent the string **" foo "**
+     * keys can't just be a single dot
+     * values can't start with a dot followed by spaces
+     * empty objects are not expressible    
+
 ### module
 
 ```coffee-script
@@ -39,23 +87,8 @@ stringify_options =  # stringify's second argument, defaults are:
 
 ```
 
-### format
-
-- only spaces are allowed for indentation.
-- keys can have single spaces in them. 
-- more than one space marks the end of a key.
-- dictionary values and list items are always trimmed.
-- dictionary values can contain longer space sequences.
-- list items can't contain more than one space in a row.
-- each list item is on it's own line.
-- a dot is used as a placeholder for objects and lists inside of lists.
-
 ### caveats
 
-This is in early alpha stadium and not meant to be completely foolproof.
-
-Besides the limitations mentioned above, 
-there are known issues with empty lists, empty objects and null values as 
-well as potential conversions to strings when converting back and forth.
-
+This is in alpha stadium and not meant to be completely foolproof.  
+Don't use it if you can't live with the limitations mentioned above.  
 Don't expect your data to convert flawlessly!
