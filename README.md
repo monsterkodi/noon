@@ -6,28 +6,38 @@
 ### format
 
 - **hierarchy is expressed by indentation with spaces**.
+```coffee-script
       grandpa
           parent
               child
               sibling
           uncle
+```          
 - **two or more spaces mark the end of a dictionary key**, therefore ...
 - **keys and list items can have single spaces in them** but ...
 - **only dictionary values can contain consecutive spaces**:
+```coffee-scrip
       key 1    value 1
       key 2    value 2 contains    spaces
+```     
 - **objects inside lists** are expressed like this:
-      .
+```coffee-script
+    .
         a  1
-      .
+    .
         b  2
+```        
 - **dense notation**:
+```coffee-script
       key  . a .. b . c
+```
   is equivalent to
+```coffee-script
       key
          a
             b
          c
+```
 
 #### advantages
 
