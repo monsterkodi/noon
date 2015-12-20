@@ -52,11 +52,14 @@
 
      > e.g. the number **42** and the string **"42"** are both represented as **42**  
      > the same holds for other values, e.g. **true**, **false**, **null**, etc.
+     
+     > right now, the string representation is favored, but this will change in one of  
+     > the next releases
   
 * some limitations on keys and values
 
      * leading and trailing spaces are ignored:
-     > e.g. it is not possible to represent the string **" foo "**
+       e.g. it is not possible to represent the string **" foo "**
      * keys can't just be a single dot
      * values can't start with a dot followed by spaces
      * empty objects are not expressible    
