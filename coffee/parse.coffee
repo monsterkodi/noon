@@ -65,7 +65,6 @@ parse = (s) ->
                 if _.last(t.o) == '.'
                     t.o.pop()
                     t.o.push []
-                console.log '-> push ', k
                 t.o.push value k
             else
                 makeObject(t)[key k] = value v

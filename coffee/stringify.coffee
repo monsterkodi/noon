@@ -46,6 +46,14 @@ stringify = (obj, options={}) ->
         colors = noColors
     else
         colors = _.assign _.clone(defaultColors), opt.colors
+
+    escape = (k) ->
+        if k[0] in [' ', '#', '|']
+            k = '|' + k
+        if k[k.length-1] in [' ', '#', '|']
+            k += '|'
+        if k == '' then k = '||'
+        k
     
     pretty = (o, ind, visited) ->
         
@@ -61,6 +69,9 @@ stringify = (obj, options={}) ->
         
         keyValue = (k,v) ->
             s = ind
+            
+            k = escape k
+            
             if opt.align
                 ks = _.padRight k, Math.max maxKey, k.length+2
                 i  = _.padRight ind+indstr, maxKey
@@ -87,7 +98,8 @@ stringify = (obj, options={}) ->
                 return colors.null "undefined"
             return colors.null '<?>'
         t = typeof o
-        if t == 'string' then return colors.string o 
+        if t == 'string' 
+            return colors.string escape o
         else if t == 'object'
             
             if opt.circular

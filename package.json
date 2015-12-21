@@ -1,13 +1,16 @@
 {
   "name": "noon",
-  "version": "0.4.5",
+  "version": "0.5.0",
   "description": "'nother ordinary object notation",
   "main": "js/main.js",
   "keywords": [
-    "nother",
+    "noon",
     "ordinary",
     "object",
-    "notation"
+    "notation",
+    "json",
+    "cson",
+    "yaml"
   ],
   "author": "monsterkodi",
   "license": "Unlicense",

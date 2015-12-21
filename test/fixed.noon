@@ -14,11 +14,11 @@ fixed
         |whatever?
         |  blarg
         |    blub
-    a   |a
-    b   | b
-    c   |  c
-    d   |   d 
-    e   |    e
+    a*  |a
+    b*  | b
+    c*  |  c
+    d*  |   d 
+    e*  |    e
 
 rec       
         |  rec
