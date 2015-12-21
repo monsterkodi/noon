@@ -71,6 +71,8 @@ stringify = (obj, options={}) ->
             s = ind
             
             k = escape k
+            if k.indexOf('  ') > 0 and k[0] != '|'
+                k = "|#{k}|"
             
             if opt.align
                 ks = _.padRight k, Math.max maxKey, k.length+2
