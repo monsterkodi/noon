@@ -39,7 +39,6 @@ stringify = (obj, options={}) ->
     opt = _.assign _.clone(defaults), options
     
     indstr = _.padRight '', opt.indent
-    indval = _.padRight '', Math.max 2, opt.indent
     
     if opt.colors == true
         colors = defaultColors
@@ -66,7 +65,7 @@ stringify = (obj, options={}) ->
                 ks = _.padRight k, Math.max maxKey, k.length+2
                 i  = _.padRight ind+indstr, maxKey
             else
-                ks = k
+                ks = _.padRight k, k.length+2
                 i  = ind+indstr
             s += colors.key ks
             s += toStr v, i, false, visited
