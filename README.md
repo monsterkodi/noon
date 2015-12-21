@@ -16,27 +16,44 @@
 - **two or more spaces mark the end of a dictionary key**, therefore ...
 - **keys and list items can have single spaces in them** but ...
 - **only dictionary values can contain consecutive spaces**:
-```coffee-scrip
+```coffee-script
       key 1    value 1
       key 2    value 2 contains    spaces
 ```     
+- **only 'malformed' strings need to be escaped**:
+```coffee-script
+a             |  leading spaces
+b             trailing spaces  |
+c             |  leading and trailing spaces  |
+pipe symbol   |||
+empty string  ||
+```     
+- **keys can also be escaped but can't contain the pipe symbol**:
+```coffee-script
+|  leading|  key has leading spaces
+|trailing |  key has trailing spaces
+|  both   |
+|mul    ti|  
+|    |       key consists of spaces
+||           key is empty string
+```     
 - **objects inside lists** are expressed like this:
 ```coffee-script
-    .
-        a  1
-    .
-        b  2
+.
+    a  1
+.
+    b  2
 ```        
 - **dense notation**:
 ```coffee-script
-      key  . a .. b . c
+key  . a .. b . c
 ```
   is equivalent to
 ```coffee-script
-      key
-         a
-            b
-         c
+key
+    a
+        b
+    c
 ```
 
 #### advantages
@@ -44,7 +61,7 @@
 - easy to read
 - easy to write
 - fast to parse 
-- no need to escape characters
+- normally no need to escape characters
 
 #### disadvantages
 
