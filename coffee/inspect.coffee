@@ -14,25 +14,45 @@ inspect = (l) ->
     depth = p
 
     key = ''
+    
+    lit = false
+    if l[p] == '|'
+        lit = true
+        key += '|'
+        p += 1
+    
     while l[p]?
-        if l[p] == ' ' and l[p+1] == ' '
+        if l[p] == ' ' and l[p+1] == ' ' and not lit
             break
+            
         key += l[p]
         p += 1
+        if lit and l[p-1] == '|'
+            break
+
+    if lit
+        lit = false    
+    else
+        key = key.trimRight()
     
     while l[p] == ' ' # whitespace between key and value
         p += 1
 
     value = ''
-    while l[p]?
+    
+    if l[p] == '|'
+        lit = true
+        value += '|'
+        p += 1
+    
+    while l[p]?        
         value += l[p]
         p += 1
+        if lit and l[p-1] == '|' and l.trimRight().length == p
+            break
 
-    if l[p-1] == ' '
-        if value
-            value = value.trimRight()
-        else
-            key = key.trimRight()
+    if l[p-1] == ' ' and not lit
+        value = value.trimRight() if value?
         
     key   = null if key == ''
     value = null if value == ''

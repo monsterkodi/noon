@@ -37,33 +37,46 @@ parse = (s) ->
             else
                 b.o[b.l] = o
         o
-    
+
+    key = (k) ->
+        if k[0] == '|' 
+            if k[k.length-1] == '|'
+                return k.substr(1, k.length-2)
+            return k.substr 1
+        k
+        
     values = 
         'null': null
         'true': true
         'false': false
+
     value = (v) ->
-        if values[v] != undefined then return values[v]
+        if values[v] != undefined  then return values[v]
+        if v[0] == '|' then return key v            
+        else if v[v.length-1] == '|'
+            return v.substr(0, v.length-1)
         if not isNaN(parseFloat v) then return parseFloat v
-        if not isNaN(parseInt v) then return parseInt v
+        if not isNaN(parseInt v)   then return parseInt   v
         v
-    
+        
     insert = (t, k, v) ->
         if _.isArray t.o
             if not v?
                 if _.last(t.o) == '.'
                     t.o.pop()
                     t.o.push []
+                console.log '-> push ', k
                 t.o.push value k
             else
-                makeObject(t)[k] = value v
+                makeObject(t)[key k] = value v
         else
-            t.o[k] = value v
-            t.l = k
+            t.o[key k] = value v
+            t.l = key k
 
     indent = (t, k, v) ->
         o = []
         o = {} if v?
+        
         if _.isArray t.o
             if _.last(t.o) == '.'
                 t.o.pop()
@@ -74,10 +87,11 @@ parse = (s) ->
                 t.o[l] = o                
         else
             t.o[t.l] = o
+            
         if v?
-            o[k] = value v
+            o[key k] = value v
         else
-            o.push k
+            o.push value k
         o
     
     addLine = (d,k,v) ->

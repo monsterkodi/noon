@@ -10,7 +10,8 @@ fixed
     z   ||||
     g   |||
     h   ||
-    i   |whatever?
+    i   
+        |whatever?
         |  blarg
         |    blub
     a   |a
@@ -20,7 +21,7 @@ fixed
     e   |    e
 
 rec       
-        |   rec
+        |  rec
         |       
         |
         |# commo 
@@ -29,11 +30,15 @@ rec
         
 chars   
     0   
+        | xxxxxx |
+        |11    11|
+        |###  ###|
         | 000000 |
-        |000  000|
-        |00    00|
-        |000  000|
-        | 000000 |
+    1   
+        | xxxxxx |  1
+        |11    11|  2 
+        |###  ###|  3
+        | 000000 |  4
 
 aasdjk
 ich will nicht
@@ -53,19 +58,44 @@ wtf
     |  b |  | b    |
     |  c |  |  c   |
     |  d |  |   d  |
+
+    z1      asdasd     |
+    z2      asdasd     ||
     
-    |  a |  |a|
-    |  b |  | b|
-    |  c |  |  c|
-    |  d |  |   d|
+    a       |a
+    b       |  b
 
-    |  a |  |a
-    |  b |  | b
-    |  c |  |  c
-    |  d |  |   d
+    x       aasdasd |
+    y       aas     |
+    z       asdasd  |
+    
+    | .a |   a     |
+    | .b    | b    |
+    .c |  |  c   |
+    | .d        d  |
 
-    key  a  vala
-    |key  b|  valueb
+    | %a |  |a     ||
+    | %b |  | b    ||
+    | %c |  |  c   ||
+    | %d |  |   d  ||
+
+    | +a |  ||a     ||
+    | +b |  || b    ||
+    | +c |  ||  c   ||
+    | +d |  ||   d  ||
+    
+    | _a |  |a|
+    | _b |  | b|
+    | _c |  |  c|
+    | _d |  |   d|
+
+    | *a |  |a
+    | *b |  | b
+    | *c |  |  c
+    | *d |  |   d
+
+    key a     value  a
+    |key  b|  value  b
     
     
     
