@@ -20,7 +20,7 @@
       key 1    value 1
       key 2    value 2 contains    spaces
 ```     
-- **only 'malformed' strings need to be escaped**:
+- **if trimming your strings is not an option**, you can escape:
 ```coffee-script
 a             |  leading spaces
 b             trailing spaces  |
@@ -30,10 +30,7 @@ empty string  ||
 ```     
 - **keys can also be escaped but can't contain the pipe symbol**:
 ```coffee-script
-|  leading|  key has leading spaces
-|trailing |  key has trailing spaces
-|  both   |
-|mul    ti|  
+| s  pace |  key keeps spaces
 |    |       key consists of spaces
 ||           key is empty string
 ```     
@@ -64,21 +61,10 @@ key
 - normally no need to escape characters
 
 #### disadvantages
-
-* non-string values and their string representation are indistinguishable 
-
-     > e.g. the number **42** and the string **"42"** are both represented as **42**  
-     > the same holds for other values, e.g. **true**, **false**, **null**, etc.
-     
-     > right now, the string representation is favored, but this will change in one of  
-     > the next releases
   
 * some limitations on keys and values
 
-     * leading and trailing spaces are ignored:
-       e.g. it is not possible to represent the string **" foo "**
-     * keys can't just be a single dot
-     * values can't start with a dot followed by spaces
+     * keys can't contain the pipe symbol |
      * empty objects are not expressible    
 
 ### module

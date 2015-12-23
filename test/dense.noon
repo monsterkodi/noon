@@ -1,6 +1,6 @@
 dense1  . level1a . level1b .. level2b . level1c .. level2c ... level3c
 
-dense2  . key1 value1 . key2 value2 . key3 .. key3.1 value3.1 .. key3.2 value3 2
+dense2  . key1  value1 . key2  value2 . key3 .. key3.1  value3.1 .. key3.2  value3 2
 
 dense values:  . this_is_on_level 1 . this_one also . one .. child_of_one_at_level  2 .. another_child_of_one ... with ... children 
 
@@ -8,7 +8,7 @@ dense values:  . this_is_on_level 1 . this_one also . one .. child_of_one_at_lev
 monsterkodi     . refresh  . color green . screenHeight 940
 projects        . refresh  . color blue  . screenHeight 960 . break
     
-l   .
+l   
     @               . size 380 . color  red
     monsterkodi     . refresh  . color green . screenHeight 940
     projects        . refresh  . color blue  . screenHeight 960 . break
