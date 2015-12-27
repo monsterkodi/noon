@@ -44,9 +44,15 @@ gulp.task 'bump', ->
 gulp.task 'clean', (cb) ->
     del.sync [ 'js' ]
     cb()
+    
+gulp.task 'test', (cb) ->
+    child_process = require 'child_process'
+    test = child_process.spawn "mocha", ['--compilers', 'coffee:coffee-script/register'], stdio: 'inherit'
+    test.on 'close', cb
 
 gulp.task 'release', ['clean', 'salt', 'coffee_release']
 
 gulp.task 'default', ->
                 
     gulp.watch 'coffee/**/*.coffee', ['salt']
+    gulp.watch 'test/*.coffee', ['test']

@@ -28,7 +28,7 @@ c             |  leading and trailing spaces  |
 pipe symbol   |||
 empty string  ||
 ```     
-- **keys can also be escaped but can't contain the pipe symbol**:
+- **keys can also be escaped, but they can't contain the pipe symbol**:
 ```
 | s  pace |  key keeps spaces
 |    |       key consists of spaces
@@ -63,7 +63,6 @@ key
 #### disadvantages
   
 * some limitations on keys and values
-
      * keys can't contain the pipe symbol: |
      * empty objects are currently not expressible    
 
