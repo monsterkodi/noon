@@ -93,4 +93,45 @@ describe 'parse', ->
                         e: 0
                     f: 1
                 g: null
-    
+    it 'complex object', ->
+        expect noon.parse("""
+        a
+            b
+              c
+            d
+        e f
+            g  h
+        1  one  two  
+        j
+            .
+                k  l
+            .
+                m  n
+        """)
+        .to.eql
+            a:
+                b: ['c']
+                d: null
+            'e f':
+                g: 'h'
+            '1': 'one  two'
+            j: [{k: 'l'}, m: 'n']
+    it 'dense notation', ->
+        expect noon.parse("""
+        a  . b .. c 1 .. d  2 .. e ... x y z  ... f .... null  null ... 3 .. g . h 
+        """)
+        .to.eql
+            a:
+                b:
+                    c: 1
+                    d: 2
+                    e: 
+                        x: 'y z'
+                        f: 
+                            'null': null
+                        '3': null
+                    g: null
+                h: null
+
+                        
+        
