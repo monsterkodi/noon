@@ -6,22 +6,22 @@
 ### format
 
 - **hierarchy is expressed by indentation with spaces**.
-```coffee-script
-      grandpa
-          parent
-              child
-              sibling
-          uncle
+```
+grandpa
+    parent
+        child
+        sibling
+    uncle
 ```          
 - **two or more spaces mark the end of a dictionary key**, therefore ...
 - **keys and list items can have single spaces in them** but ...
 - **only dictionary values can contain consecutive spaces**:
-```coffee-script
-      key 1    value 1
-      key 2    value 2 contains    spaces
+```
+key 1    value 1
+key 2    value 2 contains    spaces
 ```     
 - **if trimming your strings is not an option**, you can escape:
-```coffee-script
+```
 a             |  leading spaces
 b             trailing spaces  |
 c             |  leading and trailing spaces  |
@@ -29,20 +29,20 @@ pipe symbol   |||
 empty string  ||
 ```     
 - **keys can also be escaped but can't contain the pipe symbol**:
-```coffee-script
+```
 | s  pace |  key keeps spaces
 |    |       key consists of spaces
 ||           key is empty string
 ```     
 - **objects inside lists** are expressed like this:
-```coffee-script
+```
 .
     a  1
 .
     b  2
 ```        
 - **dense notation**:
-```coffee-script
+```
 key  . a .. b . c
 ```
   is equivalent to
@@ -64,8 +64,14 @@ key
   
 * some limitations on keys and values
 
-     * keys can't contain the pipe symbol |
-     * empty objects are not expressible    
+     * keys can't contain the pipe symbol: |
+     * empty objects are currently not expressible    
+
+#### example files
+
+* [language](https://github.com/monsterkodi/language-noon/blob/master/grammars/noon.noon)
+* [urtil](https://github.com/monsterkodi/urtil/blob/gh-pages/examples/example)
+* [font](https://github.com/monsterkodi/gulp-salt/blob/master/font.noon)
 
 ### module
 
