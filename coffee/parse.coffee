@@ -6,7 +6,7 @@
 000        000   000  000   000  0000000   00000000
 ###
 
-inspect = require './inspect'
+# inspect = require './inspect'
 
 parse = (s) ->
     
@@ -55,7 +55,14 @@ parse = (s) ->
         else
             [ld]
     
-    
+    ###
+     0000000  00000000   000      000  000000000
+    000       000   000  000      000     000   
+    0000000   00000000   000      000     000   
+         000  000        000      000     000   
+    0000000   000        0000000  000     000   
+    ###
+
     lines = s.split '\n'
     stack = [
         o: []
@@ -194,19 +201,79 @@ parse = (s) ->
                 if undensed
                     t.d = d
                 insert t, k, v
+        
+    ###
+    000  000   000   0000000  00000000   00000000   0000000  000000000
+    000  0000  000  000       000   000  000       000          000   
+    000  000 0 000  0000000   00000000   0000000   000          000   
+    000  000  0000       000  000        000       000          000   
+    000  000   000  0000000   000        00000000   0000000     000   
+    ###
+    inspect = (l) ->    
+        p = 0
+        
+        while l[p] == ' ' # preceeding spaces
+            p += 1
+        d = p
+
+        k = ''
+        
+        escl = false
+        escr = false
+        if l[p] == '|'
+            escl = true
+            k += '|'
+            p += 1
+        
+        while l[p]?
+            if l[p] == ' ' and l[p+1] == ' ' and not escl
+                break
+                
+            k += l[p]
+            p += 1
+            if escl and l[p-1] == '|'
+                break
+
+        if not escl
+            k = k.trimRight()
+        
+        while l[p] == ' ' # whitespace between key and value
+            p += 1
+
+        v = ''
+        
+        if l[p] == '|'
+            escr = true
+            v += '|'
+            p += 1
+        
+        while l[p]?        
+            v += l[p]
+            p += 1
+            if escr and l[p-1] == '|' and l.trimRight().length == p
+                break
+
+        if l[p-1] == ' ' and not escr
+            v = v.trimRight() if v?
             
+        k = null if k == ''
+        v = null if v == ''
+        [d, k, v, escl]
+                   
     ###
-    000      000  000   000  00000000   0000000
-    000      000  0000  000  000       000     
-    000      000  000 0 000  0000000   0000000 
-    000      000  000  0000  000            000
-    0000000  000  000   000  00000000  0000000 
+    00000000   0000000    0000000  000   000        000      000  000   000  00000000
+    000       000   000  000       000   000        000      000  0000  000  000     
+    0000000   000000000  000       000000000        000      000  000 0 000  0000000 
+    000       000   000  000       000   000        000      000  000  0000  000     
+    00000000  000   000   0000000  000   000        0000000  000  000   000  00000000
     ###
+    
     i = 0
     for line in lines
-        [d,k,v] = inspect line 
 
-        if v? and v.startsWith '. ' # dense value
+        [d, k, v, e] = inspect line
+
+        if v? and not e and v.startsWith '. ' # dense value
             addLine d, k
 
             ud = last(stack).d

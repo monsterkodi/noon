@@ -48,11 +48,8 @@ stringify = (obj, options={}) ->
         colors = _.assign _.clone(defaultColors), opt.colors
 
     escape = (k) ->
-        if k[0] in [' ', '#', '|']
-            k = '|' + k
-        if k[k.length-1] in [' ', '#', '|']
-            k += '|'
-        if k == '' then k = '||'
+        if k == '' or k[0] in [' ', '#', '|'] or k[k.length-1] in [' ', '#', '|']
+            k = '|' + k + '|'
         k
     
     pretty = (o, ind, visited) ->
@@ -73,6 +70,10 @@ stringify = (obj, options={}) ->
             k = escape k
             if k.indexOf('  ') > 0 and k[0] != '|'
                 k = "|#{k}|"
+            else if k[0] != '|' and k[k.length-1] == '|'
+                k = '|' + k
+            else if k[0] == '|' and k[k.length-1] != '|'
+                k += '|'
             
             if opt.align
                 ks = _.padRight k, Math.max maxKey, k.length+2
@@ -114,7 +115,7 @@ stringify = (obj, options={}) ->
                 s += '\n' if o.length and ind!=''
                 s += (ind+toStr(v,ind+indstr,true,visited) for v in o).join '\n'
             else
-                s = arry and '.\n' or '\n'
+                s = (arry and '.\n') or ((ind != '') and '\n' or '')
                 s += pretty o, ind, visited
             return s
         else
