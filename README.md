@@ -62,10 +62,9 @@ key
 
 #### disadvantages
   
-* some limitations
-     * keys can't start with the pipe symbol: |
-     * escaped keys can't contain the pipe symbol
-     * empty objects are currently not expressible
+- keys can't start with the pipe symbol: |
+- escaped keys can't contain the pipe symbol
+- empty objects are not expressible
 
 #### example files
 
