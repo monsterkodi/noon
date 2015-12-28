@@ -95,7 +95,7 @@ parse = (s) ->
         if k?[0] == '|' 
             if k[k.length-1] == '|'
                 return k.substr(1, k.length-2)
-            return k.substr 1
+            return k.substr(1).trimRight()
         k
         
     ###

@@ -31,7 +31,7 @@ gulp.task 'coffee_release', ->
         .pipe gulp.dest 'js/'
                     
 gulp.task 'salt', ->
-    gulp.src ['coffee/**/*.coffee'], base: '.'
+    gulp.src ['coffee/**/*.coffee', 'test/*.coffee'], base: '.'
         .pipe plumber()
         .pipe salt()
         .pipe gulp.dest '.'
@@ -54,5 +54,5 @@ gulp.task 'release', ['clean', 'salt', 'coffee_release']
 
 gulp.task 'default', ->
                 
-    gulp.watch 'coffee/**/*.coffee', ['salt']
+    gulp.watch 'coffee/**/*.coffee', ['coffee']
     gulp.watch 'test/*.coffee', ['test']
