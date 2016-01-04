@@ -6,9 +6,6 @@
 0000000      000     000   000  000  000   000   0000000   000  000          000   
 ###
 
-_       = require 'lodash'
-chalk   = require 'chalk'
-
 defaults =
     indent:   4      # number of spaces per indent level
     align:    true   # vertically align object values
@@ -18,34 +15,46 @@ defaults =
     null:     false  # output null dictionary values
     colors:   false  # colorize output with ansi colors
                      # true for default colors or custom dictionary
-
-defaultColors =
-    key:     chalk.bold.gray
-    null:    chalk.bold.blue
-    value:   chalk.bold.magenta
-    string:  chalk.bold.white
-    visited: chalk.bold.red
     
-noop = (s) -> s
-noColors = 
-    key:     noop
-    null:    noop
-    value:   noop
-    string:  noop
-    visited: noop
-
 stringify = (obj, options={}) ->
 
-    opt = _.assign _.clone(defaults), options
+    padRight = (s, l) -> 
+        while s.length < l
+            s += ' '
+        s
+
+    def = (o,d) ->
+        r = {}
+        for k,v of o
+            r[k] = v
+        for k,v of d
+            r[k] = v if not r[k]?
+        r
+
+    opt = def options, defaults
     
-    indstr = _.padRight '', opt.indent
+    indstr = padRight '', opt.indent
     
-    if opt.colors == true
-        colors = defaultColors
-    else if opt.colors == false
-        colors = noColors
+    if opt.colors == false or opt.colors == 0
+        noop = (s) -> s
+        colors = 
+            key:     noop
+            null:    noop
+            value:   noop
+            string:  noop
+            visited: noop
     else
-        colors = _.assign _.clone(defaultColors), opt.colors
+        chalk  = require 'chalk'
+        defaultColors =
+            key:     chalk.bold.gray
+            null:    chalk.bold.blue
+            value:   chalk.bold.magenta
+            string:  chalk.bold.white
+            visited: chalk.bold.red
+        if opt.colors == true
+            colors = defaultColors
+        else
+            colors = def opt.colors, defaultColors
 
     escape = (k) ->
         if k == '' or k[0] in [' ', '#', '|'] or k[k.length-1] in [' ', '#', '|']
@@ -76,16 +85,16 @@ stringify = (obj, options={}) ->
                 k += '|'
             
             if opt.align
-                ks = _.padRight k, Math.max maxKey, k.length+2
-                i  = _.padRight ind+indstr, maxKey
+                ks = padRight k, Math.max maxKey, k.length+2
+                i  = padRight ind+indstr, maxKey
             else
-                ks = _.padRight k, k.length+2
+                ks = padRight k, k.length+2
                 i  = ind+indstr
             s += colors.key ks
             s += toStr v, i, false, visited
 
         if opt.sort
-            for k in _.keys(o).sort()
+            for k in Object.keys(o).sort()
                 l.push keyValue k, o[k]
         else
             for own k,v of o

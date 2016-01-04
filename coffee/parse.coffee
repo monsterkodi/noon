@@ -6,8 +6,6 @@
 000        000   000  000   000  0000000   00000000
 ###
 
-# inspect = require './inspect'
-
 parse = (s) ->
     
     last = (a) -> a?[a.length-1]
