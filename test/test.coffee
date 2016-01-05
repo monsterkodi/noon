@@ -32,8 +32,13 @@ describe 'parse', ->
         66.0
         0.42
         66.60
+        Infinity
+        +20
+        -20
+        +0
+        -1.23
         """
-        .to.eql [42,66,0.42,66.6]
+        .to.eql [42,66,0.42,66.6,Infinity,20,-20,0,-1.23]
         
     it 'bool', ->
         expect noon.parse """
@@ -58,6 +63,18 @@ describe 'parse', ->
         
         expect noon.parse "|66.6000|"
         .to.eql ['66.6000']
+
+        expect noon.parse "6.6.6"
+        .to.eql ['6.6.6']
+
+        expect noon.parse "^1.2"
+        .to.eql ['^1.2']
+
+        expect noon.parse "++2"
+        .to.eql ['++2']
+
+        expect noon.parse "+-0"
+        .to.eql ['+-0']
                 
     it 'list', ->
         expect noon.parse("""

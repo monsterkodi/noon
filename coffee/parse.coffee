@@ -120,8 +120,8 @@ parse = (s) ->
         if v?[0] == '|' then return key v            
         else if v?[v.length-1] == '|'
             return v.substr(0, v.length-1)
-        if not isNaN(parseFloat v) then return parseFloat v
-        if not isNaN(parseInt v)   then return parseInt   v
+        if /^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(v) then return parseFloat v
+        if /^(\-|\+)?([0-9]+|Infinity)$/.test(v)   then return parseInt   v
         v
         
     ###
@@ -271,7 +271,7 @@ parse = (s) ->
 
         [d, k, v, e] = inspect line
 
-        if v? and not e and v.startsWith '. ' # dense value
+        if v? and (not e) and (v.startsWith '. ') # dense value
             addLine d, k
 
             ud = last(stack).d
