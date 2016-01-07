@@ -302,7 +302,7 @@ parse = (s) ->
             if v == '...'
                 i += 1
                 vl = []
-                while lines[i].trimLeft() != '...'
+                while lines[i].trim() != '...'
                     l = lines[i].trim()
                     if l[0] == '|' then l = l.substr 1
                     if l[l.length-1] == '|' then l = l.substr 0, l.length-1
