@@ -57,6 +57,9 @@ describe 'parse', ->
         
         expect noon.parse "hello world"
         .to.eql ['hello world']
+
+        expect noon.parse "| hello world |"
+        .to.eql [' hello world ']
         
         expect noon.parse('| .  ... |  ')
         .to.eql [' .  ... ']
@@ -75,6 +78,10 @@ describe 'parse', ->
 
         expect noon.parse "+-0"
         .to.eql ['+-0']
+        
+        expect noon.parse('... \n line 1 \n line 2 \n ...')
+        .to.eql ['line 1\nline 2']
+
                 
     it 'list', ->
         expect noon.parse("""
@@ -263,6 +270,9 @@ describe 'parse', ->
             ' ..... ':'. '
             ' .     ':'. '
             ' ..    ':'.. '
+            
+        expect noon.parse '... \n| 1 |\n | 2 \n  3  |\n  ...'
+        .to.eql [' 1 \n 2\n3  ']
 
 ###
  0000000  000000000  00000000   000  000   000   0000000   000  00000000  000   000
@@ -315,6 +325,9 @@ describe 'stringify', ->
         
         expect noon.stringify "66.6000"
         .to.eql '66.6000'
+        
+        expect noon.stringify "1\n2\n3"
+        .to.eql '...\n1\n2\n3\n...'
         
     it 'float', ->
         expect noon.stringify [0.24,66.6]
@@ -416,3 +429,8 @@ describe 'stringify', ->
         |# a|   |# b|
         """
         
+        expect noon.stringify " 1 \n2 \n  3"
+        .to.eql '...\n| 1 |\n|2 |\n|  3|\n...'
+
+        expect noon.stringify o: " 1 \n2 \n  3"
+        .to.eql 'o   ...\n| 1 |\n|2 |\n|  3|\n...'

@@ -267,8 +267,9 @@ parse = (s) ->
     ###
     
     i = 0
-    for line in lines
+    while i < lines.length
 
+        line = lines[i]
         [d, k, v, e] = inspect line
 
         if v? and (not e) and (v.startsWith '. ') # dense value
@@ -283,8 +284,32 @@ parse = (s) ->
             while last(stack).d > ud+1
                 stack.pop()
             last(stack).undensed = true
-            
         else
+            if k == '...' and not v?
+                i += 1
+                vl = []
+                while not lines[i].trimLeft().startsWith '...'
+                    l = lines[i].trim()
+                    if l[0] == '|' then l = l.substr 1
+                    if l[l.length-1] == '|' then l = l.substr 0, l.length-1
+                    vl.push l
+                    i += 1
+                k = vl.join '\n'
+                r = lines[i].trimLeft().substr(3).trim()
+                if r.length
+                    v = r
+                
+            if v == '...'
+                i += 1
+                vl = []
+                while lines[i].trimLeft() != '...'
+                    l = lines[i].trim()
+                    if l[0] == '|' then l = l.substr 1
+                    if l[l.length-1] == '|' then l = l.substr 0, l.length-1
+                    vl.push l
+                    i += 1
+                v = vl.join '\n'
+                
             addLine d, k, v
         i += 1
                         

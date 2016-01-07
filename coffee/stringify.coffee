@@ -57,7 +57,13 @@ stringify = (obj, options={}) ->
             colors = def opt.colors, defaultColors
 
     escape = (k) ->
-        if k == '' or k[0] in [' ', '#', '|'] or k[k.length-1] in [' ', '#', '|']
+        if 0 <= k.indexOf '\n'
+            sp = k.split '\n'
+            es = sp.map (s) -> escape(s)
+            es.unshift '...'
+            es.push '...'
+            return es.join '\n'
+        if k == '' or k == '...' or k[0] in [' ', '#', '|'] or k[k.length-1] in [' ', '#', '|']
             k = '|' + k + '|'
         k
     
@@ -75,7 +81,6 @@ stringify = (obj, options={}) ->
         
         keyValue = (k,v) ->
             s = ind
-            
             k = escape k
             if k.indexOf('  ') > 0 and k[0] != '|'
                 k = "|#{k}|"
