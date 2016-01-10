@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-cd "`dirname $0`/.."
-LOG="`sds -rk name`.log"
-echo "$PWD/$LOG"
-rm -f   $LOG
-touch   $LOG
-tail -f $LOG
