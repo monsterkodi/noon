@@ -35,9 +35,11 @@ noon
     maxalign    . ? max align width, 0: no limit    . = 32
     sort        . ? sort keys alphabetically        . = false
     colors      . ? output with ansi colors         . = true
-    version     . - V . = #{require("#{__dirname}/../package.json").version}
+    
 supported filetypes:
     #{sds.extnames.join '\n    '}
+
+version   #{require("#{__dirname}/../package.json").version}
 """
 
 clog = console.log
