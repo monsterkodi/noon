@@ -9,7 +9,7 @@
 fs        = require 'fs'
 sds       = require 'sds'
 path      = require 'path'
-chalk     = require 'chalk'
+colors    = require 'colors'
 _         = require 'lodash'
 str       = require './tools/str'
 log       = require './tools/log'
@@ -45,7 +45,7 @@ version   #{require("#{__dirname}/../package.json").version}
 clog = console.log
 
 err = (msg) ->
-    clog chalk.red("\n"+msg+"\n")
+    clog ("\n"+msg+"\n").red
     process.exit()
 
 if args.file

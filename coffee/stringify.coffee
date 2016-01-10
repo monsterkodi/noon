@@ -44,13 +44,13 @@ stringify = (obj, options={}) ->
             string:  noop
             visited: noop
     else
-        chalk  = require 'chalk'
+        colors  = require 'colors'
         defaultColors =
-            key:     chalk.bold.gray
-            null:    chalk.bold.blue
-            value:   chalk.bold.magenta
-            string:  chalk.bold.white
-            visited: chalk.bold.red
+            key:     colors.bold.gray
+            null:    colors.bold.blue
+            value:   colors.bold.magenta
+            string:  colors.bold.white
+            visited: colors.bold.red
         if opt.colors == true
             colors = defaultColors
         else

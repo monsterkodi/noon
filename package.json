@@ -25,10 +25,10 @@
     "noon": "./bin/noon"
   },
   "dependencies": {
-    "chalk": "^1.1.1",
+    "colors": "^1.1.2",
     "lodash": "^3.10.1",
     "performance-now": "^0.2.0",
-    "karg": ">=0.1.6",
-    "sds": ">=1.4.8"
+    "karg": ">=0.1.8",
+    "sds": ">=1.4.11"
   }
 }

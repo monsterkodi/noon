@@ -99,12 +99,12 @@ stringify_options =  # stringify's second argument, defaults are:
     colors:   false  # colorize output with ansi colors
                      # custom dictionary or true for default colors:
 
- defaultColors =
-     key:     chalk.bold.gray
-     null:    chalk.bold.blue
-     value:   chalk.bold.magenta
-     string:  chalk.bold.white
-     visited: chalk.bold.red
+defaultColors =
+     key:     colors.bold.gray
+     null:    colors.bold.blue
+     value:   colors.bold.magenta
+     string:  colors.bold.white
+     visited: colors.bold.red
 
 ```
 
