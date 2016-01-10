@@ -24,4 +24,4 @@ dependencies
                 lodash              ^3.10.1
                 performance-now     ^0.2.0
                 karg                >=0.1.8
-                sds                 >=1.4.11
+                sds                 >=1.4.12
