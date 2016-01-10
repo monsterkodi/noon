@@ -27,18 +27,18 @@ save      = require './save'
 ###
 
 args = require('karg') """
-    noon
-        file        . ? the file to convert             . *
-        output      . ? output file or filetype         . = .noon
-        indent      . ? indentation length              . = 4
-        align       . ? align values                    . = true
-        maxalign    . ? max align width, 0: no limit    . = 32
-        sort        . ? sort keys alphabetically        . = false
-        colors      . ? output with ansi colors         . = true
-        version     . - V . = #{require("#{__dirname}/../package.json").version}
-    supported filetypes:
-        #{sds.extnames.join '\n    '}
-    """
+noon
+    file        . ? the file to convert             . *
+    output      . ? output file or filetype         . = .noon
+    indent      . ? indentation length              . = 4
+    align       . ? align values                    . = true
+    maxalign    . ? max align width, 0: no limit    . = 32
+    sort        . ? sort keys alphabetically        . = false
+    colors      . ? output with ansi colors         . = true
+    version     . - V . = #{require("#{__dirname}/../package.json").version}
+supported filetypes:
+    #{sds.extnames.join '\n    '}
+"""
 
 clog = console.log
 

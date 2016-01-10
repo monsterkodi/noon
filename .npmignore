@@ -1,11 +1,9 @@
 coffee
-bin/run
 bin/log
 bin/publish
 test
 img
-.build-tools.cson
 .gitignore
 *.log
-gulpfile.coffee
 Icon?
+package.noon

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 cd "`dirname $0`/.."
-gulp bump
-gulp release
+bump
 git add .
 git commit -m "v`sds -rp version`" 
 git push
