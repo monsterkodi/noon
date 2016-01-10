@@ -11,11 +11,11 @@ sds       = require 'sds'
 path      = require 'path'
 colors    = require 'colors'
 _         = require 'lodash'
-log       = require './tools/log'
 profile   = require './tools/profile'
 stringify = require './stringify'
 parse     = require './parse'
 save      = require './save'
+log       = console.log
 
 ###
  0000000   00000000    0000000    0000000
@@ -41,10 +41,8 @@ supported filetypes:
 version   #{require("#{__dirname}/../package.json").version}
 """
 
-clog = console.log
-
 err = (msg) ->
-    clog ("\n"+msg+"\n").red
+    log ("\n"+msg+"\n").red
     process.exit()
 
 if args.file
@@ -66,7 +64,7 @@ if args.file
         else
             s = sds.stringify o, 
                 ext: args.output
-        clog s
+        log s
     else
         if path.extname(args.output) == '.noon'
             save args.output, o,

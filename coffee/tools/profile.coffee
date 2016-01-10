@@ -7,7 +7,6 @@
 ###
 
 colors = require 'colors'
-log    = require './log'
 now    = require 'performance-now'
 
 start = undefined
@@ -18,9 +17,9 @@ profile = (msg) ->
     if start? and s_msg.length
         ms = (now()-start).toFixed 0
         if ms > 1000
-            log "#{s_msg} in #{(ms/1000).toFixed(3)} sec".gray
+            console.log "#{s_msg} in #{(ms/1000).toFixed(3)} sec".gray
         else
-            log "#{s_msg} in #{ms} ms".gray
+            console.log "#{s_msg} in #{ms} ms".gray
 
     start = now()
     s_msg = msg
