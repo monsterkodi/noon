@@ -75,4 +75,4 @@ if args.file
                 colors: false
                 sort: args.sort
         else
-            sds.save args.output, o
+            sds.save args.output, o, indent: _.pad '', args.indent
