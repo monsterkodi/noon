@@ -27,7 +27,7 @@ log       = console.log
 
 args = require('karg') """
 noon
-    file        . ? the file to convert             . *
+    file        . ? the file to convert             . * . = package.json
     output      . ? output file or filetype         . = .noon
     indent      . ? indentation length              . = 4
     align       . ? align values                    . = true

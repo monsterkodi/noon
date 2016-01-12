@@ -23,5 +23,5 @@ dependencies
                 colors              ^1.1.2
                 lodash              ^3.10.1
                 performance-now     ^0.2.0
-                karg                >=0.1.8
+                karg                >=0.1.17
                 sds                 >=1.4.12
