@@ -64,6 +64,7 @@ if args.file
         else
             s = sds.stringify o, 
                 ext: args.output
+                indent: _.pad '', args.indent
         log s
     else
         if path.extname(args.output) == '.noon'
