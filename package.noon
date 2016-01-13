@@ -21,7 +21,7 @@ bin
                 noon    ./bin/noon
 dependencies    
                 colors              ^1.1.2
-                lodash              ^3.10.1
+                lodash              ^4.0.0
                 performance-now     ^0.2.0
                 karg                >=0.1.17
-                sds                 >=1.4.12
+                sds                 >=1.4.17
