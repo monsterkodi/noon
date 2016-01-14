@@ -20,7 +20,7 @@ bugs
 bin             
                 noon    ./bin/noon
 scripts         
-                test    mocha --compilers coffee:coffee-script/register
+                test    mocha -R dot --compilers coffee:coffee-script/register
 dependencies    
                 colors              ^1.1.2
                 lodash              ^4.0.0
