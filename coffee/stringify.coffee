@@ -33,7 +33,9 @@ stringify = (obj, options={}) ->
 
     opt = def options, defaults
     
-    indstr = padRight '', opt.indent
+    indstr = opt.indent
+    if typeof indstr != 'string' 
+        indstr = padRight '', opt.indent
     
     if opt.colors == false or opt.colors == 0
         noop = (s) -> s
@@ -96,7 +98,14 @@ stringify = (obj, options={}) ->
                 ks = padRight k, k.length+2
                 i  = ind+indstr
             s += colors.key ks
-            s += toStr v, i, false, visited
+            vs = toStr v, i, false, visited
+            if vs[0] == '\n'
+                while s[s.length-1] == ' '
+                    s = s.substr 0, s.length-1                
+            s += vs
+            while s[s.length-1] == ' '
+                s = s.substr 0, s.length-1
+            s
 
         if opt.sort
             for k in Object.keys(o).sort()
@@ -126,8 +135,11 @@ stringify = (obj, options={}) ->
                 
             if o.constructor.name == 'Array'
                 s = ind!='' and arry and '.' or ''
-                s += '\n' if o.length and ind!=''
+                s = '\n' if o.length and ind!=''
                 s += (ind+toStr(v,ind+indstr,true,visited) for v in o).join '\n'
+                # s += ind + (toStr(v,ind+indstr,true,visited) for v in o).join '\n'
+                # while s[s.length-1] == ' '
+                #     s = s.substr 0, s.length-1
             else
                 s = (arry and '.\n') or ((ind != '') and '\n' or '')
                 s += pretty o, ind, visited

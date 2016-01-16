@@ -434,3 +434,72 @@ describe 'stringify', ->
 
         expect noon.stringify o: " 1 \n2 \n  3"
         .to.eql 'o   ...\n| 1 |\n|2 |\n|  3|\n...'
+
+    it 'trim', ->
+        o = a: 1, b: null, c: 2
+        
+        expect noon.stringify o, align: false
+        .to.eql """
+        a  1
+        b
+        c  2
+        """
+        expect noon.stringify o, align: true
+        .to.eql """
+        a   1
+        b
+        c   2
+        """
+
+        expect noon.stringify {a: b: c: 1}, align: true
+        .to.eql """
+        a
+            b
+                c   1
+        """
+
+        expect noon.stringify {x: y: z: 1}, align: false
+        .to.eql """
+        x
+            y
+                z  1
+        """
+
+    it 'maxalign', ->
+        o = o: 1, ooOOoo: 2
+        expect noon.stringify o, maxalign: 2
+        .to.eql """
+        o  1
+        ooOOoo  2
+        """
+        expect noon.stringify o, maxalign: 4
+        .to.eql """
+        o   1
+        ooOOoo  2
+        """
+        expect noon.stringify o, maxalign: 8
+        .to.eql """
+        o       1
+        ooOOoo  2
+        """
+        
+    it 'indent', ->
+        o = a: b: c: 1
+        expect noon.stringify o, indent: 2, align: false
+        .to.eql """
+        a
+          b
+            c  1
+        """
+        expect noon.stringify o, indent: 4, align: false
+        .to.eql """
+        a
+            b
+                c  1
+        """
+        expect noon.stringify o, indent: 8, align: false
+        .to.eql """
+        a
+                b
+                        c  1
+        """
