@@ -352,6 +352,20 @@ describe 'stringify', ->
         c   3
         """
         
+        o = a: 1, b: 2    
+        r = """
+        a   1
+        b   2
+        """
+        expect noon.stringify o
+        .to.eql r
+
+        expect noon.stringify o, indent: '  '
+        .to.eql r
+
+        expect noon.stringify o, indent: 2
+        .to.eql r
+        
     it 'escape', ->
         
         expect noon.stringify [
@@ -498,6 +512,24 @@ describe 'stringify', ->
                 c  1
         """
         expect noon.stringify o, indent: 8, align: false
+        .to.eql """
+        a
+                b
+                        c  1
+        """
+        expect noon.stringify o, indent: '  ', align: false
+        .to.eql """
+        a
+          b
+            c  1
+        """
+        expect noon.stringify o, indent: '    ', align: false
+        .to.eql """
+        a
+            b
+                c  1
+        """
+        expect noon.stringify o, indent: '        ', align: false
         .to.eql """
         a
                 b

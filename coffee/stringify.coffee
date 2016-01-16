@@ -33,9 +33,9 @@ stringify = (obj, options={}) ->
 
     opt = def options, defaults
     
-    indstr = opt.indent
-    if typeof indstr != 'string' 
-        indstr = padRight '', opt.indent
+    if typeof opt.indent == 'string' 
+        opt.indent = opt.indent.length
+    indstr = padRight '', opt.indent
     
     if opt.colors == false or opt.colors == 0
         noop = (s) -> s
