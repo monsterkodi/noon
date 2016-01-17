@@ -70,7 +70,8 @@ key
 
 * [language](https://github.com/monsterkodi/language-noon/blob/master/grammars/noon.noon)
 * [urtil](https://github.com/monsterkodi/urtil/blob/gh-pages/examples/example)
-* [font](https://github.com/monsterkodi/gulp-salt/blob/master/font.noon)
+* [font](https://github.com/monsterkodi/salter/blob/master/font.noon)
+* [package](https://github.com/monsterkodi/noon/blob/master/package.noon)
 
 ### module
 
