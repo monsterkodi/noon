@@ -272,7 +272,7 @@ parse = (s) ->
         line = lines[i]
         [d, k, v, e] = inspect line
 
-        if v? and (not e) and (v.startsWith '. ') # dense value
+        if v? and (not e) and (v.substr(0,2) == '. ') # dense value
             addLine d, k
 
             ud = last(stack).d
@@ -288,7 +288,7 @@ parse = (s) ->
             if k == '...' and not v?
                 i += 1
                 vl = []
-                while not lines[i].trimLeft().startsWith '...'
+                while lines[i].trimLeft().substr(0,3) != '...'
                     l = lines[i].trim()
                     if l[0] == '|' then l = l.substr 1
                     if l[l.length-1] == '|' then l = l.substr 0, l.length-1
