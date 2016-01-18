@@ -1,32 +1,32 @@
-name                noon
-version             0.7.3
-description         'nother ordinary object notation
-main                js/main.js
+name            noon
+version         0.7.3
+description     'nother ordinary object notation
+main            js/main.js
 keywords
-                    noon
-                    ordinary
-                    object
-                    notation
-                    json
-                    cson
-                    yaml
-author              monsterkodi
-license             Unlicense
+                noon
+                ordinary
+                object
+                notation
+                json
+                cson
+                yaml
+author          monsterkodi
+license         Unlicense
 repository
-                    type    git
-                    url     https://github.com/monsterkodi/noon
+                type  git
+                url   https://github.com/monsterkodi/noon
 bugs
-                    url     https://github.com/monsterkodi/noon/issues
+                url   https://github.com/monsterkodi/noon/issues
 bin
-                    noon    ./bin/noon
+                noon  ./bin/noon
 scripts
-                    test    mocha -R dot --compilers coffee:coffee-script/register
+                test  mocha -R dot --compilers coffee:coffee-script/register
 dependencies
-                    colors              ^1.1.2
-                    lodash              ^4.0.0
-                    performance-now     ^0.2.0
-                    karg                >=0.1.19
-                    sds                 >=1.4.21
+                colors          ^1.1.2
+                lodash          ^4.0.0
+                performance-now  ^0.2.0
+                karg            >=0.1.19
+                sds             >=1.4.21
 devDependencies
-                    chai    ^3.4.1
-                    mocha   ^2.3.4
+                chai    ^3.4.1
+                mocha   ^2.3.4
