@@ -165,6 +165,38 @@ describe 'parse', ->
                 g: 'h'
             '1': 'one  two'
             j: [{k: 'l'}, '.|':'true|false']
+            
+
+    it 'spaces', ->    
+        o = {a: 1, b: 2}
+            
+        expect noon.parse """
+        a  1
+        b  2
+        """
+        .to.eql o
+        
+        expect noon.parse """
+         a  1
+         b  2
+        """
+        .to.eql o
+
+        expect noon.parse """
+            a  1
+            b  2
+        """
+        .to.eql o
+
+        expect noon.parse """
+        
+        
+        a  1
+        
+        b  2
+        
+        """
+        .to.eql o
 
     it 'dense notation', ->
         
@@ -191,6 +223,58 @@ describe 'parse', ->
             b: [ 'foo', 'bar', 'foo', 'bar' ]
             c: 
                 foo: 'bar'
+                
+        expect noon.parse """
+        a  . b .. c 0
+        """
+        .to.eql
+            a: 
+                b:
+                    c: 0
+
+    it 'one line notation', ->
+
+        expect noon.parse "a . b .. c 4"
+        .to.eql
+            a: 
+                b:
+                    c: 4
+        
+        expect noon.parse "a 1 :: b 2 :: c 5"
+        .to.eql
+            a: 1
+            b: 2
+            c: 5
+
+        expect noon.parse "a:: b:: c 3:: d 4"
+        .to.eql
+            a: null
+            b: null
+            c: 3
+            d: 4
+
+        expect noon.parse "a      :: b          :: c:: d 4"
+        .to.eql
+            a: null
+            b: null
+            c: null
+            d: 4
+
+        expect noon.parse "a      :: b          :: c:: d  "
+        .to.eql ['a', 'b', 'c', 'd']
+
+        expect noon.parse "1 :: 2 :: 3 :: 4"
+        .to.eql [1,2,3,4]
+
+        expect noon.parse "a . 1 . 2 :: b . 6"
+        .to.eql
+            a: [1,2]
+            b: [6]
+
+        expect noon.parse "a     .     1     .     2     :: b    .   7     "
+        .to.eql
+            a: [1,2]
+            b: [7]
 
     it 'escape', -> 
         
