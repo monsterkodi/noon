@@ -1,5 +1,5 @@
 name            noon
-version         0.7.5
+version         0.8.0
 description     'nother ordinary object notation
 main            js/main.js
 keywords
@@ -25,8 +25,8 @@ dependencies
                 colors          ^1.1.2
                 lodash          ^4.0.0
                 performance-now  ^0.2.0
-                karg            >=0.1.19
-                sds             >=1.4.21
+                karg            >=0.1.32
+                sds             >=1.4.23
 devDependencies
                 chai    ^3.4.1
                 mocha   ^2.3.4
