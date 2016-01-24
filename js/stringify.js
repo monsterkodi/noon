@@ -190,7 +190,7 @@
         if (o.constructor.name === 'Array') {
           s = ind !== '' && arry && '.' || '';
           if (o.length && ind !== '') {
-            s = '\n';
+            s += '\n';
           }
           s += ((function() {
             var j, len, results;

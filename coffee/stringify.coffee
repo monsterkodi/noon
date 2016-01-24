@@ -135,11 +135,8 @@ stringify = (obj, options={}) ->
                 
             if o.constructor.name == 'Array'
                 s = ind!='' and arry and '.' or ''
-                s = '\n' if o.length and ind!=''
+                s += '\n' if o.length and ind!=''
                 s += (ind+toStr(v,ind+indstr,true,visited) for v in o).join '\n'
-                # s += ind + (toStr(v,ind+indstr,true,visited) for v in o).join '\n'
-                # while s[s.length-1] == ' '
-                #     s = s.substr 0, s.length-1
             else
                 s = (arry and '.\n') or ((ind != '') and '\n' or '')
                 s += pretty o, ind, visited
