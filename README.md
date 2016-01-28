@@ -60,7 +60,7 @@ key
 key . a :: b . c :: d 1 :: e 2
 ```
   is equivalent to
-```coffee-script
+```
 key
     a
 b
@@ -71,16 +71,21 @@ e   2
 
 #### advantages
 
-- easy to read
-- easy to write
+- minimal amount of 'control-' or 'non-data-characters', therefore
+    - easy to read
+    - easy to write
 - fast to parse 
+    - parsing speed is comparable to those of json or yaml
 - normally no need to escape characters
+    - good for storing regexp strings
+    - works well in config files
 
 #### disadvantages
   
 - keys can't start with the pipe symbol: |
 - escaped keys can't contain the pipe symbol
 - empty objects are not expressible
+- probably some other unknown corner cases
 
 #### example files
 
