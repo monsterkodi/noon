@@ -91,7 +91,7 @@ d   1
 e   2
 ```
 
-#### advantages
+### advantages
 
 - minimal amount of 'control-' or 'non-data-characters', therefore
     - easy to read
@@ -102,14 +102,7 @@ e   2
     - good for storing regexp strings
     - works well in config files
 
-#### disadvantages
-  
-- keys can't start with the pipe symbol: |
-- escaped keys can't contain the pipe symbol
-- empty objects are not expressible
-- probably some other unknown corner cases
-
-#### example files
+### example files
 
 * [language](https://github.com/monsterkodi/language-noon/blob/master/grammars/noon.noon)
 * [urtil](https://github.com/monsterkodi/urtil/blob/gh-pages/examples/example)
@@ -135,7 +128,7 @@ what's up?    ☺
 # { hello: 'world', 'what\'s up?': '☺' }
 
 stringify_options =   # stringify's second argument, defaults are: 
-    ext:      '.noon' # output format: .noon .json, .yaml .cson .plist
+    ext:      '.noon' # output format: .noon .json .yaml .cson .plist
     indent:   4       # number of spaces per indent level
     align:    true    # vertically align object values
     maxalign: 32      # maximal number of spaces when aligning
@@ -181,6 +174,13 @@ noon.save 'filenoext', data, ext: '.noon'
 ```
 
 ### caveats
+
+#### disadvantages
+  
+- keys can't start with the pipe symbol: |
+- escaped keys can't contain the pipe symbol
+- empty objects are not expressible
+- probably some other unknown corner cases
 
 This is in alpha stadium and not meant to be completely foolproof.  
 Don't use it if you can't live with the limitations mentioned above.  
