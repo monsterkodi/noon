@@ -13,6 +13,7 @@
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   defaults = {
+    ext: '.noon',
     indent: 4,
     align: true,
     maxalign: 32,
@@ -49,6 +50,17 @@
       return r;
     };
     opt = def(options, defaults);
+    switch (opt.ext) {
+      case '.json':
+        return JSON.stringify(obj, null, opt.indent);
+      case '.cson':
+        return require('cson').stringify(obj, null, opt.indent);
+      case '.plist':
+        return require('simple-plist').stringify(obj);
+      case '.yml':
+      case '.yaml':
+        return require('js-yaml').dump(obj);
+    }
     if (typeof opt.indent === 'string') {
       opt.indent = opt.indent.length;
     }

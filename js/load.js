@@ -8,15 +8,13 @@
  */
 
 (function() {
-  var colors, err, fs, load, parse, path;
+  var colors, err, fs, load, path;
 
   fs = require('fs');
 
   colors = require('colors');
 
   path = require('path');
-
-  parse = require('./parse');
 
   err = function(msg) {
     return console.log(("\n" + msg + "\n").red);
@@ -42,7 +40,7 @@
         case '.yaml':
           return require('js-yaml').load(str);
         default:
-          return parse(str);
+          return require('./parse')(str);
       }
     }
   };

@@ -648,3 +648,57 @@ describe 'stringify', ->
                 b
                         c  1
         """
+
+###
+ 0000000  000000000  00000000   000  000   000   0000000   000  00000000  000   000        00000000  000   000  000000000
+000          000     000   000  000  0000  000  000        000  000        000 000         000        000 000      000   
+0000000      000     0000000    000  000 0 000  000  0000  000  000000      00000          0000000     00000       000   
+     000     000     000   000  000  000  0000  000   000  000  000          000           000        000 000      000   
+0000000      000     000   000  000  000   000   0000000   000  000          000           00000000  000   000     000   
+###
+
+describe 'stringify ext', ->
+
+    o = a: 1, b: 2    
+    it 'should output noon by default', -> 
+        
+        expect noon.stringify o
+        .to.eql """
+        a   1
+        b   2
+        """
+
+    it 'should output noon', -> 
+        
+        expect noon.stringify o, ext: '.noon'
+        .to.eql """
+        a   1
+        b   2
+        """
+        
+    it 'should output json', -> 
+        
+        expect noon.stringify o, ext: '.json'
+        .to.eql """
+        {
+            "a": 1,
+            "b": 2
+        }
+        """
+
+    it 'should output cson', -> 
+        
+        expect noon.stringify o, ext: '.cson'
+        .to.eql """
+        a: 1
+        b: 2
+        """
+
+    it 'should output yaml', -> 
+        
+        expect noon.stringify o, ext: '.yaml'
+        .to.eql """
+        a: 1
+        b: 2
+        
+        """

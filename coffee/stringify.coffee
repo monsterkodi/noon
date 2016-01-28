@@ -6,15 +6,17 @@
 0000000      000     000   000  000  000   000   0000000   000  000          000   
 ###
 
+
 defaults =
-    indent:   4      # number of spaces per indent level
-    align:    true   # vertically align object values
-    maxalign: 32     # maximal number of spaces when aligning
-    sort:     false  # sort object keys alphabetically
-    circular: false  # check for circular references (expensive!)
-    null:     false  # output null dictionary values
-    colors:   false  # colorize output with ansi colors
-                     # true for default colors or custom dictionary
+    ext:      '.noon' # output format
+    indent:   4       # number of spaces per indent level
+    align:    true    # vertically align object values
+    maxalign: 32      # maximal number of spaces when aligning
+    sort:     false   # sort object keys alphabetically
+    circular: false   # check for circular references (expensive!)
+    null:     false   # output null dictionary values
+    colors:   false   # colorize output with ansi colors
+                      # true for default colors or custom dictionary
     
 stringify = (obj, options={}) ->
 
@@ -32,6 +34,12 @@ stringify = (obj, options={}) ->
         r
 
     opt = def options, defaults
+    
+    switch opt.ext
+        when '.json'         then return JSON.stringify obj, null, opt.indent
+        when '.cson'         then return require('cson').stringify obj, null, opt.indent
+        when '.plist'        then return require('simple-plist').stringify obj
+        when '.yml', '.yaml' then return require('js-yaml').dump obj
     
     if typeof opt.indent == 'string' 
         opt.indent = opt.indent.length
