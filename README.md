@@ -1,7 +1,9 @@
 # noon
 ### 'nother ordinary object notation
 
-![noon](https://raw.githubusercontent.com/monsterkodi/noon/master/img/noon.png)
+![icon](./img/icon.png)
+
+![noon](./img/noon.png)
 
 ### format
 
