@@ -7,36 +7,36 @@
 ### format
 
 - **hierarchy is expressed by indentation with spaces**.
-    ```
+```
 grandpa
     parent
         child
         sibling
     uncle
-    ```          
+```          
 - **two or more spaces mark the end of a dictionary key**, therefore ...
 - **keys and list items can have single spaces in them** but ...
 - **only dictionary values can contain consecutive spaces**:
-    ```
+```
 key 1    value 1
 key 2    value 2 contains    spaces
-    ```     
+```     
 - **if trimming your strings is not an option**, you can escape:
-    ```
+```
 a             |  leading spaces
 b             trailing spaces  |
 c             |  leading and trailing spaces  |
 pipe symbol   |||
 empty string  ||
-    ```     
+```     
 - **keys must be escaped from both ends**:
-    ```
+```
 | s  pace |  key keeps spaces
 |    |       key consists of spaces
 ||           key is empty string
-    ```     
+```     
 - **multiline strings**
-    ```
+```
 key  ...
 value is
 a text with
@@ -44,52 +44,52 @@ line breaks
 which stops
 now
 ...  
-    ```
+```
 - **one key makes an object**
-    ```
+```
 this is
 an   object
-    ```
+```
     the above in json: `{"this": "is", "an": "object"}` while 
-    ```
+```
 this is
 a list
-    ``` 
+``` 
     is equivalent to `["this is", "a list"]`
 - **objects inside lists** are expressed like this:
-    ```
+```
 .
     a  1
 .
     b  2
-    ```
+```
     the above in json: `[{"a": 1}, {"b": 2}]` while
 - **dense notation**:
-    ```
+```
 key  . a .. b . c
-    ```
+```
     is equivalent to
-    ```
+```
 key
     a
         b
     c
-    ```
+```
 - **one line notation**:
     - **:: represents a line break**
     - **no spaces in keys allowed**, therefore no two-space-seperation necessary
-    ```
+```
 key . a :: b . c :: d 1 :: e 2
-    ```
+```
       is equivalent to
-    ```
+```
 key
     a
 b
     c
 d   1
 e   2
-    ```
+```
 
 #### advantages
 
