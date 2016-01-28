@@ -1,34 +1,34 @@
-name            noon
-version         0.9.5
-description     'nother ordinary object notation
-main            js/main.js
+name                noon
+version             0.9.6
+description         'nother ordinary object notation
+main                js/main.js
 keywords
-                noon
-                ordinary
-                object
-                notation
-                json
-                cson
-                yaml
-author          monsterkodi
-license         Unlicense
+                    noon
+                    ordinary
+                    object
+                    notation
+                    json
+                    cson
+                    yaml
+author              monsterkodi
+license             Unlicense
 repository
-                type  git
-                url   https://github.com/monsterkodi/noon
+                    type    git
+                    url     https://github.com/monsterkodi/noon
 bugs
-                url   https://github.com/monsterkodi/noon/issues
+                    url     https://github.com/monsterkodi/noon/issues
 bin
-                noon  ./bin/noon
+                    noon    ./bin/noon
 scripts
-                test  mocha -R dot --compilers coffee:coffee-script/register
+                    test    mocha -R dot --compilers coffee:coffee-script/register
 dependencies
-                colors          ^1.1.2
-                lodash          ^4.0.1
-                performance-now  ^0.2.0
-                karg            >=0.3.1
-                cson            ^3.0.2
-                js-yaml         ^3.5.2
-                simple-plist    git://github.com/monsterkodi/node-simple-plist.git
+                    colors              ^1.1.2
+                    lodash              ^4.0.1
+                    performance-now     ^0.2.0
+                    karg                >=0.3.1
+                    cson                ^3.0.2
+                    js-yaml             ^3.5.2
+                    simple-plist        git://github.com/monsterkodi/node-simple-plist.git
 devDependencies
-                chai    ^3.5.0
-                mocha   ^2.4.4
+                    chai    ^3.5.0
+                    mocha   ^2.4.4
