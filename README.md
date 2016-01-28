@@ -50,7 +50,7 @@ now
 this is
 an   object
 ```
-the above in json: `{"this": "is", "an": "object"}` while 
+the above in json: `{"this is": null, "an": "object"}` while 
 ```
 this is
 a list
