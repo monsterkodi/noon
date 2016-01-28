@@ -110,6 +110,28 @@ defaultColors =
 
 ```
 
+```coffee-script
+# load data from file 
+
+data = noon.load 'file.noon' 
+
+# or any of the other types in noon.extnames:
+
+data = noon.load 'file.json'
+data = noon.load 'file.yaml'
+data = noon.load 'file.cson'
+data = noon.load 'file.plist'
+
+# write data to file
+
+noon.save 'file.noon', data
+
+# or 
+
+noon.save 'file.noon', data, stringify_options
+
+```
+
 ### caveats
 
 This is in alpha stadium and not meant to be completely foolproof.  

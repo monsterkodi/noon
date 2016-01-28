@@ -8,12 +8,10 @@
  */
 
 (function() {
-  var _, args, colors, err, ext, fs, log, o, parse, path, profile, ref, s, save, sds, stringify,
+  var _, args, colors, d, err, ext, fs, load, log, noon, o, parse, path, profile, ref, save, stringify,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   fs = require('fs');
-
-  sds = require('sds');
 
   path = require('path');
 
@@ -27,7 +25,11 @@
 
   parse = require('./parse');
 
+  load = require('./load');
+
   save = require('./save');
+
+  noon = require('./main');
 
   log = console.log;
 
@@ -40,7 +42,7 @@
   000   000  000   000   0000000   0000000
    */
 
-  args = require('karg')("noon\n    file        . ? the file to convert             . * . = package.json\n    output      . ? output file or filetype         . = .noon\n    indent      . ? indentation length              . = 4\n    align       . ? align values                    . = true\n    maxalign    . ? max align width, 0: no limit    . = 32\n    sort        . ? sort keys alphabetically        . = false\n    colors      . ? output with ansi colors         . = true\n    \nsupported filetypes:\n    " + (sds.extnames.join('\n    ')) + "\n\nversion   " + (require(__dirname + "/../package.json").version));
+  args = require('karg')("noon\n    file        . ? the file to convert             . * . = package.json\n    output      . ? output file or filetype         . = .noon\n    indent      . ? indentation length              . = 4\n    align       . ? align values                    . = true\n    maxalign    . ? max align width, 0: no limit    . = 32\n    sort        . ? sort keys alphabetically        . = false\n    colors      . ? output with ansi colors         . = true\n    \nsupported filetypes:\n    " + (noon.extnames.join('\n    ')) + "\n\nversion   " + (require(__dirname + "/../package.json").version));
 
   err = function(msg) {
     log(("\n" + msg + "\n").red);
@@ -49,41 +51,38 @@
 
   if (args.file) {
     ext = path.extname(args.file);
-    if (ext === '.noon' || indexOf.call(sds.extnames, ext) < 0) {
-      o = parse(fs.readFileSync(args.file, 'utf8'));
-    } else {
-      o = sds.load(args.file);
-    }
-    if (ref = args.output, indexOf.call(sds.extnames, ref) >= 0) {
+    d = load(args.file);
+    if (ref = args.output, indexOf.call(noon.extnames, ref) >= 0) {
       if (args.output === '.noon') {
-        s = stringify(o, {
+        o = {
           align: args.align,
           indent: Math.max(1, args.indent),
           maxalign: Math.max(0, args.maxalign),
           colors: args.colors,
           sort: args.sort
-        });
+        };
       } else {
-        s = sds.stringify(o, {
+        o = {
           ext: args.output,
           indent: _.pad('', args.indent)
-        });
+        };
       }
-      log(s);
+      log(stringify(d, o));
     } else {
       if (path.extname(args.output) === '.noon') {
-        save(args.output, o, {
+        o = {
           align: args.align,
           indent: Math.max(1, args.indent),
           maxalign: Math.max(0, args.maxalign),
           colors: false,
           sort: args.sort
-        });
+        };
       } else {
-        sds.save(args.output, o, {
+        o = {
           indent: _.pad('', args.indent)
-        });
+        };
       }
+      save(args.output, d, o);
     }
   }
 

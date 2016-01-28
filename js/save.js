@@ -6,19 +6,27 @@
      000  000   000     000     000     
 0000000   000   000      0      00000000
  */
-var fs, path, save, toStr;
 
-fs = require('fs');
+(function() {
+  var _, fs, path, save, toStr;
 
-path = require('path');
+  fs = require('fs');
 
-toStr = require('./stringify');
+  path = require('path');
 
-save = function(p, data, opts) {
-  if (opts == null) {
-    opts = {};
-  }
-  return fs.writeFileSync(p, toStr(data, opts));
-};
+  _ = require('lodash');
 
-module.exports = save;
+  toStr = require('./stringify');
+
+  save = function(p, data, opt) {
+    if (opt == null) {
+      opt = {};
+    }
+    return fs.writeFileSync(p, toStr(data, _.defaults({
+      ext: path.extname(p)
+    }, opt)));
+  };
+
+  module.exports = save;
+
+}).call(this);
