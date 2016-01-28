@@ -53,6 +53,21 @@ key
         b
     c
 ```
+- **one line notation**:
+    - **::** represents line break
+    - **no spaces in keys allowed**, therefore no two-space-seperation necessary    
+```
+key . a :: b . c :: d 1 :: e 2
+```
+  is equivalent to
+```coffee-script
+key
+    a
+b
+    c
+d   1
+e   2
+```
 
 #### advantages
 
@@ -92,14 +107,15 @@ what's up?    ☺
 
 # { hello: 'world', 'what\'s up?': '☺' }
 
-stringify_options =  # stringify's second argument, defaults are: 
-    indent:   4      # number of spaces per indent level
-    align:    true   # vertically align object values
-    maxalign: 32     # maximal number of spaces when aligning
-    sort:     false  # sort object keys alphabetically
-    circular: false  # check for circular references (expensive!)
-    colors:   false  # colorize output with ansi colors
-                     # custom dictionary or true for default colors:
+stringify_options =   # stringify's second argument, defaults are: 
+    ext:      '.noon' # output format: .noon .json, .yaml .cson .plist
+    indent:   4       # number of spaces per indent level
+    align:    true    # vertically align object values
+    maxalign: 32      # maximal number of spaces when aligning
+    sort:     false   # sort object keys alphabetically
+    circular: false   # check for circular references (expensive!)
+    colors:   false   # colorize output with ansi colors
+                      # custom dictionary or true for default colors:
 
 defaultColors =
      key:     colors.bold.gray
@@ -122,6 +138,9 @@ data = noon.load 'file.yaml'
 data = noon.load 'file.cson'
 data = noon.load 'file.plist'
 
+```
+
+```coffee-script
 # write data to file
 
 noon.save 'file.noon', data
@@ -129,6 +148,8 @@ noon.save 'file.noon', data
 # or 
 
 noon.save 'file.noon', data, stringify_options
+noon.save 'file.json', data  # < write as json
+noon.save 'filenoext', data, ext: '.noon'
 
 ```
 
