@@ -63,7 +63,7 @@ is equivalent to `["this is", "a list"]`
 .
     b  2
 ```
-the above in json: `[{"a": 1}, {"b": 2}]` while
+the above in json: `[{"a": 1}, {"b": 2}]`
 - **dense notation**:
 ```
 key  . a .. b . c
