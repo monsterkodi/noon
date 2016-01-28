@@ -4,6 +4,13 @@
 
 ![noon](./img/noon.png)
 
+### tl;dr
+
+- you like [CoffeeScript](http://coffeescript.org/)?
+    - go ahead, this makes your data smell as good as coffee :)
+- you are more into [TypesSript](http://www.typescriptlang.org)? Nothing wrong with [JSON](http://json.org/) or JavaScript?
+    - probably nothing interesting to see for you here :(
+
 ### format
 
 #### hierarchy 
