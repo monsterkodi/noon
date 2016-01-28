@@ -35,13 +35,36 @@ empty string  ||
 |    |       key consists of spaces
 ||           key is empty string
 ```     
+- **multiline strings**
+```
+key  ...
+value is
+a text with
+line breaks
+which stops
+now
+...  
+```
+- **one key makes an object**
+```
+this is
+an   object
+```    
+    the above in json: `{"this": "is", "an": "object"}` while
+```
+this is
+a list
+```    
+    is equivalent to `["this is", "a list"]`
+
 - **objects inside lists** are expressed like this:
 ```
 .
     a  1
 .
     b  2
-```        
+```
+    the above in json: `[{"a": 1}, {"b": 2}]` while
 - **dense notation**:
 ```
 key  . a .. b . c
@@ -54,7 +77,7 @@ key
     c
 ```
 - **one line notation**:
-    - **::** represents line break
+    - **:: represents a line break**
     - **no spaces in keys allowed**, therefore no two-space-seperation necessary    
 ```
 key . a :: b . c :: d 1 :: e 2

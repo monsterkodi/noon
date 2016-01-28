@@ -234,6 +234,13 @@ describe 'parse', ->
 
     it 'one line notation', ->
 
+        expect noon.parse "key . a :: b . c :: d 1 :: e 2"
+        .to.eql
+            key: ['a']
+            b:   ['c']
+            d:   1
+            e:   2
+
         expect noon.parse "a . b .. c 4"
         .to.eql
             a: 
