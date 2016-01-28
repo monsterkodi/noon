@@ -50,12 +50,12 @@ now
 this is
 an   object
 ```
-    the above in json: `{"this": "is", "an": "object"}` while 
+the above in json: `{"this": "is", "an": "object"}` while 
 ```
 this is
 a list
 ``` 
-    is equivalent to `["this is", "a list"]`
+is equivalent to `["this is", "a list"]`
 - **objects inside lists** are expressed like this:
 ```
 .
@@ -63,12 +63,12 @@ a list
 .
     b  2
 ```
-    the above in json: `[{"a": 1}, {"b": 2}]` while
+the above in json: `[{"a": 1}, {"b": 2}]` while
 - **dense notation**:
 ```
 key  . a .. b . c
 ```
-    is equivalent to
+is equivalent to
 ```
 key
     a
@@ -81,7 +81,7 @@ key
 ```
 key . a :: b . c :: d 1 :: e 2
 ```
-      is equivalent to
+is equivalent to
 ```
 key
     a
