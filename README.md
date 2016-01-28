@@ -1,5 +1,4 @@
 # noon
-### 'nother ordinary object notation
 
 ![icon](./img/icon.png)
 
