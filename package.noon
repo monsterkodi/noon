@@ -25,7 +25,7 @@ dependencies
                 colors          ^1.1.2
                 lodash          ^4.0.1
                 performance-now  ^0.2.0
-                karg            >=0.2.1
+                karg            >=0.3.1
                 cson            ^3.0.2
                 js-yaml         ^3.5.2
                 simple-plist    git://github.com/monsterkodi/node-simple-plist.git
