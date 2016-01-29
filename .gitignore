@@ -1,3 +1,4 @@
 *.log
 Icon?
 node_modules
+*.tiff
