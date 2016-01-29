@@ -72,13 +72,16 @@ now
 this is
 an   object
 ```
+
 the above as json: `{"this is": null, "an": "object"}`  
 while 
+
 ```
 this is
-a list
+not an object
 ``` 
-is equivalent to `["this is", "a list"]`
+
+is equivalent to `["this is", "not an object"]`
 
 #### objects inside lists 
 
@@ -105,6 +108,7 @@ key
         b
     c
 ```
+
 #### one line notation
 
 **::** represents a line break  

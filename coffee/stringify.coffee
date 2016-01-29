@@ -18,6 +18,11 @@ defaults =
     colors:   false   # colorize output with ansi colors
                       # true for default colors or custom dictionary
     
+regs = 
+    url:    new RegExp '^(https?|git|file)(://)(\\S+)$'
+    path:   new RegExp '^([\\.\\/\\S]+)(\\/\\S+)$'
+    semver: new RegExp '([^><=~]?)(\\d+)(\\.)(\\d+)(\\.)(\\d+)'
+        
 stringify = (obj, options={}) ->
 
     padRight = (s, l) -> 
@@ -48,23 +53,45 @@ stringify = (obj, options={}) ->
     if opt.colors == false or opt.colors == 0
         noop = (s) -> s
         colors = 
+            url:     noop
             key:     noop
             null:    noop
+            true:    noop
+            false:   noop
+            path:    noop
             value:   noop
             string:  noop
+            semver:  noop
+            number:  noop
             visited: noop
+            special: noop
     else
         colors  = require 'colors'
         defaultColors =
-            key:     colors.bold.gray
-            null:    colors.bold.blue
-            value:   colors.bold.magenta
-            string:  colors.bold.white
-            visited: colors.bold.red
+            url:     colors.yellow
+            key:     colors.gray
+            null:    colors.blue
+            true:    colors.blue.bold
+            false:   colors.gray.dim
+            path:    colors.green
+            value:   colors.white
+            string:  colors.white.bold
+            semver:  colors.red
+            number:  colors.magenta
+            visited: colors.red
+            dim:     '\\^\\>\\=\\.\\:\\/\\-'
+            fat:     '*'
         if opt.colors == true
             colors = defaultColors
         else
             colors = def opt.colors, defaultColors
+
+    beautify = (s) -> 
+        if colors.dim?
+            s = s.replace new RegExp("([#{colors.dim}]+)", 'g'), '$1'.dim
+        if colors.fat?
+            s = s.replace new RegExp("([#{colors.fat}]+)", 'g'), '$1'.bold
+        s
 
     escape = (k) ->
         if 0 <= k.indexOf '\n'
@@ -105,7 +132,7 @@ stringify = (obj, options={}) ->
             else
                 ks = padRight k, k.length+2
                 i  = ind+indstr
-            s += colors.key ks
+            s += colors.key opt.colors != false and s.length == 0 and ks.bold or ks
             vs = toStr v, i, false, visited
             if vs[0] == '\n'
                 while s[s.length-1] == ' '
@@ -133,6 +160,11 @@ stringify = (obj, options={}) ->
             return colors.null '<?>'
         t = typeof o
         if t == 'string' 
+            if opt.colors != false
+                for rc in Object.keys regs
+                    if colors[rc]? and regs[rc].test o
+                        return colors[rc] beautify escape o
+                
             return colors.string escape o
         else if t == 'object'
             
@@ -149,6 +181,10 @@ stringify = (obj, options={}) ->
                 s = (arry and '.\n') or ((ind != '') and '\n' or '')
                 s += pretty o, ind, visited
             return s
+        else if t == 'number'
+            return colors.number String o
+        else if t == 'boolean'
+            return (o and colors.true or colors.false) String o
         else
             return colors.value String o # plain values
         return colors.null '<???>'

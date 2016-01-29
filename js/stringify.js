@@ -8,7 +8,7 @@
  */
 
 (function() {
-  var defaults, stringify,
+  var defaults, regs, stringify,
     hasProp = {}.hasOwnProperty,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
@@ -23,8 +23,14 @@
     colors: false
   };
 
+  regs = {
+    url: new RegExp('^(https?|git|file)(://)(\\S+)$'),
+    path: new RegExp('^([\\.\\/\\S]+)(\\/\\S+)$'),
+    semver: new RegExp('([^><=~]?)(\\d+)(\\.)(\\d+)(\\.)(\\d+)')
+  };
+
   stringify = function(obj, options) {
-    var colors, def, defaultColors, escape, indstr, noop, opt, padRight, pretty, s, toStr;
+    var beautify, colors, def, defaultColors, escape, indstr, noop, opt, padRight, pretty, s, toStr;
     if (options == null) {
       options = {};
     }
@@ -70,20 +76,35 @@
         return s;
       };
       colors = {
+        url: noop,
         key: noop,
         "null": noop,
+        "true": noop,
+        "false": noop,
+        path: noop,
         value: noop,
         string: noop,
-        visited: noop
+        semver: noop,
+        number: noop,
+        visited: noop,
+        special: noop
       };
     } else {
       colors = require('colors');
       defaultColors = {
-        key: colors.bold.gray,
-        "null": colors.bold.blue,
-        value: colors.bold.magenta,
-        string: colors.bold.white,
-        visited: colors.bold.red
+        url: colors.yellow,
+        key: colors.gray,
+        "null": colors.blue,
+        "true": colors.blue.bold,
+        "false": colors.gray.dim,
+        path: colors.green,
+        value: colors.white,
+        string: colors.white.bold,
+        semver: colors.red,
+        number: colors.magenta,
+        visited: colors.red,
+        dim: '\\^\\>\\=\\.\\:\\/\\-',
+        fat: '*'
       };
       if (opt.colors === true) {
         colors = defaultColors;
@@ -91,6 +112,15 @@
         colors = def(opt.colors, defaultColors);
       }
     }
+    beautify = function(s) {
+      if (colors.dim != null) {
+        s = s.replace(new RegExp("([" + colors.dim + "]+)", 'g'), '$1'.dim);
+      }
+      if (colors.fat != null) {
+        s = s.replace(new RegExp("([" + colors.fat + "]+)", 'g'), '$1'.bold);
+      }
+      return s;
+    };
     escape = function(k) {
       var es, ref, ref1, sp;
       if (0 <= k.indexOf('\n')) {
@@ -141,7 +171,7 @@
           ks = padRight(k, k.length + 2);
           i = ind + indstr;
         }
-        s += colors.key(ks);
+        s += colors.key(opt.colors !== false && s.length === 0 && ks.bold || ks);
         vs = toStr(v, i, false, visited);
         if (vs[0] === '\n') {
           while (s[s.length - 1] === ' ') {
@@ -170,7 +200,7 @@
       return l.join('\n');
     };
     toStr = function(o, ind, arry, visited) {
-      var s, t, v;
+      var j, len, rc, ref, s, t, v;
       if (ind == null) {
         ind = '';
       }
@@ -191,6 +221,15 @@
       }
       t = typeof o;
       if (t === 'string') {
+        if (opt.colors !== false) {
+          ref = Object.keys(regs);
+          for (j = 0, len = ref.length; j < len; j++) {
+            rc = ref[j];
+            if ((colors[rc] != null) && regs[rc].test(o)) {
+              return colors[rc](beautify(escape(o)));
+            }
+          }
+        }
         return colors.string(escape(o));
       } else if (t === 'object') {
         if (opt.circular) {
@@ -205,10 +244,10 @@
             s += '\n';
           }
           s += ((function() {
-            var j, len, results;
+            var len1, m, results;
             results = [];
-            for (j = 0, len = o.length; j < len; j++) {
-              v = o[j];
+            for (m = 0, len1 = o.length; m < len1; m++) {
+              v = o[m];
               results.push(ind + toStr(v, ind + indstr, true, visited));
             }
             return results;
@@ -218,6 +257,10 @@
           s += pretty(o, ind, visited);
         }
         return s;
+      } else if (t === 'number') {
+        return colors.number(String(o));
+      } else if (t === 'boolean') {
+        return (o && colors["true"] || colors["false"])(String(o));
       } else {
         return colors.value(String(o));
       }

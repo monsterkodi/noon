@@ -1,0 +1,23 @@
+number
+            int         42 
+            zero        0
+            float       -2.304
+bool        
+            true
+            false
+string      
+            some    text
+            other   text with spaces
+            more    
+                    with    1 number some/path
+url         
+            file://local
+            http://foo.com
+            git://hub.com
+path        
+            /ab/so/lu.te
+            ./re/la/tive
+semver
+            0.0.1
+            ^0.1.1
+            >=10.100.1000
