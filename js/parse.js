@@ -271,6 +271,9 @@
       }
       d = p;
       k = '';
+      if (l[p] === '#') {
+        return [d, null, null, false];
+      }
       escl = false;
       escr = false;
       if (l[p] === '|') {

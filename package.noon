@@ -23,7 +23,7 @@ scripts
                 test  mocha -R dot --compilers coffee:coffee-script/register
 dependencies
                 colors          ^1.1.2
-                lodash          ^4.0.1
+                lodash          ^4.1.0
                 performance-now  ^0.2.0
                 karg            >=0.3.1
                 cson            ^3.0.2
@@ -31,4 +31,4 @@ dependencies
                 simple-plist    git://github.com/monsterkodi/node-simple-plist.git
 devDependencies
                 chai    ^3.5.0
-                mocha   ^2.4.4
+                mocha   ^2.4.5

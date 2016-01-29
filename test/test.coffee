@@ -365,6 +365,42 @@ describe 'parse', ->
         expect noon.parse '... \n| 1 |\n | 2 \n  3  |\n  ...'
         .to.eql [' 1 \n 2\n3  ']
 
+    it 'comment', -> 
+        
+        expect noon.parse """
+        # this is a comment
+        this is some data
+        """
+        .to.eql ['this is some data']
+
+
+        expect noon.parse """
+        a  1
+            #foo
+        b  2
+        #b  3
+        c   4 # 5
+        d   
+            6 # 7
+        #  
+        ###
+        """
+        .to.eql 
+            a: 1
+            b: 2
+            c: '4 # 5'
+            d: ['6 # 7']
+
+        expect noon.parse """
+        a  1
+        |#|
+            |#
+            | # 
+        """
+        .to.eql 
+            a: 1
+            '#': ['#', ' #']
+
 ###
  0000000  000000000  00000000   000  000   000   0000000   000  00000000  000   000
 000          000     000   000  000  0000  000  000        000  000        000 000 
@@ -656,6 +692,21 @@ describe 'stringify', ->
                         c  1
         """
 
+    it 'comment', ->
+        
+        expect noon.stringify '#'
+        .to.eql "|#|"
+
+        expect noon.stringify '#foo'
+        .to.eql "|#foo|"
+
+        expect noon.stringify ['###', '#', '  # ']
+        .to.eql """
+        |###|
+        |#|
+        |  # |
+        """
+        
 ###
  0000000  000000000  00000000   000  000   000   0000000   000  00000000  000   000        00000000  000   000  000000000
 000          000     000   000  000  0000  000  000        000  000        000 000         000        000 000      000   

@@ -216,6 +216,7 @@ parse = (s) ->
     000  000  0000       000  000        000       000          000   
     000  000   000  0000000   000        00000000   0000000     000   
     ###
+    
     inspect = (l) ->   
 
         p = 0
@@ -225,6 +226,9 @@ parse = (s) ->
         d = p
 
         k = ''
+
+        if l[p] == '#'
+            return [d, null, null, false]
         
         escl = false
         escr = false
