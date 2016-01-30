@@ -149,6 +149,7 @@ e   2
 - normally no need to escape characters
     - good for storing regexp strings
     - works well in config files
+    - works well in [command line arguments](https://github.com/monsterkodi/colorcat/blob/master/test/test.sh)
 
 ### example files
 
