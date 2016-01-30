@@ -1,4 +1,3 @@
-# noon
 
 ![icon](./img/icon.png)
 
@@ -64,6 +63,16 @@ line breaks
 which stops
 now
 ...  
+```
+
+#### comments
+```coffee-script
+# comments start with the hash sign
+# mixing of data and comments is not allowed
+therefore:
+    1 # this is not a comment
+    | # neither is this one
+      # but this one is 
 ```
 
 #### one key makes an object
@@ -208,7 +217,7 @@ data = noon.load 'file.plist'
 
 noon.save 'file.noon', data
 
-# or 
+# or
 
 noon.save 'file.noon', data, stringify_options
 noon.save 'file.json', data  # < write as json
@@ -221,7 +230,6 @@ noon.save 'filenoext', data, ext: '.noon'
 #### missing features
 
 - async load and save
-- comments
 
 #### disadvantages
   

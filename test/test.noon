@@ -9,15 +9,24 @@ string
             some    text
             other   text with spaces
             more    
-                    with    1 number some/path
+                    true    1 number (some/path)
+                    false   2.3 http://bla true
+                    123     (123)
 url         
             file://local
             http://foo.com
             git://hub.com
+            key  https://value
 path        
             /ab/so/lu.te
             ./re/la/tive
+            key  /v/alu.e
 semver
             0.0.1
             ^0.1.1
             >=10.100.1000
+            key  6.6.6
+            
+file://local
+./re/la/tive
+>=6.6.6
