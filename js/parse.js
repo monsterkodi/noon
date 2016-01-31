@@ -27,7 +27,7 @@
      0000000   000   000  0000000    00000000  000   000  0000000   00000000
      */
     undense = function(d, s) {
-      var i, j, key, l, ld, p, ref, ref1, sd, sl, t;
+      var i, j, key, l, ld, p, pp, ref, sd, sl, t;
       sl = s.length;
       sd = d;
       p = 0;
@@ -40,7 +40,16 @@
       }
       l = '';
       key = true;
-      while (p < sl && !(s[p] === '.' && p < sl + 1 && ((ref = s[p + 1]) === '.' || ref === ' '))) {
+      while (p < sl) {
+        if (s[p] === '.') {
+          pp = p + 1;
+          while (pp < sl && s[pp] === '.') {
+            pp += 1;
+          }
+          if (s[pp] === ' ') {
+            break;
+          }
+        }
         l += s[p];
         if (key && s[p] === ' ') {
           if (p < sl + 1 && s[p + 1] !== ' ') {
@@ -51,7 +60,7 @@
         p += 1;
       }
       ld = '';
-      for (i = j = 0, ref1 = d; 0 <= ref1 ? j < ref1 : j > ref1; i = 0 <= ref1 ? ++j : --j) {
+      for (i = j = 0, ref = d; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
         ld += ' ';
       }
       ld += l;

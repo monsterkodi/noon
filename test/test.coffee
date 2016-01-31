@@ -232,6 +232,13 @@ describe 'parse', ->
                 b:
                     c: 0
 
+        expect noon.parse """
+        a  . path ../some.file
+        """
+        .to.eql
+            a: 
+                path: '../some.file'
+
     it 'one line notation', ->
 
         expect noon.parse "key . a :: b . c :: d 1 :: e 2"

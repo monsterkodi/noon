@@ -26,7 +26,7 @@
   regs = {
     url: new RegExp('^(https?|git|file)(://)(\\S+)$'),
     path: new RegExp('^([\\.\\/\\S]+)(\\/\\S+)$'),
-    semver: new RegExp('([^><=~]?)(\\d+)(\\.)(\\d+)(\\.)(\\d+)')
+    semver: new RegExp('\\d+\\.\\d+\\.\\d+')
   };
 
   stringify = function(obj, options) {
@@ -111,8 +111,7 @@
         semver: colors.red,
         number: colors.magenta,
         visited: colors.red,
-        dim: '\\^\\>\\=\\.\\:\\/\\-',
-        fat: '*'
+        dim: '^>=.:/-'
       };
       if (opt.colors === true) {
         colors = defaultColors;
@@ -121,11 +120,13 @@
       }
     }
     beautify = function(s) {
+      var c, j, len, ref;
       if (colors.dim != null) {
-        s = s.replace(new RegExp("([" + colors.dim + "]+)", 'g'), '$1'.dim);
-      }
-      if (colors.fat != null) {
-        s = s.replace(new RegExp("([" + colors.fat + "]+)", 'g'), '$1'.bold);
+        ref = colors.dim;
+        for (j = 0, len = ref.length; j < len; j++) {
+          c = ref[j];
+          s = s.replace(new RegExp("\\" + c, 'g'), c.dim);
+        }
       }
       return s;
     };

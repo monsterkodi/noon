@@ -21,7 +21,7 @@ defaults =
 regs = 
     url:    new RegExp '^(https?|git|file)(://)(\\S+)$'
     path:   new RegExp '^([\\.\\/\\S]+)(\\/\\S+)$'
-    semver: new RegExp '([^><=~]?)(\\d+)(\\.)(\\d+)(\\.)(\\d+)'
+    semver: new RegExp '\\d+\\.\\d+\\.\\d+'
         
 stringify = (obj, options={}) ->
 
@@ -87,8 +87,7 @@ stringify = (obj, options={}) ->
             semver:  colors.red
             number:  colors.magenta
             visited: colors.red
-            dim:     '\\^\\>\\=\\.\\:\\/\\-'
-            fat:     '*'
+            dim:     '^>=.:/-'
         if opt.colors == true
             colors = defaultColors
         else
@@ -96,9 +95,8 @@ stringify = (obj, options={}) ->
 
     beautify = (s) -> 
         if colors.dim?
-            s = s.replace new RegExp("([#{colors.dim}]+)", 'g'), '$1'.dim
-        if colors.fat?
-            s = s.replace new RegExp("([#{colors.fat}]+)", 'g'), '$1'.bold
+            for c in colors.dim
+                s = s.replace new RegExp("\\#{c}", 'g'), c.dim
         s
 
     escape = (k) ->
@@ -171,7 +169,7 @@ stringify = (obj, options={}) ->
             if opt.colors != false
                 for rc in Object.keys regs
                     if colors[rc]? and regs[rc].test o
-                        return colors[rc] beautify escape o
+                        return  colors[rc] beautify escape o
                 
             return colors.string escape o
         else if t == 'object'

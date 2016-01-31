@@ -33,7 +33,14 @@ parse = (s) ->
         
         l = ''
         key = true
-        while p < sl and not (s[p] == '.' and p < sl+1 and (s[p+1] in ['.', ' '])) # add to line until first dotdot or dotspace
+                
+        while p < sl 
+            if s[p] == '.' 
+                pp = p+1
+                while pp < sl and s[pp] == '.'
+                    pp += 1
+                if s[pp] == ' '
+                    break
             l += s[p]
             if key and s[p] == ' '
                 if p < sl+1 and s[p+1] != ' '
