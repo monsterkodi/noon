@@ -50,6 +50,14 @@ stringify = (obj, options={}) ->
         opt.indent = opt.indent.length
     indstr = padRight '', opt.indent
     
+    ###
+     0000000   0000000   000       0000000   00000000    0000000
+    000       000   000  000      000   000  000   000  000     
+    000       000   000  000      000   000  0000000    0000000 
+    000       000   000  000      000   000  000   000       000
+     0000000   0000000   0000000   0000000   000   000  0000000 
+    ###
+    
     if opt.colors == false or opt.colors == 0
         noop = (s) -> s
         colors = 

@@ -147,9 +147,9 @@ e   2
 - fast to parse 
     - parsing speed is comparable to those of json or yaml
 - normally no need to escape characters
-    - good for storing regexp strings
     - works well in config files
     - works well in [command line arguments](https://github.com/monsterkodi/colorcat/blob/master/test/test.sh)
+    - good for storing [regexp patterns](https://github.com/monsterkodi/colorcat/blob/master/syntax/noon.noon)
 
 ### example files
 
