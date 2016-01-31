@@ -191,11 +191,17 @@ stringify_options =   # stringify's second argument, defaults are:
                       # custom dictionary or true for default colors:
 
 defaultColors =
-     key:     colors.bold.gray
-     null:    colors.bold.blue
-     value:   colors.bold.magenta
-     string:  colors.bold.white
-     visited: colors.bold.red
+    url:     colors.yellow
+    key:     colors.gray
+    null:    colors.blue
+    true:    colors.blue.bold
+    false:   colors.gray.dim
+    path:    colors.green
+    value:   colors.white
+    string:  colors.white.bold
+    semver:  colors.red
+    number:  colors.magenta
+    visited: colors.red
 
 ```
 
