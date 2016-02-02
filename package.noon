@@ -1,5 +1,5 @@
 name            noon
-version         0.9.17
+version         1.0.0
 description     'nother ordinary object notation
 main            js/main.js
 keywords
@@ -10,6 +10,16 @@ keywords
                 json
                 cson
                 yaml
+                data
+                read
+                load
+                parse
+                write
+                save
+                convert
+                stringify
+                command line
+                tool
 author          monsterkodi
 license         Unlicense
 repository
