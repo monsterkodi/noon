@@ -239,6 +239,14 @@ describe 'parse', ->
             a: 
                 path: '../some.file'
 
+        expect noon.parse """
+        a  . ? some sentence. some other sentence. . A: next sentence...
+        """
+        .to.eql
+            a: 
+                '?':  'some sentence. some other sentence.'
+                'A:': 'next sentence...' 
+
     it 'one line notation', ->
 
         expect noon.parse "key . a :: b . c :: d 1 :: e 2"

@@ -41,12 +41,13 @@
       l = '';
       key = true;
       while (p < sl) {
-        if (s[p] === '.') {
-          pp = p + 1;
+        if (l !== '' && s[p] === ' ' && s[p + 1] === '.') {
+          pp = p + 2;
           while (pp < sl && s[pp] === '.') {
             pp += 1;
           }
           if (s[pp] === ' ') {
+            p += 1;
             break;
           }
         }

@@ -35,12 +35,14 @@ parse = (s) ->
         key = true
                 
         while p < sl 
-            if s[p] == '.' 
-                pp = p+1
+            if l != '' and s[p] == ' ' and s[p+1] == '.'
+                pp = p+2
                 while pp < sl and s[pp] == '.'
                     pp += 1
                 if s[pp] == ' '
+                    p += 1
                     break
+                    
             l += s[p]
             if key and s[p] == ' '
                 if p < sl+1 and s[p+1] != ' '
