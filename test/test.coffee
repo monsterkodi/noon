@@ -197,7 +197,7 @@ describe 'parse', ->
         
         """
         .to.eql o
-
+        
     it 'dense notation', ->
         
         expect noon.parse """
@@ -246,6 +246,41 @@ describe 'parse', ->
             a: 
                 '?':  'some sentence. some other sentence.'
                 'A:': 'next sentence...' 
+
+    it 'dense escaped', ->
+
+        expect noon.parse """
+        a  . x | 1| . y | 2 | . z |3 |
+        """
+        .to.eql
+            a: 
+                x: ' 1'
+                y: ' 2 ' 
+                z: '3 ' 
+
+        expect noon.parse """
+        a  . | 1| . | 2 | . |3 |
+        """
+        .to.eql
+            a: [ ' 1', ' 2 ', '3 '] 
+
+        expect noon.parse """
+        a  . | 1| a . | 2 | b . |3 | c
+        """
+        .to.eql
+            a: 
+                ' 1':  'a' 
+                ' 2 ': 'b'
+                '3 ':  'c' 
+
+        expect noon.parse """
+        a  . | 1|   a | . | 2 | | b| . |3 | |c x 
+        """
+        .to.eql
+            a: 
+                ' 1':  'a ' 
+                ' 2 ': ' b'
+                '3 ':  'c x' 
 
     it 'one line notation', ->
 
@@ -299,6 +334,13 @@ describe 'parse', ->
             b: [7]
 
     it 'escape', -> 
+        
+        expect noon.parse """
+         | 1|
+         |2 |
+         | 3 |
+        """
+        .to.eql [' 1', '2 ', ' 3 '] 
         
         expect noon.parse """
         a  | 1  1  

@@ -33,6 +33,8 @@ parse = (s) ->
         
         l = ''
         key = true
+        esc = false
+        # console.log '---', d, s
                 
         while p < sl 
             if l != '' and s[p] == ' ' and s[p+1] == '.'
@@ -42,13 +44,14 @@ parse = (s) ->
                 if s[pp] == ' '
                     p += 1
                     break
-                    
+            esc |= s[p] ==  '|'
             l += s[p]
-            if key and s[p] == ' '
+            if not esc and key and s[p] == ' '
                 if p < sl+1 and s[p+1] != ' '
                     l += ' '
                 key = false
             p += 1
+            esc ^= s[p] ==  '|'
             
         ld = '' # pad line with spaces
         for i in [0...d]
@@ -58,8 +61,10 @@ parse = (s) ->
         if p < sl
             t = undense sd, s.substring p
             t.unshift ld
+            # console.log t
             t
         else
+            # console.log [ld]
             [ld]
     
     ###
