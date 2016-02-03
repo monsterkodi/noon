@@ -20,9 +20,9 @@
     return console.log(("\n" + msg + "\n").red);
   };
 
-  load = function(p) {
+  load = function(p, ext) {
     var extname, str;
-    extname = path.extname(p);
+    extname = ext != null ? ext : path.extname(p);
     if (extname === '.plist') {
       return require('simple-plist').readFileSync(p);
     } else {

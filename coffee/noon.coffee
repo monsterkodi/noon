@@ -35,6 +35,7 @@ noon
     maxalign    . ? max align width, 0: no limit    . = 32
     sort        . ? sort keys alphabetically        . = false
     colors      . ? output with ansi colors         . = true
+    type        . ? input filetype
     
 supported filetypes:
     #{noon.extnames.join '\n    '}
@@ -50,7 +51,7 @@ if args.file
 
     ext = path.extname args.file
 
-    d = load args.file
+    d = load args.file, args.type
 
     if args.output in noon.extnames
         if args.output == '.noon'

@@ -42,7 +42,7 @@
   000   000  000   000   0000000   0000000
    */
 
-  args = require('karg')("noon\n    file        . ? the file to convert             . * . = package.json\n    output      . ? output file or filetype         . = .noon\n    indent      . ? indentation length              . = 4\n    align       . ? align values                    . = true\n    maxalign    . ? max align width, 0: no limit    . = 32\n    sort        . ? sort keys alphabetically        . = false\n    colors      . ? output with ansi colors         . = true\n    \nsupported filetypes:\n    " + (noon.extnames.join('\n    ')) + "\n\nversion   " + (require(__dirname + "/../package.json").version));
+  args = require('karg')("noon\n    file        . ? the file to convert             . * . = package.json\n    output      . ? output file or filetype         . = .noon\n    indent      . ? indentation length              . = 4\n    align       . ? align values                    . = true\n    maxalign    . ? max align width, 0: no limit    . = 32\n    sort        . ? sort keys alphabetically        . = false\n    colors      . ? output with ansi colors         . = true\n    type        . ? input filetype\n    \nsupported filetypes:\n    " + (noon.extnames.join('\n    ')) + "\n\nversion   " + (require(__dirname + "/../package.json").version));
 
   err = function(msg) {
     log(("\n" + msg + "\n").red);
@@ -51,7 +51,7 @@
 
   if (args.file) {
     ext = path.extname(args.file);
-    d = load(args.file);
+    d = load(args.file, args.type);
     if (ref = args.output, indexOf.call(noon.extnames, ref) >= 0) {
       if (args.output === '.noon') {
         o = {

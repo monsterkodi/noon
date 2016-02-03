@@ -12,9 +12,9 @@ path   = require 'path'
 
 err  = (msg) -> console.log ("\n"+msg+"\n").red
 
-load = (p) ->
+load = (p, ext) ->
     
-    extname = path.extname p
+    extname = ext ? path.extname p
     if extname == '.plist'
         require('simple-plist').readFileSync p
     else
