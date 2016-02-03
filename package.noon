@@ -1,5 +1,5 @@
 name            noon
-version         1.0.1
+version         1.0.2
 description     'nother ordinary object notation
 main            js/main.js
 keywords
