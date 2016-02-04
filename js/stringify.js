@@ -119,17 +119,14 @@
         colors = def(opt.colors, defaultColors);
       }
     }
-    beautify = function(s) {
-      var c, j, len, ref;
-      if (colors.dim != null) {
-        ref = colors.dim;
-        for (j = 0, len = ref.length; j < len; j++) {
-          c = ref[j];
-          s = s.replace(new RegExp("\\" + c, 'g'), c.dim);
-        }
-      }
-      return s;
-    };
+
+    /*
+    00000000   0000000   0000000   0000000   00000000   00000000
+    000       000       000       000   000  000   000  000     
+    0000000   0000000   000       000000000  00000000   0000000 
+    000            000  000       000   000  000        000     
+    00000000  0000000    0000000  000   000  000        00000000
+     */
     escape = function(k) {
       var es, ref, ref1, sp;
       if (0 <= k.indexOf('\n')) {
@@ -146,6 +143,33 @@
       }
       return k;
     };
+
+    /*
+    0000000    00000000   0000000   000   000  000000000  000  00000000  000   000
+    000   000  000       000   000  000   000     000     000  000        000 000 
+    0000000    0000000   000000000  000   000     000     000  000000      00000  
+    000   000  000       000   000  000   000     000     000  000          000   
+    0000000    00000000  000   000   0000000      000     000  000          000
+     */
+    beautify = function(s) {
+      var c, j, len, ref;
+      if (colors.dim != null) {
+        ref = colors.dim;
+        for (j = 0, len = ref.length; j < len; j++) {
+          c = ref[j];
+          s = s.replace(new RegExp("\\" + c, 'g'), c.dim);
+        }
+      }
+      return s;
+    };
+
+    /*
+    00000000   00000000   00000000  000000000  000000000  000   000
+    000   000  000   000  000          000        000      000 000 
+    00000000   0000000    0000000      000        000       00000  
+    000        000   000  000          000        000        000   
+    000        000   000  00000000     000        000        000
+     */
     pretty = function(o, ind, visited) {
       var j, k, keyValue, kl, l, len, maxKey, ref, v;
       if (opt.align) {
@@ -208,6 +232,14 @@
       }
       return l.join('\n');
     };
+
+    /*
+    000000000   0000000    0000000  000000000  00000000 
+       000     000   000  000          000     000   000
+       000     000   000  0000000      000     0000000  
+       000     000   000       000     000     000   000
+       000      0000000   0000000      000     000   000
+     */
     toStr = function(o, ind, arry, visited) {
       var j, len, rc, ref, s, t, v;
       if (ind == null) {
