@@ -144,8 +144,6 @@ e   2
 - minimal amount of 'control-' or 'non-data-characters', therefore
     - easy to read
     - easy to write
-- fast to parse 
-    - parsing speed is comparable to those of json or yaml
 - normally no need to escape characters
     - works well in config files
     - works well in [command line arguments](https://github.com/monsterkodi/colorcat/blob/master/test/test.sh)
@@ -245,6 +243,5 @@ noon.save 'filenoext', data, ext: '.noon'
 - empty objects are not expressible
 - probably some other unknown corner cases
 
-This is in alpha stadium and not meant to be completely foolproof.  
 Don't use it if you can't live with the limitations mentioned above.  
 Don't expect your data to convert flawlessly!

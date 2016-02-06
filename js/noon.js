@@ -8,7 +8,7 @@
  */
 
 (function() {
-  var _, args, colors, d, err, ext, fs, load, log, noon, o, parse, path, profile, ref, save, stringify,
+  var _, args, colors, d, err, ext, fs, load, log, noon, o, parse, path, ref, save, stringify,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   fs = require('fs');
@@ -18,8 +18,6 @@
   colors = require('colors');
 
   _ = require('lodash');
-
-  profile = require('./tools/profile');
 
   stringify = require('./stringify');
 
