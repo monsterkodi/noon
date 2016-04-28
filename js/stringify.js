@@ -173,15 +173,17 @@
     pretty = function(o, ind, visited) {
       var j, k, keyValue, kl, l, len, maxKey, ref, v;
       if (opt.align) {
-        maxKey = 0;
-        for (k in o) {
-          if (!hasProp.call(o, k)) continue;
-          v = o[k];
-          kl = parseInt(Math.ceil((k.length + 2) / opt.indent) * opt.indent);
-          maxKey = Math.max(maxKey, kl);
-          if (opt.maxalign && maxKey > opt.maxalign) {
-            maxKey = opt.maxalign;
-            break;
+        maxKey = opt.indent;
+        if (Object.keys(o).length > 1) {
+          for (k in o) {
+            if (!hasProp.call(o, k)) continue;
+            v = o[k];
+            kl = parseInt(Math.ceil((k.length + 2) / opt.indent) * opt.indent);
+            maxKey = Math.max(maxKey, kl);
+            if (opt.maxalign && (maxKey > opt.maxalign)) {
+              maxKey = opt.maxalign;
+              break;
+            }
           }
         }
       }

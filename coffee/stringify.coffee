@@ -137,13 +137,14 @@ stringify = (obj, options={}) ->
     pretty = (o, ind, visited) ->
         
         if opt.align        
-            maxKey = 0
-            for own k,v of o
-                kl = parseInt(Math.ceil((k.length+2)/opt.indent)*opt.indent)
-                maxKey = Math.max maxKey, kl
-                if opt.maxalign and maxKey > opt.maxalign
-                    maxKey = opt.maxalign
-                    break
+            maxKey = opt.indent
+            if Object.keys(o).length > 1
+                for own k,v of o
+                    kl = parseInt(Math.ceil((k.length+2)/opt.indent)*opt.indent)
+                    maxKey = Math.max maxKey, kl
+                    if opt.maxalign and (maxKey > opt.maxalign)
+                        maxKey = opt.maxalign
+                        break
         l = []
         
         keyValue = (k,v) ->

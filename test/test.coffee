@@ -709,6 +709,46 @@ describe 'stringify', ->
         o       1
         ooOOoo  2
         """
+
+        expect noon.stringify o, maxalign: 18
+        .to.eql """
+        o       1
+        ooOOoo  2
+        """
+        
+        t = foofoo: 
+             barbarbar: 1
+             foo: 2
+             
+        expect noon.stringify t
+        .to.eql """
+        foofoo
+            barbarbar   1
+            foo         2
+        """
+
+        expect noon.stringify t, indent: 3
+        .to.eql """
+        foofoo
+           barbarbar   1
+           foo         2
+        """
+
+        t = 
+            foobar: 
+                barfoo: 1
+                bar: 2
+            foo: 
+                bar: 1
+
+        expect noon.stringify t
+        .to.eql """
+        foobar
+                barfoo  1
+                bar     2
+        foo
+                bar  1
+        """
         
     it 'indent', ->
         o = a: b: c: 1

@@ -1,0 +1,37 @@
+{
+  "number": {
+    "int": 42,
+    "zero": 0,
+    "float": -2.304
+  },
+  "bool": {
+    "true": true,
+    "false": false
+  },
+  "string": {
+    "some": "text",
+    "other": "text with spaces",
+    "more": {
+      "123": "(123)",
+      "true": "1 number (some/path)",
+      "false": "2.3 http://bla true"
+    }
+  },
+  "url": {
+    "file://local": "file://local",
+    "http://foo.com": "http://foo.com",
+    "git://hub.com": "git://hub.com",
+    "key": "https://value"
+  },
+  "path": {
+    "/ab/so/lu.te": "/ab/so/lu.te",
+    "./re/la/tive": "./re/la/tive",
+    "key": "/v/alu.e"
+  },
+  "semver": {
+    "0.0.1": "0.0.1",
+    "^0.1.1": "^0.1.1",
+    ">=10.100.1000": ">=10.100.1000",
+    "key": "6.6.6"
+  }
+}
