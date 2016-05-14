@@ -2,6 +2,7 @@ coffee
 test
 img
 .gitignore
+.konrad.noon
 *.log
 Icon?
 package.noon
