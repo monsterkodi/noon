@@ -8,7 +8,7 @@
  */
 
 (function() {
-  var _, args, colors, d, err, ext, fs, load, log, noon, o, parse, path, ref, save, stringify,
+  var _, args, colors, d, e, err, error, ext, fs, load, log, noon, o, parse, path, ref, save, stringify,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   fs = require('fs');
@@ -49,7 +49,12 @@
 
   if (args.file) {
     ext = path.extname(args.file);
-    d = load(args.file, args.type);
+    try {
+      d = load(args.file, args.type);
+    } catch (error) {
+      e = error;
+      err(e);
+    }
     if (ref = args.output, indexOf.call(noon.extnames, ref) >= 0) {
       if (args.output === '.noon') {
         o = {

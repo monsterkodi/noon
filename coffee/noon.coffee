@@ -50,7 +50,10 @@ if args.file
 
     ext = path.extname args.file
 
-    d = load args.file, args.type
+    try
+        d = load args.file, args.type
+    catch e
+        err e
 
     if args.output in noon.extnames
         if args.output == '.noon'

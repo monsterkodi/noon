@@ -15,6 +15,7 @@ err  = (msg) -> console.log ("\n"+msg+"\n").red
 load = (p, ext) ->
     
     extname = ext ? path.extname p
+
     if extname == '.plist'
         require('simple-plist').readFileSync p
     else
@@ -29,5 +30,5 @@ load = (p, ext) ->
             when '.yml', '.yaml' then require('js-yaml').load str
             else
                 require('./parse') str
-
+        
 module.exports = load
