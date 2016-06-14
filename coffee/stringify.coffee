@@ -206,13 +206,12 @@ stringify = (obj, options={}) ->
                 
             return colors.string escape o
         else if t == 'object'
-            
             if opt.circular
                 if o in visited
                     return colors.visited '<v>'
                 visited.push o
                 
-            if o.constructor.name == 'Array'
+            if o.constructor?.name == 'Array'
                 s = ind!='' and arry and '.' or ''
                 s += '\n' if o.length and ind!=''
                 s += (ind+toStr(v,ind+indstr,true,visited) for v in o).join '\n'

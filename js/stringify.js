@@ -243,7 +243,7 @@
        000      0000000   0000000      000     000   000
      */
     toStr = function(o, ind, arry, visited) {
-      var j, len, rc, ref, s, t, v;
+      var j, len, rc, ref, ref1, s, t, v;
       if (ind == null) {
         ind = '';
       }
@@ -281,7 +281,7 @@
           }
           visited.push(o);
         }
-        if (o.constructor.name === 'Array') {
+        if (((ref1 = o.constructor) != null ? ref1.name : void 0) === 'Array') {
           s = ind !== '' && arry && '.' || '';
           if (o.length && ind !== '') {
             s += '\n';
