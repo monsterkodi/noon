@@ -1,6 +1,6 @@
 {
   "name": "noon",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "'nother ordinary object notation",
   "main": "js/main.js",
   "keywords": [
