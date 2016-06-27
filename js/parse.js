@@ -88,7 +88,7 @@
     while (s[leadingSpaces] === ' ') {
       leadingSpaces += 1;
     }
-    lines = s.split('\n');
+    lines = s.split(/\r?\n/);
     if (lines.length === 1) {
       lines = [lines[0].trim()];
       leadingSpaces = 0;
