@@ -661,6 +661,14 @@ describe 'stringify', ->
 
         expect noon.stringify o: " 1 \n2 \n  3"
         .to.eql 'o   ...\n| 1 |\n|2 |\n|  3|\n...'
+        
+        expect noon.stringify a: ["a  b", "1   3", "   c    d  e   "]
+        .to.eql """
+        a
+            |a  b|
+            |1   3|
+            |   c    d  e   |
+        """
 
     it 'trim', ->
         o = a: 1, b: null, c: 2

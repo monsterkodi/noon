@@ -108,7 +108,7 @@ stringify = (obj, options={}) ->
             es.unshift '...'
             es.push '...'
             return es.join '\n'
-        if k == '' or k == '...' or k[0] in [' ', '#', '|'] or k[k.length-1] in [' ', '#', '|']
+        if k == '' or k == '...' or k[0] in [' ', '#', '|'] or k[k.length-1] in [' ', '#', '|'] or /\ \ /.test k
             k = '|' + k + '|'
         k
 
