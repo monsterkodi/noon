@@ -7,7 +7,7 @@
 
 - you like [CoffeeScript](http://coffeescript.org/)?
     - go ahead, this makes your data smell as good as coffee :)
-- you are more into [TypesSript](http://www.typescriptlang.org)? Nothing wrong with [JSON](http://json.org/) or JavaScript?
+- you are more into [TypesSript](http://www.typescriptlang.org)? Nothing wrong with [JSON](http://json.org/)?
     - probably nothing interesting to see for you here :(
 
 ### format
@@ -141,13 +141,13 @@ e   2
 
 ### advantages
 
-- minimal amount of 'control-' or 'non-data-characters', therefore
+- minimal amount of 'control-' or 'non-data-characters'
     - easy to read
     - easy to write
 - normally no need to escape characters
     - works well in config files
     - works well in [command line arguments](https://github.com/monsterkodi/colorcat/blob/master/test/test.sh)
-    - good for storing [regexp patterns](https://github.com/monsterkodi/colorcat/blob/master/syntax/noon.noon)
+    - good for storing [regexp patterns](https://github.com/monsterkodi/ko/blob/master/syntax/noon.noon)
 
 ### example files
 
@@ -232,12 +232,6 @@ noon.save 'filenoext', data, ext: '.noon'
 
 ### caveats
 
-#### missing features
-
-- async load and save
-
-#### disadvantages
-  
 - keys can't start with the pipe symbol: |
 - escaped keys can't contain the pipe symbol
 - empty objects are not expressible
