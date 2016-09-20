@@ -179,7 +179,7 @@ what's up?    ☺
 # { hello: 'world', 'what\'s up?': '☺' }
 
 stringify_options =   # stringify's second argument, defaults are: 
-    ext:      '.noon' # output format: .noon .json .yaml .cson .plist
+    ext:      '.noon' # output format: .noon .json .yaml .cson
     indent:   4       # number of spaces per indent level
     align:    true    # vertically align object values
     maxalign: 32      # maximal number of spaces when aligning
@@ -213,7 +213,6 @@ data = noon.load 'file.noon'
 data = noon.load 'file.json'
 data = noon.load 'file.yaml'
 data = noon.load 'file.cson'
-data = noon.load 'file.plist'
 
 ```
 

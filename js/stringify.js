@@ -61,8 +61,6 @@
         return JSON.stringify(obj, null, opt.indent);
       case '.cson':
         return require('cson').stringify(obj, null, opt.indent);
-      case '.plist':
-        return require('simple-plist').stringify(obj);
       case '.yml':
       case '.yaml':
         return require('js-yaml').dump(obj);

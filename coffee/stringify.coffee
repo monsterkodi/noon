@@ -43,7 +43,6 @@ stringify = (obj, options={}) ->
     switch opt.ext
         when '.json'         then return JSON.stringify obj, null, opt.indent
         when '.cson'         then return require('cson').stringify obj, null, opt.indent
-        when '.plist'        then return require('simple-plist').stringify obj
         when '.yml', '.yaml' then return require('js-yaml').dump obj
     
     if typeof opt.indent == 'string' 

@@ -16,19 +16,16 @@ load = (p, ext) ->
     
     extname = ext ? path.extname p
 
-    if extname == '.plist'
-        require('simple-plist').readFileSync p
-    else
-        str = fs.readFileSync p, 'utf8'
-        if str.length <= 0
-            err "empty file: #{p.yellow.bold}"
-            return null
-            
-        switch extname
-            when '.json' then JSON.parse str
-            when '.cson' then require('cson').parse str
-            when '.yml', '.yaml' then require('js-yaml').load str
-            else
-                require('./parse') str
+    str = fs.readFileSync p, 'utf8'
+    if str.length <= 0
+        err "empty file: #{p.yellow.bold}"
+        return null
+        
+    switch extname
+        when '.json' then JSON.parse str
+        when '.cson' then require('cson').parse str
+        when '.yml', '.yaml' then require('js-yaml').load str
+        else
+            require('./parse') str
         
 module.exports = load

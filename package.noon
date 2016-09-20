@@ -38,7 +38,6 @@ dependencies
                 karg            >=1.0.7
                 cson            ^3.0.2
                 js-yaml         ^3.6.1
-                simple-plist    git://github.com/monsterkodi/node-simple-plist.git
 devDependencies
                 chai    ^3.5.0
                 mocha   ^2.4.5

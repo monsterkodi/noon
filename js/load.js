@@ -23,25 +23,21 @@
   load = function(p, ext) {
     var extname, str;
     extname = ext != null ? ext : path.extname(p);
-    if (extname === '.plist') {
-      return require('simple-plist').readFileSync(p);
-    } else {
-      str = fs.readFileSync(p, 'utf8');
-      if (str.length <= 0) {
-        err("empty file: " + p.yellow.bold);
-        return null;
-      }
-      switch (extname) {
-        case '.json':
-          return JSON.parse(str);
-        case '.cson':
-          return require('cson').parse(str);
-        case '.yml':
-        case '.yaml':
-          return require('js-yaml').load(str);
-        default:
-          return require('./parse')(str);
-      }
+    str = fs.readFileSync(p, 'utf8');
+    if (str.length <= 0) {
+      err("empty file: " + p.yellow.bold);
+      return null;
+    }
+    switch (extname) {
+      case '.json':
+        return JSON.parse(str);
+      case '.cson':
+        return require('cson').parse(str);
+      case '.yml':
+      case '.yaml':
+        return require('js-yaml').load(str);
+      default:
+        return require('./parse')(str);
     }
   };
 
