@@ -198,6 +198,11 @@ describe 'parse', ->
         """
         .to.eql o
         
+        expect noon.parse """
+        key      value   with    some    spaces   .   
+        """
+        .to.eql {key: "value   with    some    spaces   ."}
+        
     it 'dense notation', ->
         
         expect noon.parse """
@@ -578,6 +583,11 @@ describe 'stringify', ->
 
         expect noon.stringify o, indent: 2
         .to.eql r
+        
+        expect noon.stringify {key: "value   with    some    spaces  ."}
+        .to.eql """
+        key  value   with    some    spaces  .
+        """
         
     it 'escape', ->
         

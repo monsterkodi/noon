@@ -8,6 +8,7 @@ bool
 string      
             some    text
             other   text with spaces
+            stuff   text  with a   lot o f   spaces    .
             more    
                     true    1 number (some/path)
                     false   2.3 http://bla true

@@ -125,18 +125,20 @@
     000            000  000       000   000  000        000     
     00000000  0000000    0000000  000   000  000        00000000
      */
-    escape = function(k) {
+    escape = function(k, arry) {
       var es, ref, ref1, sp;
       if (0 <= k.indexOf('\n')) {
         sp = k.split('\n');
         es = sp.map(function(s) {
-          return escape(s);
+          return escape(s, arry);
         });
         es.unshift('...');
         es.push('...');
         return es.join('\n');
       }
-      if (k === '' || k === '...' || ((ref = k[0]) === ' ' || ref === '#' || ref === '|') || ((ref1 = k[k.length - 1]) === ' ' || ref1 === '#' || ref1 === '|') || /\ \ /.test(k)) {
+      if (k === '' || k === '...' || ((ref = k[0]) === ' ' || ref === '#' || ref === '|') || ((ref1 = k[k.length - 1]) === ' ' || ref1 === '#' || ref1 === '|')) {
+        k = '|' + k + '|';
+      } else if (arry && /\ \ /.test(k)) {
         k = '|' + k + '|';
       }
       return k;
@@ -189,7 +191,7 @@
       keyValue = function(k, v) {
         var i, ks, s, vs;
         s = ind;
-        k = escape(k);
+        k = escape(k, true);
         if (k.indexOf('  ') > 0 && k[0] !== '|') {
           k = "|" + k + "|";
         } else if (k[0] !== '|' && k[k.length - 1] === '|') {
@@ -267,11 +269,11 @@
           for (j = 0, len = ref.length; j < len; j++) {
             rc = ref[j];
             if ((colors[rc] != null) && regs[rc].test(o)) {
-              return colors[rc](beautify(escape(o)));
+              return colors[rc](beautify(escape(o, arry)));
             }
           }
         }
-        return colors.string(escape(o));
+        return colors.string(escape(o, arry));
       } else if (t === 'object') {
         if (opt.circular) {
           if (indexOf.call(visited, o) >= 0) {

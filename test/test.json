@@ -11,6 +11,7 @@
   "string": {
     "some": "text",
     "other": "text with spaces",
+    "stuff": "text  with a   lot o f   spaces    .",
     "more": {
       "123": "(123)",
       "true": "1 number (some/path)",

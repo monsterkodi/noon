@@ -100,14 +100,16 @@ stringify = (obj, options={}) ->
     00000000  0000000    0000000  000   000  000        00000000
     ###
 
-    escape = (k) ->
+    escape = (k, arry) ->
         if 0 <= k.indexOf '\n'
             sp = k.split '\n'
-            es = sp.map (s) -> escape(s)
+            es = sp.map (s) -> escape(s, arry)
             es.unshift '...'
             es.push '...'
             return es.join '\n'
-        if k == '' or k == '...' or k[0] in [' ', '#', '|'] or k[k.length-1] in [' ', '#', '|'] or /\ \ /.test k
+        if k == '' or k == '...' or k[0] in [' ', '#', '|'] or k[k.length-1] in [' ', '#', '|'] 
+            k = '|' + k + '|'
+        else if arry and /\ \ /.test k
             k = '|' + k + '|'
         k
 
@@ -148,7 +150,7 @@ stringify = (obj, options={}) ->
         
         keyValue = (k,v) ->
             s = ind
-            k = escape k
+            k = escape k, true
             if k.indexOf('  ') > 0 and k[0] != '|'
                 k = "|#{k}|"
             else if k[0] != '|' and k[k.length-1] == '|'
@@ -201,9 +203,9 @@ stringify = (obj, options={}) ->
             if opt.colors != false
                 for rc in Object.keys regs
                     if colors[rc]? and regs[rc].test o
-                        return  colors[rc] beautify escape o
+                        return  colors[rc] beautify escape o, arry
                 
-            return colors.string escape o
+            return colors.string escape o, arry
         else if t == 'object'
             if opt.circular
                 if o in visited
