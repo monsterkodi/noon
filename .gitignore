@@ -1,4 +1,6 @@
 *.log
 Icon?
+js
+package.json
 node_modules
 *.tiff
