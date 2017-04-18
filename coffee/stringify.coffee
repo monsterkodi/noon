@@ -216,6 +216,8 @@ stringify = (obj, options={}) ->
                 s = ind!='' and arry and '.' or ''
                 s += '\n' if o.length and ind!=''
                 s += (ind+toStr(v,ind+indstr,true,visited) for v in o).join '\n'
+            else if o.constructor?.name == 'RegExp'
+                return colors.semver o.source
             else
                 s = (arry and '.\n') or ((ind != '') and '\n' or '')
                 s += pretty o, ind, visited

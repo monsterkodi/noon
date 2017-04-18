@@ -831,6 +831,18 @@ describe 'stringify', ->
         }
         """
         
+    it 'regexp', ->
+        expect noon.stringify [ /^hello\sworld$/gi, /[\w\d]*/ ]
+        .to.eql """
+        ^hello\\sworld$
+        [\\w\\d]*
+        """
+        
+    it 'regexp values', ->
+        result = noon.stringify {a: /^hello\sworld$/gi, b: /[\w\d]*/}
+        expctd = "a   ^hello\\sworld$\nb   [\\w\\d]*"
+        expect(result) .to.eql expctd
+
 ###
  0000000  000000000  00000000   000  000   000   0000000   000  00000000  000   000        00000000  000   000  000000000
 000          000     000   000  000  0000  000  000        000  000        000 000         000        000 000      000   
