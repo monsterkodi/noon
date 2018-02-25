@@ -1,5 +1,5 @@
 name            noon
-version         1.1.0
+version         1.1.1
 description     'nother ordinary object notation
 main            js/main.js
 keywords
@@ -26,15 +26,12 @@ bugs
                 url  https://github.com/monsterkodi/noon/issues
 bin
                 noon  ./bin/noon
-scripts
-                test  mocha -R dot --compilers coffee:coffee-script/register
 dependencies
-                colors          ^1.1.2
-                lodash          ^4.17.4
-                performance-now  ^2.1.0
-                karg            >=1.0.10
-                cson            ^4.1.0
-                js-yaml         ^3.8.3
+                colors    ^1.1.2
+                cson      ^5.1.0
+                js-yaml   ^3.10.0
+                karg      >=1.0.10
+                lodash    ^4.17.5
 devDependencies
                 chai    ^3.5.0
                 mocha   ^3.2.0
