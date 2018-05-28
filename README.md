@@ -22,6 +22,7 @@ Whitespace is preferred over other control characters:
 * [language](https://github.com/monsterkodi/language-noon/blob/master/grammars/noon.noon)
 * [urtil](https://github.com/monsterkodi/urtil/blob/gh-pages/examples/example)
 * [font](https://github.com/monsterkodi/salter/blob/master/font.noon)
+* [menu](https://github.com/monsterkodi/kaligraf/blob/master/coffee/menu.noon)
 
 ### format
 
