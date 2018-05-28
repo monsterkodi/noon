@@ -3,9 +3,9 @@
 
 ![noon](./img/noon.png)
 
-### about
+### noon
 
-**noon** is an object notation with a focus on human readability.
+is an object notation with a focus on human readability.
 
 Whitespace is preferred over other control characters:
 
@@ -18,10 +18,10 @@ Whitespace is preferred over other control characters:
     
 ### example files
 
+* [package](https://github.com/monsterkodi/noon/blob/master/package.noon)
 * [language](https://github.com/monsterkodi/language-noon/blob/master/grammars/noon.noon)
 * [urtil](https://github.com/monsterkodi/urtil/blob/gh-pages/examples/example)
 * [font](https://github.com/monsterkodi/salter/blob/master/font.noon)
-* [package](https://github.com/monsterkodi/noon/blob/master/package.noon)
 
 ### format
 
