@@ -9,12 +9,12 @@
 
 Whitespace is preferred over other control characters:
 
-    - Indentation is used to express hierarchy
-    - Strings don't need to be escaped
-        - works well in config files
-        - works well in [command line arguments](https://github.com/monsterkodi/colorcat/blob/master/test/test.sh)
-        - good for storing [regexp patterns](https://github.com/monsterkodi/ko/blob/master/syntax/noon.noon)
-    - Consecutive spaces mark dictionary keys
+- Indentation is used to express hierarchy
+- Strings don't need to be escaped
+    - works well in config files
+    - works well in [command line arguments](https://github.com/monsterkodi/colorcat/blob/master/test/test.sh)
+    - good for storing [regexp patterns](https://github.com/monsterkodi/ko/blob/master/syntax/noon.noon)
+- Consecutive spaces mark dictionary keys
     
 ### example files
 
@@ -119,6 +119,10 @@ therefore:
     | # neither is this one
       # but this one is 
 ```
+
+### inline
+
+sometimes data needs to be encoded in a single line. 
 
 #### dense notation
 
