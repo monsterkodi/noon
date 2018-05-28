@@ -42,7 +42,7 @@ grandpa
 
 two or more spaces mark the end of a dictionary key, therefore ...  
 keys and list items can have single spaces in them but ...  
-only dictionary values can contain consecutive spaces:
+unescaped dictionary keys can't contain consecutive spaces:
 
 ```
 key 1    value 1
