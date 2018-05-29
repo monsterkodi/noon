@@ -9,7 +9,7 @@
 fs        = require 'fs'
 path      = require 'path'
 colors    = require 'colors'
-_         = require 'lodash'
+pad       = require 'lodash.pad'
 stringify = require './stringify'
 parse     = require './parse'
 load      = require './load'
@@ -66,7 +66,7 @@ if args.file
         else
             o = 
                 ext: args.output
-                indent: _.pad '', args.indent
+                indent: pad '', args.indent
         log stringify d, o
     else
         if path.extname(args.output) == '.noon'
@@ -78,5 +78,5 @@ if args.file
                 sort: args.sort
         else
             o = 
-                indent: _.pad '', args.indent
+                indent: pad '', args.indent
         save args.output, d, o 

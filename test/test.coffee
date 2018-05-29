@@ -1,6 +1,8 @@
-_      = require 'lodash'
+isFunc = require 'lodash.isfunction'
 assert = require 'assert'
 chai   = require 'chai'
+path   = require 'path'
+fs     = require 'fs'
 noon   = require '../'
 expect = chai.expect
 chai.should()
@@ -8,13 +10,78 @@ chai.should()
 describe 'module interface', ->
     
     it 'should implement parse', ->
-        _.isFunction(noon.parse).should.be.true
+        isFunc(noon.parse).should.be.true
     it 'should implement stringify', ->
-        _.isFunction(noon.stringify).should.be.true
+        isFunc(noon.stringify).should.be.true
     it 'should implement load', ->
-        _.isFunction(noon.load).should.be.true
+        isFunc(noon.load).should.be.true
     it 'should implement save', ->
-        _.isFunction(noon.save).should.be.true
+        isFunc(noon.save).should.be.true
+    
+# 000       0000000    0000000   0000000    
+# 000      000   000  000   000  000   000  
+# 000      000   000  000000000  000   000  
+# 000      000   000  000   000  000   000  
+# 0000000   0000000   000   000  0000000    
+
+describe 'load', ->
+    
+    testNoon = path.join __dirname, 'test.noon'
+    
+    it 'sync', ->
+        
+        r = noon.load testNoon
+        
+        expect r.number.int 
+        .to.eql 42
+
+    it 'async', (done) ->
+        
+        noon.load testNoon, (r) ->
+            
+            expect r.number.int 
+            .to.eql 42
+            done()
+
+#  0000000   0000000   000   000  00000000  
+# 000       000   000  000   000  000       
+# 0000000   000000000   000 000   0000000   
+#      000  000   000     000     000       
+# 0000000   000   000      0      00000000  
+
+describe 'save', ->
+    
+    writeNoon = path.join __dirname, 'write.noon'
+    writeData = hello: 'world'
+    
+    it 'sync', ->
+        
+        try 
+            fs.unlinkSync writeNoon
+        catch err
+            null
+        
+        noon.save writeNoon, writeData
+        
+        expect noon.load writeNoon
+        .to.eql writeData
+        
+    it 'async', (done) ->
+        
+        try 
+            fs.unlinkSync writeNoon
+        catch err
+            null
+        
+        noon.save writeNoon, writeData, (err) ->
+            
+            expect err
+            .to.eql null
+            
+            expect noon.load writeNoon
+            .to.eql writeData
+            
+            done()
             
 ###
 00000000    0000000   00000000    0000000  00000000

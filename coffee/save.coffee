@@ -6,13 +6,28 @@
 0000000   000   000      0      00000000
 ###
 
-fs    = require 'fs'
-path  = require 'path'
-_     = require 'lodash'
-toStr = require './stringify'
+fs         = require 'fs'
+path       = require 'path'
+defaults   = require 'lodash.defaults'
+isFunction = require 'lodash.isfunction'
+stringify  = require './stringify'
 
-save = (p, data, opt={}) ->
+save = (p, data, strOpt, cb) ->
     
-    fs.writeFileSync p, toStr data, _.defaults ext: path.extname(p), opt
+    if isFunction strOpt
+        cb = strOpt 
+        strOpt = {}
+    else
+        strOpt ?= {}
+    
+    str = stringify data, defaults ext:path.extname(p), strOpt
+        
+    if isFunction cb
+        
+        fs.writeFile p, str, cb
+        
+    else
+    
+        fs.writeFileSync p, str
 
 module.exports = save
