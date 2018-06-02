@@ -94,6 +94,19 @@ describe 'save', ->
 describe 'parse', ->
     
     it 'number', ->
+        
+        expect noon.parse "666"
+        .to.eql [666]
+        
+        expect noon.parse "1.23"
+        .to.eql [1.23]
+        
+        expect noon.parse "0.000"
+        .to.eql [0]
+        
+        expect noon.parse "Infinity"
+        .to.eql [Infinity]
+        
         expect noon.parse """
         42
         66.0
@@ -108,6 +121,10 @@ describe 'parse', ->
         .to.eql [42,66,0.42,66.6,Infinity,20,-20,0,-1.23]
         
     it 'bool', ->
+        
+        expect noon.parse "true"
+        .to.eql [true]
+        
         expect noon.parse """
         true
         false
