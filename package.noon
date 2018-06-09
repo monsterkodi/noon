@@ -1,22 +1,10 @@
 name            noon
-version         1.4.0
+version         1.5.0
 description     'nother ordinary object notation
 main            js/main.js
 keywords
                 object-notation
-                command-line-tool
                 noon
-                json
-                cson
-                yaml
-                data
-                read
-                load
-                save
-                write
-                parse
-                convert
-                stringify
 author          monsterkodi
 license         Unlicense
 repository

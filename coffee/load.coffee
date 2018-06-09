@@ -16,7 +16,6 @@ err  = (msg) -> console.log ("\n"+msg+"\n").red
 parseStr = (str, p, ext) ->
     
     if str.length <= 0
-        err "empty file: #{p.yellow.bold}"
         return null
         
     extname = ext ? path.extname p
