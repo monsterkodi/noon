@@ -964,14 +964,6 @@ describe 'stringify ext', ->
         }
         """
 
-    it 'should output cson', -> 
-        
-        expect noon.stringify o, ext: '.cson'
-        .to.eql """
-        a: 1
-        b: 2
-        """
-
     it 'should output yaml', -> 
         
         expect noon.stringify o, ext: '.yaml'

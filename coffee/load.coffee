@@ -21,7 +21,6 @@ parseStr = (str, p, ext) ->
     extname = ext ? path.extname p
     switch extname
         when '.json' then JSON.parse str
-        when '.cson' then require('cson').parse str
         when '.yml', '.yaml' then require('js-yaml').load str
         else
             require('./parse') str

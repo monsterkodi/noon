@@ -1,10 +1,11 @@
 name            noon
-version         1.5.0
+version         2.0.0
 description     'nother ordinary object notation
 main            js/main.js
 keywords
-                object-notation
                 noon
+                object
+                notation
 author          monsterkodi
 license         Unlicense
 repository
@@ -18,7 +19,6 @@ scripts
                 test  ./node_modules/.bin/mocha -c --require koffee/js/register ./test/test.coffee
 dependencies
                 colors          ^1.3.3
-                cson            ^5.1.0
                 js-yaml         ^3.13.1
                 karg            >=1.10.0
                 lodash.defaults  ^4.2.0
