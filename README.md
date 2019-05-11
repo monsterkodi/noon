@@ -167,7 +167,7 @@ e   2
 
 ### module
 
-```coffee-script
+```coffeescript
 noon = require 'noon'
 
 # usage is similar to JSON 
@@ -208,7 +208,7 @@ defaultColors =
 
 ```
 
-```coffee-script
+```coffeescript
 # load data from file 
 
 data = noon.load 'file.noon' 
@@ -220,7 +220,7 @@ data = noon.load 'file.yaml'
 
 ```
 
-```coffee-script
+```coffeescript
 # write data to file
 
 noon.save 'file.noon', data
