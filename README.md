@@ -14,7 +14,6 @@ Whitespace is preferred over other control characters:
     - works well in config files
     - works well in [command line arguments](https://github.com/monsterkodi/colorcat/blob/master/test/test.sh)
     - good for storing [regexp patterns](https://github.com/monsterkodi/ko/blob/master/syntax/ko.noon)
-- Consecutive spaces mark dictionary keys
     
 ### example files
 
