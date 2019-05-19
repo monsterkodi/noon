@@ -287,6 +287,28 @@ describe 'parse', ->
         """
         .to.eql {key: "value   with    some    spaces   ."}
         
+    it 'whitespace lines', ->
+        
+        o = {a: 1, b: 2}
+        
+        expect noon.parse """
+         
+        a  1
+         
+        b  2
+         
+        """
+        .to.eql o
+
+        expect noon.parse """
+            
+        a  1
+            
+        b  2
+            
+        """
+        .to.eql o
+        
     it 'dense notation', ->
         
         expect noon.parse """

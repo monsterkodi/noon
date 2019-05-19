@@ -8,6 +8,11 @@
 
 parse = (s) ->
     
+    EMPTY   = /^\s*$/
+    NEWLINE = /\r?\n/
+    FLOAT   = /^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/
+    INT     = /^(\-|\+)?([0-9]+|Infinity)$/
+    
     last = (a) -> a?[a.length-1]
     isArray = (a) -> a? and typeof(a) == 'object' and a.constructor.name == 'Array'
     
@@ -34,7 +39,6 @@ parse = (s) ->
         l = ''
         key = true
         esc = false
-        # console.log '---', d, s
                 
         while p < sl 
             if l != '' and s[p] == ' ' and s[p+1] == '.'
@@ -61,10 +65,8 @@ parse = (s) ->
         if p < sl
             t = undense sd, s.substring p
             t.unshift ld
-            # console.log t
             t
         else
-            # console.log [ld]
             [ld]
     
     ###
@@ -76,15 +78,15 @@ parse = (s) ->
     ###
 
     leadingSpaces = 0
-    while s[leadingSpaces] == ' '
-        leadingSpaces += 1
 
-    lines = s.split /\r?\n/
+    lines = s.split(NEWLINE).filter (l) -> not EMPTY.test l 
 
     if lines.length == 1
         lines = [lines[0].trim()]
-        leadingSpaces = 0
-    
+    else 
+        while lines[0][leadingSpaces] == ' '
+            leadingSpaces += 1
+        
     stack = [
         o: []
         d: leadingSpaces
@@ -143,8 +145,8 @@ parse = (s) ->
         if v?[0] == '|' then return key v            
         else if v?[v.length-1] == '|'
             return v.substr(0, v.length-1)
-        if /^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(v) then return parseFloat v
-        if /^(\-|\+)?([0-9]+|Infinity)$/.test(v)   then return parseInt   v
+        if FLOAT.test(v) then return parseFloat v
+        if INT.test(v)   then return parseInt   v
         v
         
     ###
@@ -237,12 +239,13 @@ parse = (s) ->
         
         while l[p] == ' ' # preceeding spaces
             p += 1
-        d = p
 
+        if not l[p]? then return [0, null, null, false] # only spaces in line
+        
+        d = p
         k = ''
 
-        if l[p] == '#'
-            return [d, null, null, false]
+        if l[p] == '#' then return [0, null, null, false] # comment line
         
         escl = false
         escr = false

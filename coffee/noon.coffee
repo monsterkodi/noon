@@ -15,7 +15,6 @@ parse     = require './parse'
 load      = require './load'
 save      = require './save'
 noon      = require './main'
-log       = console.log
 
 ###
  0000000   00000000    0000000    0000000
@@ -53,7 +52,7 @@ if args.file
     try
         d = load args.file, args.type
     catch e
-        err e
+        err e.stack
 
     if args.output in noon.extnames
         if args.output == '.noon'
