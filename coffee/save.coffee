@@ -6,15 +6,14 @@
 0000000   000   000      0      00000000
 ###
 
-fs         = require 'fs'
-path       = require 'path'
-defaults   = require 'lodash.defaults'
-isFunction = require 'lodash.isfunction'
-stringify  = require './stringify'
-
 save = (p, data, strOpt, cb) ->
+
+    fs         = require 'fs'
+    path       = require 'path'
+    defaults   = require 'lodash.defaults'
+    stringify  = require './stringify'
     
-    if isFunction strOpt
+    if 'function' == typeof strOpt
         cb = strOpt 
         strOpt = {}
     else
@@ -22,7 +21,7 @@ save = (p, data, strOpt, cb) ->
     
     str = stringify data, defaults ext:path.extname(p), strOpt
         
-    if isFunction cb
+    if 'function' == typeof cb
         
         fs.writeFile p, str, cb
         

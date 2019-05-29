@@ -111,7 +111,8 @@ now
 ```
 
 #### comments
-```coffee-script
+
+```coffeescript
 # comments start with the hash sign
 # mixing of data and comments is not allowed
 therefore:

@@ -6,19 +6,12 @@
 0000000   0000000   000   000  0000000  
 ###
 
-fs     = require 'fs'
-colors = require 'colors'
-path   = require 'path'
-isFunc = require 'lodash.isfunction'
-
-err  = (msg) -> console.log ("\n"+msg+"\n").red
-
 parseStr = (str, p, ext) ->
     
     if str.length <= 0
         return null
         
-    extname = ext ? path.extname p
+    extname = ext ? require('path').extname p
     switch extname
         when '.json' then JSON.parse str
         when '.yml', '.yaml' then require('js-yaml').load str
@@ -26,14 +19,16 @@ parseStr = (str, p, ext) ->
             require('./parse') str
 
 load = (p, ext, cb) ->
+
+    fs = require 'fs'
     
-    cb = ext if isFunc ext
+    cb = ext if 'function' == typeof ext
     
-    if isFunc cb
+    if 'function' == typeof cb
         
         fs.readFile p, 'utf8', (e, str) ->
             if e?
-                err "error reading file: #{p.yellow.bold}", e
+                error "error reading file: #{p}", e
                 cb null
             else
                 cb parseStr str, p, ext

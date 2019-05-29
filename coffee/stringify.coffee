@@ -6,7 +6,6 @@
 0000000      000     000   000  000  000   000   0000000   000  000          000   
 ###
 
-
 defaults =
     ext:      '.noon' # output format
     indent:   4       # number of spaces per indent level
