@@ -21,13 +21,13 @@ regs =
     url:    new RegExp '^(https?|git|file)(://)(\\S+)$'
     path:   new RegExp '^([\\.\\/\\S]+)(\\/\\S+)$'
     semver: new RegExp '\\d+\\.\\d+\\.\\d+'
-        
-stringify = (obj, options={}) ->
 
-    padRight = (s, l) -> 
-        while s.length < l
-            s += ' '
-        s
+rpad = (s, l) -> 
+    while s.length < l
+        s += ' '
+    s
+    
+stringify = (obj, options={}) ->
 
     def = (o,d) ->
         r = {}
@@ -45,7 +45,7 @@ stringify = (obj, options={}) ->
     
     if typeof opt.indent == 'string' 
         opt.indent = opt.indent.length
-    indstr = padRight '', opt.indent
+    indstr = rpad '', opt.indent
     
     ###
      0000000   0000000   000       0000000   00000000    0000000
@@ -157,10 +157,10 @@ stringify = (obj, options={}) ->
                 k += '|'
             
             if opt.align
-                ks = padRight k, Math.max maxKey, k.length+2
-                i  = padRight ind+indstr, maxKey
+                ks = rpad k, Math.max maxKey, k.length+2
+                i  = rpad ind+indstr, maxKey
             else
-                ks = padRight k, k.length+2
+                ks = rpad k, k.length+2
                 i  = ind+indstr
             s += colors.key opt.colors != false and s.length == 0 and ks.bold or ks
             vs = toStr v, i, false, visited

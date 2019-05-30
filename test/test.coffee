@@ -1,4 +1,3 @@
-isFunc = require 'lodash.isfunction'
 assert = require 'assert'
 chai   = require 'chai'
 path   = require 'path'
@@ -10,13 +9,13 @@ chai.should()
 describe 'module interface', ->
     
     it 'should implement parse', ->
-        isFunc(noon.parse).should.be.true
+        (typeof noon.parse).should.eql 'function'
     it 'should implement stringify', ->
-        isFunc(noon.stringify).should.be.true
+        (typeof noon.stringify).should.eql 'function'
     it 'should implement load', ->
-        isFunc(noon.load).should.be.true
+        (typeof noon.load).should.eql 'function'
     it 'should implement save', ->
-        isFunc(noon.save).should.be.true
+        (typeof noon.save).should.eql 'function'
     
 # 000       0000000    0000000   0000000    
 # 000      000   000  000   000  000   000  
