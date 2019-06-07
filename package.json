@@ -1,0 +1,42 @@
+{
+  "name": "noon",
+  "version": "2.9.0",
+  "description": "'nother ordinary object notation",
+  "keywords": [
+    "noon",
+    "object",
+    "notation"
+  ],
+  "author": "monsterkodi",
+  "license": "Unlicense",
+  "main": "js/main.js",
+  "files": [
+    "./js/*.js",
+    "./bin/noon"
+  ],
+  "bin": {
+    "noon": "./bin/noon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/monsterkodi/noon"
+  },
+  "bugs": {
+    "url": "https://github.com/monsterkodi/noon/issues"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -c --require koffee/js/register ./test/test.coffee"
+  },
+  "dependencies": {
+    "js-yaml": "^3.13.1",
+    "karg": ">=1.16.0",
+    "klor": ">=0.53.0",
+    "lodash.defaults": "^4.2.0",
+    "lodash.pad": "^4.5.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "koffee": "^0.56.0"
+  }
+}
