@@ -71,19 +71,19 @@ stringify = (obj, options={}) ->
             visited: noop
             special: noop
     else
-        colors  = require 'colors'
+        require('klor').kolor.globalize()
         defaultColors =
-            url:     colors.yellow
-            key:     colors.gray
-            null:    colors.blue
-            true:    colors.blue.bold
-            false:   colors.gray.dim
-            path:    colors.green
-            value:   colors.white
-            string:  colors.white.bold
-            semver:  colors.red
-            number:  colors.magenta
-            visited: colors.red
+            url:     yellow
+            key:     gray
+            null:    blue
+            true:    (s) -> blue bold s
+            false:   (s) -> gray dim s
+            path:    green
+            value:   white
+            string:  (s) -> white bold s
+            semver:  red
+            number:  magenta
+            visited: red
             dim:     '^>=.:/-'
         if opt.colors == true
             colors = defaultColors
@@ -122,7 +122,7 @@ stringify = (obj, options={}) ->
     beautify = (s) -> 
         if colors.dim?
             for c in colors.dim
-                s = s.replace new RegExp("\\#{c}", 'g'), c.dim
+                s = s.replace new RegExp("\\#{c}", 'g'), dim c
         s
     
     ###
@@ -162,7 +162,7 @@ stringify = (obj, options={}) ->
             else
                 ks = rpad k, k.length+2
                 i  = ind+indstr
-            s += colors.key opt.colors != false and s.length == 0 and ks.bold or ks
+            s += colors.key opt.colors != false and s.length == 0 and bold(ks) or ks
             vs = toStr v, i, false, visited
             if vs[0] == '\n'
                 while s[s.length-1] == ' '

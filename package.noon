@@ -18,9 +18,9 @@ bin
 scripts
                 test  ./node_modules/.bin/mocha -c --require koffee/js/register ./test/test.coffee
 dependencies
-                colors          ^1.3.3
                 js-yaml         ^3.13.1
                 karg            >=1.13.0
+                klor            >=0.52.0
                 lodash.defaults  ^4.2.0
                 lodash.pad      ^4.5.1
 devDependencies
