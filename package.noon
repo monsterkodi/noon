@@ -1,5 +1,5 @@
 name            noon
-version         2.9.0
+version         2.10.0
 description     'nother ordinary object notation
 keywords
                 noon
@@ -9,8 +9,8 @@ author          monsterkodi
 license         Unlicense
 main            js/main.js
 files
-                ./js/*.js
-                ./bin/noon
+                bin/noon
+                js/*.js
 bin
                 noon  ./bin/noon
 repository
