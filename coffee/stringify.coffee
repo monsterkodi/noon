@@ -39,64 +39,34 @@ stringify = (obj, options={}) ->
 
     opt = def options, defaults
     
+    #       000   0000000   0000000   000   000        000   000  00     00  000      
+    #       000  000       000   000  0000  000         000 000   000   000  000      
+    #       000  0000000   000   000  000 0 000          00000    000000000  000      
+    # 000   000       000  000   000  000  0000           000     000 0 000  000      
+    #  0000000   0000000    0000000   000   000           000     000   000  0000000  
+        
     switch opt.ext
-        when '.json'         then return JSON.stringify obj, null, opt.indent
-        when '.yml', '.yaml' then return require('js-yaml').dump obj
+        when '.json'   
+            cs = JSON.stringify obj, null, opt.indent
+        when '.yml', '.yaml' 
+            cs = require('js-yaml').dump obj
+            
+    if cs
+        if opt.colors
+            return require('klor').syntax text:cs, ext:opt.ext
+        else
+            return cs
     
     if typeof opt.indent == 'string' 
         opt.indent = opt.indent.length
+        
     indstr = rpad '', opt.indent
-    
-    ###
-     0000000   0000000   000       0000000   00000000    0000000
-    000       000   000  000      000   000  000   000  000     
-    000       000   000  000      000   000  0000000    0000000 
-    000       000   000  000      000   000  000   000       000
-     0000000   0000000   0000000   0000000   000   000  0000000 
-    ###
-    
-    if opt.colors == false or opt.colors == 0
-        noop = (s) -> s
-        colors = 
-            url:     noop
-            key:     noop
-            null:    noop
-            true:    noop
-            false:   noop
-            path:    noop
-            value:   noop
-            string:  noop
-            semver:  noop
-            number:  noop
-            visited: noop
-            special: noop
-    else
-        require('klor').kolor.globalize()
-        defaultColors =
-            url:     yellow
-            key:     gray
-            null:    blue
-            true:    (s) -> blue bold s
-            false:   (s) -> gray dim s
-            path:    green
-            value:   white
-            string:  (s) -> white bold s
-            semver:  red
-            number:  magenta
-            visited: red
-            dim:     '^>=.:/-'
-        if opt.colors == true
-            colors = defaultColors
-        else
-            colors = def opt.colors, defaultColors
-
-    ###
-    00000000   0000000   0000000   0000000   00000000   00000000
-    000       000       000       000   000  000   000  000     
-    0000000   0000000   000       000000000  00000000   0000000 
-    000            000  000       000   000  000        000     
-    00000000  0000000    0000000  000   000  000        00000000
-    ###
+            
+    # 00000000   0000000   0000000   0000000   00000000   00000000
+    # 000       000       000       000   000  000   000  000     
+    # 0000000   0000000   000       000000000  00000000   0000000 
+    # 000            000  000       000   000  000        000     
+    # 00000000  0000000    0000000  000   000  000        00000000
 
     escape = (k, arry) ->
         if 0 <= k.indexOf '\n'
@@ -110,28 +80,12 @@ stringify = (obj, options={}) ->
         else if arry and /\ \ /.test k
             k = '|' + k + '|'
         k
-
-    ###
-    0000000    00000000   0000000   000   000  000000000  000  00000000  000   000
-    000   000  000       000   000  000   000     000     000  000        000 000 
-    0000000    0000000   000000000  000   000     000     000  000000      00000  
-    000   000  000       000   000  000   000     000     000  000          000   
-    0000000    00000000  000   000   0000000      000     000  000          000   
-    ###
     
-    beautify = (s) -> 
-        if colors.dim?
-            for c in colors.dim
-                s = s.replace new RegExp("\\#{c}", 'g'), dim c
-        s
-    
-    ###
-    00000000   00000000   00000000  000000000  000000000  000   000
-    000   000  000   000  000          000        000      000 000 
-    00000000   0000000    0000000      000        000       00000  
-    000        000   000  000          000        000        000   
-    000        000   000  00000000     000        000        000   
-    ###
+    # 00000000   00000000   00000000  000000000  000000000  000   000
+    # 000   000  000   000  000          000        000      000 000 
+    # 00000000   0000000    0000000      000        000       00000  
+    # 000        000   000  000          000        000        000   
+    # 000        000   000  00000000     000        000        000   
     
     pretty = (o, ind, visited) ->
         
@@ -162,7 +116,7 @@ stringify = (obj, options={}) ->
             else
                 ks = rpad k, k.length+2
                 i  = ind+indstr
-            s += colors.key opt.colors != false and s.length == 0 and bold(ks) or ks
+            s += ks
             vs = toStr v, i, false, visited
             if vs[0] == '\n'
                 while s[s.length-1] == ' '
@@ -181,54 +135,49 @@ stringify = (obj, options={}) ->
             
         l.join '\n'
 
-    ###
-    000000000   0000000    0000000  000000000  00000000 
-       000     000   000  000          000     000   000
-       000     000   000  0000000      000     0000000  
-       000     000   000       000     000     000   000
-       000      0000000   0000000      000     000   000
-    ###
+    # 000000000   0000000    0000000  000000000  00000000 
+    #    000     000   000  000          000     000   000
+    #    000     000   000  0000000      000     0000000  
+    #    000     000   000       000     000     000   000
+    #    000      0000000   0000000      000     000   000
     
     toStr = (o, ind='', arry=false, visited=[]) ->
+        
         if not o? 
             if o == null
-                return opt.null or arry and colors.null("null") or ''
+                return opt.null or arry and "null" or ''
             if o == undefined
-                return colors.null "undefined"
-            return colors.null '<?>'
-        t = typeof o
-        if t == 'string' 
-            if opt.colors != false
-                for rc in Object.keys regs
-                    if colors[rc]? and regs[rc].test o
-                        return  colors[rc] beautify escape o, arry
+                return "undefined"
+            return '<?>'
+            
+        switch t = typeof o
+            
+            when 'string' 
+                return escape o, arry
                 
-            return colors.string escape o, arry
-        else if t == 'object'
-            if opt.circular
-                if o in visited
-                    return colors.visited '<v>'
-                visited.push o
-                
-            if o.constructor?.name == 'Array'
-                s = ind!='' and arry and '.' or ''
-                s += '\n' if o.length and ind!=''
-                s += (ind+toStr(v,ind+indstr,true,visited) for v in o).join '\n'
-            else if o.constructor?.name == 'RegExp'
-                return colors.semver o.source
+            when 'object'
+                if opt.circular
+                    if o in visited
+                        return '<v>'
+                    visited.push o
+                    
+                if o.constructor?.name == 'Array'
+                    s = ind!='' and arry and '.' or ''
+                    s += '\n' if o.length and ind!=''
+                    s += (ind+toStr(v,ind+indstr,true,visited) for v in o).join '\n'
+                else if o.constructor?.name == 'RegExp'
+                    return o.source
+                else
+                    s = (arry and '.\n') or ((ind != '') and '\n' or '')
+                    s += pretty o, ind, visited
+                return s
             else
-                s = (arry and '.\n') or ((ind != '') and '\n' or '')
-                s += pretty o, ind, visited
-            return s
-        else if t == 'number'
-            return colors.number String o
-        else if t == 'boolean'
-            return (o and colors.true or colors.false) String o
-        else
-            return colors.value String o # plain values
-        return colors.null '<???>'
+                return String o
+        return '<???>'
 
     s = toStr obj
+    if opt.colors
+        s = require('klor').syntax text:s, ext:'noon'
     s
 
 module.exports = stringify

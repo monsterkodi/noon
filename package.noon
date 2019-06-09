@@ -1,5 +1,5 @@
 name            noon
-version         2.10.0
+version         2.11.0
 description     'nother ordinary object notation
 keywords
                 noon
@@ -22,8 +22,8 @@ scripts
                 test  ./node_modules/.bin/mocha -c --require koffee/js/register ./test/test.coffee
 dependencies
                 js-yaml         ^3.13.1
-                karg            >=1.16.0
-                klor            >=0.53.0
+                karg            >=1.18.0
+                klor            ^0.63.0
                 lodash.defaults  ^4.2.0
                 lodash.pad      ^4.5.1
 devDependencies

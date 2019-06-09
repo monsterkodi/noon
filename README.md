@@ -184,28 +184,14 @@ what's up?    ☺
 # { hello: 'world', 'what\'s up?': '☺' }
 
 stringify_options =   # stringify's second argument, defaults are: 
-    ext:      '.noon' # output format: .noon .json .yaml
+    ext:      'noon'  # output format: noon json or yaml
     indent:   4       # number of spaces per indent level
     align:    true    # vertically align object values
     maxalign: 32      # maximal number of spaces when aligning
     sort:     false   # sort object keys alphabetically
     circular: false   # check for circular references (expensive!)
     colors:   false   # colorize output with ansi colors
-                      # custom dictionary or true for default colors:
-
-defaultColors =
-    url:     colors.yellow
-    key:     colors.gray
-    null:    colors.blue
-    true:    colors.blue.bold
-    false:   colors.gray.dim
-    path:    colors.green
-    value:   colors.white
-    string:  colors.white.bold
-    semver:  colors.red
-    number:  colors.magenta
-    visited: colors.red
-
+    
 ```
 
 ```coffeescript
@@ -229,7 +215,7 @@ noon.save 'file.noon', data
 
 noon.save 'file.noon', data, stringify_options
 noon.save 'file.json', data  # < write as json
-noon.save 'filenoext', data, ext: '.noon'
+noon.save 'filenoext', data, ext: 'noon'
 
 ```
 
@@ -238,7 +224,5 @@ noon.save 'filenoext', data, ext: '.noon'
 - keys can't start with the pipe symbol: |
 - escaped keys can't contain the pipe symbol
 - empty objects are not expressible
-- probably some other unknown corner cases
 
 Don't use it if you can't live with the limitations mentioned above.  
-Don't expect your data to convert flawlessly!

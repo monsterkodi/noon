@@ -32,7 +32,6 @@ load = (p, ext, cb) ->
                 cb null
             else
                 cb parseStr str, p, ext
-        
     else
         str = fs.readFileSync p, 'utf8'
     
