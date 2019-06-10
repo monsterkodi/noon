@@ -1,6 +1,6 @@
 {
   "name": "noon",
-  "version": "2.12.2",
+  "version": "2.12.3",
   "description": "'nother ordinary object notation",
   "keywords": [
     "noon",
@@ -31,8 +31,8 @@
   "homepage": "https://www.npmjs.com/package/noon",
   "dependencies": {
     "js-yaml": "^3.13.1",
-    "karg": ">=1.18.1",
-    "klor": ">=1.0.1",
+    "karg": "^1.18.1",
+    "klor": "^1.0.1",
     "lodash.defaults": "^4.2.0",
     "lodash.pad": "^4.5.1"
   },
