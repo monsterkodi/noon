@@ -236,6 +236,7 @@ Don't use it if you can't live with the limitations mentioned above.
 [npm-url]:http://npmjs.org/package/noon
 [travis-image]:https://travis-ci.org/monsterkodi/noon.svg?branch=master
 [travis-url]:https://travis-ci.org/monsterkodi/noon
+[![Coverage Status](https://coveralls.io/repos/github/monsterkodi/noon/badge.svg?branch=master)](https://coveralls.io/github/monsterkodi/noon?branch=master)
 [david-image]:https://david-dm.org/monsterkodi/noon/status.svg
 [david-url]:https://david-dm.org/monsterkodi/noon
 [downloads-image]:https://img.shields.io/npm/dm/noon.svg
