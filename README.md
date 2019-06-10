@@ -226,3 +226,17 @@ noon.save 'filenoext', data, ext: 'noon'
 - empty objects are not expressible
 
 Don't use it if you can't live with the limitations mentioned above.  
+
+[![npm package][npm-image]][npm-url] 
+[![Build Status][travis-image]][travis-url] 
+[![downloads][downloads-image]][downloads-url] 
+[![Dependencies Status][david-image]][david-url]
+
+[npm-image]:https://img.shields.io/npm/v/noon.svg
+[npm-url]:http://npmjs.org/package/noon
+[travis-image]:https://travis-ci.org/monsterkodi/noon.svg?branch=master
+[travis-url]:https://travis-ci.org/monsterkodi/noon
+[david-image]:https://david-dm.org/monsterkodi/noon/status.svg
+[david-url]:https://david-dm.org/monsterkodi/noon
+[downloads-image]:https://img.shields.io/npm/dm/noon.svg
+[downloads-url]:http://npmjs.org/package/noon
