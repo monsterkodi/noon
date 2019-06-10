@@ -1,6 +1,6 @@
 {
   "name": "noon",
-  "version": "2.12.3",
+  "version": "2.13.0",
   "description": "'nother ordinary object notation",
   "keywords": [
     "noon",
@@ -29,6 +29,28 @@
     "test": "./node_modules/.bin/mocha --require koffee/js/register test/test.coffee -r jscoverage -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js"
   },
   "homepage": "https://www.npmjs.com/package/noon",
+  "coffeelintConfig": {
+    "indentation": {
+      "level": "error",
+      "value": 4
+    },
+    "line_endings": {
+      "level": "error",
+      "value": "unix"
+    },
+    "max_line_length": {
+      "level": "warn",
+      "value": 120
+    },
+    "no_trailing_whitespace": {
+      "level": "ignore",
+      "value": false
+    },
+    "no_nested_string_interpolation": {
+      "level": "ignore",
+      "value": false
+    }
+  },
   "dependencies": {
     "js-yaml": "^3.13.1",
     "karg": "^1.18.1",

@@ -16,10 +16,10 @@ save      = require './save'
 noon      = require './main'
 
 #  0000000   00000000    0000000    0000000
-# 000   000  000   000  000        000     
-# 000000000  0000000    000  0000  0000000 
+# 000   000  000   000  000        000
+# 000000000  0000000    000  0000  0000000
 # 000   000  000   000  000   000       000
-# 000   000  000   000   0000000   0000000 
+# 000   000  000   000   0000000   0000000
 
 args = require('karg') """
 noon
@@ -31,7 +31,7 @@ noon
     sort        . ? sort keys alphabetically        . = false
     colors      . ? output with ansi colors         . = true
     type        . ? input filetype
-    
+
 supported filetypes:
     #{noon.extnames.join '\n    '}
 
@@ -53,30 +53,30 @@ if args.file
 
     if args.output in noon.extensions
         args.output = '.'+args.output
-        
+
     if args.output in noon.extnames
         if args.output == '.noon'
-            o= 
+            o=
                 align:      args.align
                 indent:     Math.max 1, args.indent
                 maxalign:   Math.max 0, args.maxalign
                 colors:     args.colors
                 sort:       args.sort
         else
-            o = 
+            o =
                 ext:        args.output
                 colors:     args.colors
                 indent:     pad '', args.indent
         log stringify d, o
     else
         if path.extname(args.output) == '.noon'
-            o = 
+            o =
                 align:      args.align
                 indent:     Math.max 1, args.indent
                 maxalign:   Math.max 0, args.maxalign
                 colors:     false
                 sort:       args.sort
         else
-            o = 
+            o =
                 indent:     pad '', args.indent
-        save args.output, d, o 
+        save args.output, d, o
