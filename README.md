@@ -240,4 +240,4 @@ Don't use it if you can't live with the limitations mentioned above.
 [david-image]:https://david-dm.org/monsterkodi/noon/status.svg
 [david-url]:https://david-dm.org/monsterkodi/noon
 [downloads-image]:https://img.shields.io/npm/dm/noon.svg
-[downloads-url]:http://npmjs.org/package/noon
+[downloads-url]:https://www.npmtrends.com/noon
