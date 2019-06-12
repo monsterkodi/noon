@@ -6,15 +6,15 @@ noon   = require '../'
 expect = chai.expect
 chai.should()
 
-describe 'module interface', ->
+describe 'module interface' ->
     
-    it 'should implement parse', ->
+    it 'should implement parse' ->
         (typeof noon.parse).should.eql 'function'
-    it 'should implement stringify', ->
+    it 'should implement stringify' ->
         (typeof noon.stringify).should.eql 'function'
-    it 'should implement load', ->
+    it 'should implement load' ->
         (typeof noon.load).should.eql 'function'
-    it 'should implement save', ->
+    it 'should implement save' ->
         (typeof noon.save).should.eql 'function'
     
 # 000       0000000    0000000   0000000    
@@ -23,11 +23,11 @@ describe 'module interface', ->
 # 000      000   000  000   000  000   000  
 # 0000000   0000000   000   000  0000000    
 
-describe 'load', ->
+describe 'load' ->
     
     testNoon = path.join __dirname, 'test.noon'
     
-    it 'sync', ->
+    it 'sync' ->
         
         r = noon.load testNoon
         
@@ -48,12 +48,12 @@ describe 'load', ->
 #      000  000   000     000     000       
 # 0000000   000   000      0      00000000  
 
-describe 'save', ->
+describe 'save' ->
     
     writeNoon = path.join __dirname, 'write.noon'
     writeData = hello: 'world'
     
-    it 'sync', ->
+    it 'sync' ->
         
         try 
             fs.unlinkSync writeNoon
@@ -90,9 +90,9 @@ describe 'save', ->
 000        000   000  000   000  0000000   00000000
 ###
 
-describe 'parse', ->
+describe 'parse' ->
     
-    it 'number', ->
+    it 'number' ->
         
         expect noon.parse "666"
         .to.eql [666]
@@ -119,7 +119,7 @@ describe 'parse', ->
         """
         .to.eql [42,66,0.42,66.6,Infinity,20,-20,0,-1.23]
         
-    it 'bool', ->
+    it 'bool' ->
         
         expect noon.parse "true"
         .to.eql [true]
@@ -130,13 +130,13 @@ describe 'parse', ->
         """
         .to.eql [true,false]
         
-    it 'null', ->
+    it 'null' ->
         expect noon.parse """
         null
         """
         .to.eql [null]            
         
-    it 'string', ->
+    it 'string' ->
         
         expect noon.parse "hello world"
         .to.eql ['hello world']
@@ -166,7 +166,7 @@ describe 'parse', ->
         .to.eql ['line 1\nline 2']
 
                 
-    it 'list', ->
+    it 'list' ->
         expect noon.parse("""
         a
         a1
@@ -174,7 +174,7 @@ describe 'parse', ->
         """)
         .to.eql ['a', 'a1', 'a 1']
         
-    it 'object', ->
+    it 'object' ->
         expect noon.parse """
         a  
         b  
@@ -182,7 +182,7 @@ describe 'parse', ->
         """
         .to.eql a:null, b:null, c:3
         
-    it 'nested lists', ->
+    it 'nested lists' ->
         expect noon.parse """
         a  
         b  
@@ -204,7 +204,7 @@ describe 'parse', ->
                 ['e', ['f']]
             ]
 
-    it 'nested objects', ->
+    it 'nested objects' ->
         
         expect noon.parse """
         a  
@@ -224,7 +224,7 @@ describe 'parse', ->
                     f: 1
                 g: null
                 
-    it 'complex object', ->
+    it 'complex object' ->
         
         expect noon.parse """
         a
@@ -250,7 +250,7 @@ describe 'parse', ->
             j: [{k: 'l'}, '.|':'true|false']
             
 
-    it 'spaces', ->    
+    it 'spaces' ->    
         o = {a: 1, b: 2}
             
         expect noon.parse """
@@ -286,7 +286,7 @@ describe 'parse', ->
         """
         .to.eql {key: "value   with    some    spaces   ."}
         
-    it 'whitespace lines', ->
+    it 'whitespace lines' ->
         
         o = {a: 1, b: 2}
         
@@ -308,7 +308,7 @@ describe 'parse', ->
         """
         .to.eql o
         
-    it 'dense notation', ->
+    it 'dense notation' ->
         
         expect noon.parse """
         a  . b .. c 1 .. d  2 .. e ... x y z  ... f .... null  null ... 3 .. g . h 
@@ -357,7 +357,7 @@ describe 'parse', ->
                 '?':  'some sentence. some other sentence.'
                 'A:': 'next sentence...' 
 
-    it 'dense escaped', ->
+    it 'dense escaped' ->
 
         expect noon.parse """
         a  . x | 1| . y | 2 | . z |3 |
@@ -392,7 +392,7 @@ describe 'parse', ->
                 ' 2 ': ' b'
                 '3 ':  'c x' 
 
-    it 'one line notation', ->
+    it 'one line notation' ->
 
         expect noon.parse "key . a :: b . c :: d 1 :: e 2"
         .to.eql
@@ -443,7 +443,7 @@ describe 'parse', ->
             a: [1,2]
             b: [7]
 
-    it 'escape', -> 
+    it 'escape' -> 
         
         expect noon.parse """
          | 1|
@@ -532,7 +532,7 @@ describe 'parse', ->
         expect noon.parse '... \n| 1 |\n | 2 \n  3  |\n  ...'
         .to.eql [' 1 \n 2\n3  ']
 
-    it 'comment', -> 
+    it 'comment' -> 
         
         expect noon.parse """
         # this is a comment
@@ -576,9 +576,9 @@ describe 'parse', ->
 0000000      000     000   000  000  000   000   0000000   000  000          000   
 ###
 
-describe 'stringify', ->
+describe 'stringify' ->
     
-    it 'number', -> 
+    it 'number' -> 
         
         expect noon.stringify(42)
         .to.eql '42'
@@ -586,7 +586,7 @@ describe 'stringify', ->
         expect noon.stringify(66.6000)
         .to.eql '66.6'
         
-    it 'bool', -> 
+    it 'bool' -> 
         
         expect noon.stringify false
         .to.eql 'false'
@@ -602,7 +602,7 @@ describe 'stringify', ->
         |true  |
         """
         
-    it 'null', ->
+    it 'null' ->
         
         expect noon.stringify [null, ' null ']
         .to.eql """
@@ -610,7 +610,7 @@ describe 'stringify', ->
         | null |
         """
         
-    it 'string', ->
+    it 'string' ->
         
         expect noon.stringify "hello world"
         .to.eql 'hello world'
@@ -624,14 +624,14 @@ describe 'stringify', ->
         expect noon.stringify "1\n2\n3"
         .to.eql '...\n1\n2\n3\n...'
         
-    it 'float', ->
+    it 'float' ->
         expect noon.stringify [0.24,66.6]
         .to.eql """
         0.24
         66.6
         """
         
-    it 'list', ->
+    it 'list' ->
         expect noon.stringify ['a', 'a1', 'a 1']
         .to.eql """
         a
@@ -639,7 +639,7 @@ describe 'stringify', ->
         a 1
         """
 
-    it 'list of lists ...', ->
+    it 'list of lists ...' ->
 
         expect noon.stringify [[1,2],[4,[5],[[6]]],[7],[],[[8,[9,[10,11],12]]]]
         .to.eql """
@@ -667,7 +667,7 @@ describe 'stringify', ->
                     12
         """
         
-    it 'object', ->
+    it 'object' ->
         expect noon.stringify {a:1, b:2, c:3}
         .to.eql """    
         a   1
@@ -694,7 +694,7 @@ describe 'stringify', ->
         key  value   with    some    spaces  .
         """
         
-    it 'escape', ->
+    it 'escape' ->
         
         expect noon.stringify [
             '' 
@@ -785,7 +785,7 @@ describe 'stringify', ->
             |   c    d  e   |
         """
 
-    it 'trim', ->
+    it 'trim' ->
         o = a: 1, b: null, c: 2
         
         expect noon.stringify o, align: false
@@ -815,7 +815,7 @@ describe 'stringify', ->
                 z  1
         """
 
-    it 'maxalign', ->
+    it 'maxalign' ->
         o = o: 1, ooOOoo: 2
         expect noon.stringify o, maxalign: 2
         .to.eql """
@@ -873,7 +873,7 @@ describe 'stringify', ->
                 bar  1
         """
         
-    it 'indent', ->
+    it 'indent' ->
         o = a: b: c: 1
         expect noon.stringify o, indent: 2, align: false
         .to.eql """
@@ -912,7 +912,7 @@ describe 'stringify', ->
                         c  1
         """
 
-    it 'comment', ->
+    it 'comment' ->
         
         expect noon.stringify '#'
         .to.eql "|#|"
@@ -927,7 +927,7 @@ describe 'stringify', ->
         |  # |
         """
 
-    it 'json', ->
+    it 'json' ->
                 
         expect noon.stringify {"a": "b"}, ext: '.json', indent: 8
         .to.eql """
@@ -936,14 +936,14 @@ describe 'stringify', ->
         }
         """
         
-    it 'regexp', ->
+    it 'regexp' ->
         expect noon.stringify [ /^hello\sworld$/gi, /[\w\d]*/ ]
         .to.eql """
         ^hello\\sworld$
         [\\w\\d]*
         """
         
-    it 'regexp values', ->
+    it 'regexp values' ->
         result = noon.stringify {a: /^hello\sworld$/gi, b: /[\w\d]*/}
         expctd = "a   ^hello\\sworld$\nb   [\\w\\d]*"
         expect(result) .to.eql expctd
@@ -956,10 +956,10 @@ describe 'stringify', ->
 0000000      000     000   000  000  000   000   0000000   000  000          000           00000000  000   000     000   
 ###
 
-describe 'stringify ext', ->
+describe 'stringify ext' ->
 
     o = a: 1, b: 2    
-    it 'should output noon by default', -> 
+    it 'should output noon by default' -> 
         
         expect noon.stringify o
         .to.eql """
@@ -967,7 +967,7 @@ describe 'stringify ext', ->
         b   2
         """
 
-    it 'should output noon', -> 
+    it 'should output noon' -> 
         
         expect noon.stringify o, ext: '.noon'
         .to.eql """
@@ -975,7 +975,7 @@ describe 'stringify ext', ->
         b   2
         """
         
-    it 'should output json', -> 
+    it 'should output json' -> 
         
         expect noon.stringify o, ext: '.json'
         .to.eql """
@@ -985,7 +985,7 @@ describe 'stringify ext', ->
         }
         """
 
-    it 'should output yaml', -> 
+    it 'should output yaml' -> 
         
         expect noon.stringify o, ext: '.yaml'
         .to.eql """
