@@ -1,3 +1,1 @@
 test    . test/test.coffee . coffee/parse.coffee
-ignore  . test/.*\.coffee$
-

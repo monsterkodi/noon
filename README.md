@@ -231,7 +231,6 @@ Don't use it if you can't live with the limitations mentioned above.
 [![Build Status][travis-image]][travis-url] 
 [![downloads][downloads-image]][downloads-url] 
 [![Dependencies Status][david-image]][david-url]
-[![Coverage Status](https://coveralls.io/repos/github/monsterkodi/noon/badge.svg?branch=master)](https://coveralls.io/github/monsterkodi/noon?branch=master)
 
 [npm-image]:https://img.shields.io/npm/v/noon.svg
 [npm-url]:http://npmjs.org/package/noon
