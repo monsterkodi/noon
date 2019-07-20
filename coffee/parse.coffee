@@ -8,6 +8,9 @@
 
 parse = (s) ->
 
+    return '' if not s
+    return '' if s == ''
+    
     EMPTY   = /^\s*$/
     NEWLINE = /\r?\n/
     FLOAT   = /^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/
@@ -77,7 +80,9 @@ parse = (s) ->
 
     lines = s.split(NEWLINE).filter (l) -> not EMPTY.test l
 
-    if lines.length == 1
+    if lines.length == 0
+        return ''
+    else if lines.length == 1
         lines = [lines[0].trim()]
     else
         while lines[0][leadingSpaces] == ' '

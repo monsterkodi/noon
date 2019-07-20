@@ -567,6 +567,12 @@ describe 'parse' ->
         .to.eql 
             a: 1
             '#': ['#', ' #']
+            
+    it 'empty string' -> 
+    
+        expect(noon.parse('')).to.eql ''
+        expect(noon.parse(' ')).to.eql ''
+        expect(noon.parse()).to.eql ''
 
 ###
  0000000  000000000  00000000   000  000   000   0000000   000  00000000  000   000
