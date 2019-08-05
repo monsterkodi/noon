@@ -184,7 +184,7 @@ what's up?    ☺
 # { hello: 'world', 'what\'s up?': '☺' }
 
 stringify_options =   # stringify's second argument, defaults are: 
-    ext:      'noon'  # output format: noon json or yaml
+    ext:      'noon'  # output format: noon or json
     indent:   4       # number of spaces per indent level
     align:    true    # vertically align object values
     maxalign: 32      # maximal number of spaces when aligning
@@ -195,27 +195,19 @@ stringify_options =   # stringify's second argument, defaults are:
 ```
 
 ```coffeescript
+
 # load data from file 
 
 data = noon.load 'file.noon' 
-
-# or any of the other types in noon.extnames:
-
 data = noon.load 'file.json'
-data = noon.load 'file.yaml'
 
-```
-
-```coffeescript
 # write data to file
 
 noon.save 'file.noon', data
 
-# or
-
 noon.save 'file.noon', data, stringify_options
 noon.save 'file.json', data  # < write as json
-noon.save 'filenoext', data, ext: 'noon'
+noon.save 'noext', data, ext: 'noon'
 
 ```
 

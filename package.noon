@@ -1,5 +1,5 @@
 name            noon
-version         2.15.0
+version         3.0.0
 description     'nother ordinary object notation
 keywords
                 noon
@@ -39,7 +39,6 @@ coffeelintConfig
                   level   ignore
                   value   false
 dependencies
-                js-yaml         ^3.13.1
                 karg            ^1.19.0
                 klor            ^1.4.0
                 lodash.defaults  ^4.2.0

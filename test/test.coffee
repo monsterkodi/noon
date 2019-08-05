@@ -990,12 +990,3 @@ describe 'stringify ext' ->
             "b": 2
         }
         """
-
-    it 'should output yaml' -> 
-        
-        expect noon.stringify o, ext: '.yaml'
-        .to.eql """
-        a: 1
-        b: 2
-        
-        """

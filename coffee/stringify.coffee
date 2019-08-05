@@ -39,19 +39,14 @@ stringify = (obj, options={}) ->
 
     opt = def options, defaults
     
-    #       000   0000000   0000000   000   000        000   000  00     00  000      
-    #       000  000       000   000  0000  000         000 000   000   000  000      
-    #       000  0000000   000   000  000 0 000          00000    000000000  000      
-    # 000   000       000  000   000  000  0000           000     000 0 000  000      
-    #  0000000   0000000    0000000   000   000           000     000   000  0000000  
+    #       000   0000000   0000000   000   000
+    #       000  000       000   000  0000  000
+    #       000  0000000   000   000  000 0 000
+    # 000   000       000  000   000  000  0000
+    #  0000000   0000000    0000000   000   000
         
-    switch opt.ext
-        when '.json'   
-            cs = JSON.stringify obj, null, opt.indent
-        when '.yml', '.yaml' 
-            cs = require('js-yaml').dump obj
-            
-    if cs
+    if opt.ext == '.json'
+        cs = JSON.stringify obj, null, opt.indent
         if opt.colors
             return require('klor').syntax text:cs, ext:opt.ext
         else
