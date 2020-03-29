@@ -8,7 +8,6 @@
 
 fs        = require 'fs'
 path      = require 'path'
-pad       = require 'lodash.pad'
 stringify = require './stringify'
 parse     = require './parse'
 load      = require './load'
@@ -42,6 +41,11 @@ err = (msg) ->
     log ("\n"+msg+"\n").red
     process.exit()
 
+pad = (s, l) -> 
+    while s.length < l
+        s += ' '
+    s
+    
 if args.file
 
     ext = path.extname args.file
@@ -58,25 +62,25 @@ if args.file
         if args.output == '.noon'
             o=
                 align:      args.align
-                indent:     Math.max 1, args.indent
-                maxalign:   Math.max 0, args.maxalign
+                indent:     Math.max 1 args.indent
+                maxalign:   Math.max 0 args.maxalign
                 colors:     args.colors
                 sort:       args.sort
         else
             o =
                 ext:        args.output
                 colors:     args.colors
-                indent:     pad '', args.indent
+                indent:     pad '' args.indent
         log stringify d, o
     else
         if path.extname(args.output) == '.noon'
             o =
                 align:      args.align
-                indent:     Math.max 1, args.indent
-                maxalign:   Math.max 0, args.maxalign
+                indent:     Math.max 1 args.indent
+                maxalign:   Math.max 0 args.maxalign
                 colors:     false
                 sort:       args.sort
         else
             o =
-                indent:     pad '', args.indent
+                indent:     pad '' args.indent
         save args.output, d, o

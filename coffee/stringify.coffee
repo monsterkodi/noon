@@ -22,7 +22,7 @@ regs =
     path:   new RegExp '^([\\.\\/\\S]+)(\\/\\S+)$'
     semver: new RegExp '\\d+\\.\\d+\\.\\d+'
 
-rpad = (s, l) -> 
+pad = (s, l) -> 
     while s.length < l
         s += ' '
     s
@@ -55,7 +55,7 @@ stringify = (obj, options={}) ->
     if typeof opt.indent == 'string' 
         opt.indent = opt.indent.length
         
-    indstr = rpad '', opt.indent
+    indstr = pad '' opt.indent
             
     # 00000000   0000000   0000000   0000000   00000000   00000000
     # 000       000       000       000   000  000   000  000     
@@ -70,7 +70,7 @@ stringify = (obj, options={}) ->
             es.unshift '...'
             es.push '...'
             return es.join '\n'
-        if k == '' or k == '...' or k[0] in [' ', '#', '|'] or k[k.length-1] in [' ', '#', '|'] 
+        if k == '' or k == '...' or k[0] in [' ' '#' '|'] or k[k.length-1] in [' ' '#' '|'] 
             k = '|' + k + '|'
         else if arry and /\ \ /.test k
             k = '|' + k + '|'
@@ -106,10 +106,10 @@ stringify = (obj, options={}) ->
                 k += '|'
             
             if opt.align
-                ks = rpad k, Math.max maxKey, k.length+2
-                i  = rpad ind+indstr, maxKey
+                ks = pad k, Math.max maxKey, k.length+2
+                i  = pad ind+indstr, maxKey
             else
-                ks = rpad k, k.length+2
+                ks = pad k, k.length+2
                 i  = ind+indstr
             s += ks
             vs = toStr v, i, false, visited

@@ -1,6 +1,6 @@
 name            noon
-version         3.0.0
-description     'nother ordinary object notation
+version         3.0.3
+description     no ordinary object notation
 keywords
                 noon
                 object
@@ -13,36 +13,16 @@ files
                 js/*.js
 bin
                 noon  ./bin/noon
-repository
-                type  git
-                url   https://github.com/monsterkodi/noon
+repository      github:monsterkodi/noon
 bugs
                 url  https://github.com/monsterkodi/noon/issues
 scripts
                 mocha   ./node_modules/.bin/mocha -c --require koffee/js/register ./test/test.coffee
                 test    ./node_modules/.bin/mocha -c --require koffee/js/register ./test/test.coffee
 homepage        https://www.npmjs.com/package/noon
-coffeelintConfig
-                indentation
-                  level   error
-                  value   4
-                line_endings
-                  level   error
-                  value   unix
-                max_line_length
-                  level   warn
-                  value   120
-                no_trailing_whitespace
-                  level   ignore
-                  value   false
-                no_nested_string_interpolation
-                  level   ignore
-                  value   false
 dependencies
-                karg            ^1.19.0
-                klor            ^1.4.0
-                lodash.defaults  ^4.2.0
-                lodash.pad      ^4.5.1
+                karg  ^1.19.0
+                klor  ^1.4.0
 devDependencies
                 chai    ^4.2.0
                 koffee  ^1.4.0

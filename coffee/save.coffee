@@ -10,7 +10,6 @@ save = (p, data, strOpt, cb) ->
 
     fs         = require 'fs'
     path       = require 'path'
-    defaults   = require 'lodash.defaults'
     stringify  = require './stringify'
 
     if 'function' == typeof strOpt
@@ -19,7 +18,7 @@ save = (p, data, strOpt, cb) ->
     else
         strOpt ?= {}
 
-    str = stringify data, defaults ext:path.extname(p), strOpt
+    str = stringify data, Object.assign ext:path.extname(p), strOpt
 
     if 'function' == typeof cb
 
