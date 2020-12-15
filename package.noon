@@ -1,5 +1,5 @@
 name            noon
-version         3.0.3
+version         3.1.0
 description     no ordinary object notation
 keywords
                 noon
@@ -21,9 +21,9 @@ scripts
                 test    ./node_modules/.bin/mocha -c --require koffee/js/register ./test/test.coffee
 homepage        https://www.npmjs.com/package/noon
 dependencies
-                karg  ^1.19.0
-                klor  ^1.4.0
+                karg  ^1.22.0
+                klor  ^2.12.0
 devDependencies
                 chai    ^4.2.0
-                koffee  ^1.4.0
-                mocha   ^6.2.2
+                koffee  ^1.12.0
+                mocha   ^8.2.1
