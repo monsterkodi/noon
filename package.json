@@ -22,8 +22,8 @@
     "url": "https://github.com/monsterkodi/noon/issues"
   },
   "scripts": {
-    "mocha": "./node_modules/.bin/mocha -c --require koffee/js/register ./test/test.coffee",
-    "test": "./node_modules/.bin/mocha -c --require koffee/js/register ./test/test.coffee"
+    "mocha": "mocha -c --require koffee/js/register ./test/test.coffee",
+    "test": "mocha -c --require koffee/js/register ./test/test.coffee"
   },
   "homepage": "https://www.npmjs.com/package/noon",
   "dependencies": {
