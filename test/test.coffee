@@ -34,7 +34,7 @@ describe 'load' ->
         expect r.number.int 
         .to.eql 42
 
-    it 'async', (done) ->
+    it 'async' (done) ->
         
         noon.load testNoon, (r) ->
             
