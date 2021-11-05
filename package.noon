@@ -20,7 +20,7 @@ scripts
                 test  mocha -c --require koffee/js/register ./test/test.coffee
 homepage        https://www.npmjs.com/package/noon
 dependencies
-                karg  ^1.23.0
+                karg  ^1.26.0
                 klor  ^2.16.1
 devDependencies
                 chai    ^4.3.4
