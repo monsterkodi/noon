@@ -187,6 +187,21 @@ describe 'parse' ->
         ||
         """)
         .to.eql [',' '.' ';' ':' '~' '!' '?' '@' '#' '']
+
+        expect noon.parse("""
+        key
+            ,
+            .
+            ;
+            :
+            ~
+            !
+            ?
+            @
+            |#
+            ||
+        """)
+        .to.eql key:[',' '.' ';' ':' '~' '!' '?' '@' '#' '']
         
     it 'object' ->
         expect noon.parse """

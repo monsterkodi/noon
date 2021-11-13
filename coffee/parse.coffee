@@ -157,7 +157,7 @@ parse = (s) ->
     insert = (t, k, v) ->
         if isArray t.o
             if not v?
-                if last(t.o) == '.' and t.d
+                if last(t.o) == '.' == k
                     t.o.pop()
                     t.o.push []
                 t.o.push value k
