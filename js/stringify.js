@@ -1,4 +1,4 @@
-// koffee 1.14.0
+// koffee 1.19.0
 
 /*
  0000000  000000000  00000000   000  000   000   0000000   000  00000000  000   000
@@ -8,7 +8,7 @@
 0000000      000     000   000  000  000   000   0000000   000  000          000
  */
 var defaults, pad, regs, stringify,
-    hasProp = {}.hasOwnProperty,
+    hasProp = Object.hasOwn,
     indexOf = [].indexOf;
 
 defaults = {
@@ -95,7 +95,7 @@ stringify = function(obj, options) {
             maxKey = opt.indent;
             if (Object.keys(o).length > 1) {
                 for (k in o) {
-                    if (!hasProp.call(o, k)) continue;
+                    if (!hasProp(o, k)) continue;
                     v = o[k];
                     kl = parseInt(Math.ceil((k.length + 2) / opt.indent) * opt.indent);
                     maxKey = Math.max(maxKey, kl);
@@ -146,7 +146,7 @@ stringify = function(obj, options) {
             }
         } else {
             for (k in o) {
-                if (!hasProp.call(o, k)) continue;
+                if (!hasProp(o, k)) continue;
                 v = o[k];
                 l.push(keyValue(k, v));
             }

@@ -173,6 +173,20 @@ describe 'parse' ->
         a 1
         """)
         .to.eql ['a', 'a1', 'a 1']
+
+        expect noon.parse("""
+        ,
+        .
+        ;
+        :
+        ~
+        !
+        ?
+        @
+        |#
+        ||
+        """)
+        .to.eql [',' '.' ';' ':' '~' '!' '?' '@' '#' '']
         
     it 'object' ->
         expect noon.parse """

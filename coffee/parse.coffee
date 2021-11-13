@@ -26,6 +26,7 @@ parse = (s) ->
     #  0000000   000   000  0000000    00000000  000   000  0000000   00000000
 
     undense = (d, s) -> # undenses string s at depth d. Returns list of padded lines
+        
         sl = s.length
         sd = d
 
@@ -87,7 +88,7 @@ parse = (s) ->
     else
         while lines[0][leadingSpaces] == ' '
             leadingSpaces += 1
-
+            
     stack = [
         o: []
         d: leadingSpaces
@@ -156,7 +157,7 @@ parse = (s) ->
     insert = (t, k, v) ->
         if isArray t.o
             if not v?
-                if last(t.o) == '.'
+                if last(t.o) == '.' and t.d
                     t.o.pop()
                     t.o.push []
                 t.o.push value k
