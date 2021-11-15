@@ -318,7 +318,7 @@ parse = (s) ->
         line = lines[i]
 
         [d, k, v, e] = inspect line
-
+        
         if k?
             if v? and (not e) and (v.substr(0,2) == '. ') # dense value
                 addLine d, k
@@ -333,15 +333,19 @@ parse = (s) ->
                     stack.pop()
                 last(stack).undensed = true
             else
+                oi = i
+                lineFail = -> if i >= lines.length then error "unmatched multiline string in line #{oi+1}"; return 1
                 if k == '...' and not v?
                     i += 1
                     vl = []
+                    return if lineFail() 
                     while lines[i].trimLeft().substr(0,3) != '...'
                         l = lines[i].trim()
                         if l[0] == '|' then l = l.substr 1
                         if l[l.length-1] == '|' then l = l.substr 0, l.length-1
                         vl.push l
                         i += 1
+                        return if lineFail() 
                     k = vl.join '\n'
                     r = lines[i].trimLeft().substr(3).trim()
                     if r.length
@@ -349,6 +353,7 @@ parse = (s) ->
 
                 if v == '...'
                     i += 1
+                    return if lineFail()
                     vl = []
                     while lines[i].trim() != '...'
                         l = lines[i].trim()
@@ -356,6 +361,7 @@ parse = (s) ->
                         if l[l.length-1] == '|' then l = l.substr 0, l.length-1
                         vl.push l
                         i += 1
+                        return if lineFail()
                     v = vl.join '\n'
 
                 addLine d, k, v
