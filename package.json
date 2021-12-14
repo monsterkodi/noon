@@ -1,36 +1,36 @@
 {
-    "name": "noon",
-    "version": "4.1.0",
-    "description": "no ordinary object notation",
-    "keywords": [
-        "noon",
-        "object",
-        "notation"
-    ],
-    "author": "monsterkodi",
-    "license": "Unlicense",
-    "main": "js/main.js",
-    "files": [
-        "bin/noon",
-        "js/*.js"
-    ],
-    "bin": {
-        "noon": "./bin/noon"
-    },
-    "repository": "github:monsterkodi/noon",
-    "bugs": {
-        "url": "https://github.com/monsterkodi/noon/issues"
-    },
-    "scripts": {
-        "build": "kode -Ho js kode/*.kode",
-        "test": "kode -t test/test.kode",
-        "watch": "kode -wt test/test.kode kode/*.kode"
-    },
-    "dependencies": {
-        "karg": "monsterkodi/karg",
-        "klor": "monsterkodi/klor"
-    },
-    "devDependencies": {
-        "kode": "monsterkodi/kode"
-    }
+  "name": "noon",
+  "version": "4.2.0",
+  "description": "no ordinary object notation",
+  "keywords": [
+    "noon",
+    "object",
+    "notation"
+  ],
+  "author": "monsterkodi",
+  "license": "Unlicense",
+  "main": "js/main.js",
+  "files": [
+    "bin/noon",
+    "js/*.js"
+  ],
+  "bin": {
+    "noon": "./bin/noon"
+  },
+  "repository": "github:monsterkodi/noon",
+  "bugs": {
+    "url": "https://github.com/monsterkodi/noon/issues"
+  },
+  "scripts": {
+    "build": "kode -Ho js kode/*.kode",
+    "test": "kode -t test/test.kode",
+    "watch": "kode -wt test/test.kode kode/*.kode"
+  },
+  "dependencies": {
+    "karg": "monsterkodi/karg",
+    "klor": "monsterkodi/klor"
+  },
+  "devDependencies": {
+    "kode": "monsterkodi/kode"
+  }
 }

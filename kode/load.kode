@@ -18,9 +18,9 @@ load = (p, ext, cb) ->
 
     fs = require 'fs'
 
-    cb = ext if 'function' == typeof ext
+    cb = ext if ext is 'function'
 
-    if 'function' == typeof cb
+    if cb is 'function'
 
         fs.readFile p, 'utf8', (e, str) ->
             if e?

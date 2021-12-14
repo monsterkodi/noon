@@ -1,4 +1,4 @@
-// monsterkodi/kode 0.123.0
+// monsterkodi/kode 0.125.0
 
 var _k_
 
@@ -27,11 +27,11 @@ load = function (p, ext, cb)
     var fs, str
 
     fs = require('fs')
-    if ('function' === typeof(ext))
+    if (typeof(ext) == 'function')
     {
         cb = ext
     }
-    if ('function' === typeof(cb))
+    if (typeof(cb) == 'function')
     {
         return fs.readFile(p,'utf8',function (e, str)
         {

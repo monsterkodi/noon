@@ -12,7 +12,7 @@ save = (p, data, strOpt, cb) ->
     path       = require 'path'
     stringify  = require './stringify'
 
-    if 'function' == typeof strOpt
+    if strOpt is 'function'
         cb = strOpt
         strOpt = {}
     else
@@ -20,7 +20,7 @@ save = (p, data, strOpt, cb) ->
 
     str = stringify data, Object.assign ext:path.extname(p), strOpt
 
-    if 'function' == typeof cb
+    if cb is 'function'
 
         fs.writeFile p, str, cb
 

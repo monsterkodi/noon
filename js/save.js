@@ -1,4 +1,4 @@
-// monsterkodi/kode 0.123.0
+// monsterkodi/kode 0.125.0
 
 var _k_
 
@@ -12,7 +12,7 @@ save = function (p, data, strOpt, cb)
     fs = require('fs')
     path = require('path')
     stringify = require('./stringify')
-    if ('function' === typeof(strOpt))
+    if (typeof(strOpt) == 'function')
     {
         cb = strOpt
         strOpt = {}
@@ -22,7 +22,7 @@ save = function (p, data, strOpt, cb)
         strOpt = (strOpt != null ? strOpt : {})
     }
     str = stringify(data,Object.assign({ext:path.extname(p),strOpt:strOpt}))
-    if ('function' === typeof(cb))
+    if (typeof(cb) == 'function')
     {
         return fs.writeFile(p,str,cb)
     }

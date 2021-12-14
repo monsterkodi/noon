@@ -1,4 +1,4 @@
-// monsterkodi/kode 0.123.0
+// monsterkodi/kode 0.125.0
 
 var _k_ = {in: function (a,l) {return (typeof l === 'string' && typeof a === 'string' && a.length ? '' : []).indexOf.call(l,a) >= 0}, list: function (l) {return (l != null ? typeof l.length === 'number' ? l : [] : [])}}
 
@@ -53,7 +53,7 @@ stringify = function (obj, options = {})
             return cs
         }
     }
-    if (typeof(opt.indent) === 'string')
+    if (typeof(opt.indent) == 'string')
     {
         opt.indent = opt.indent.length
     }

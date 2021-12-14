@@ -52,7 +52,7 @@ stringify = (obj, options={}) ->
         else
             return cs
     
-    if typeof opt.indent == 'string' 
+    if opt.indent is 'string' 
         opt.indent = opt.indent.length
         
     indstr = pad '' opt.indent
