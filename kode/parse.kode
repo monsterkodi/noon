@@ -57,7 +57,7 @@ parse = (s) ->
                     l += ' '
                 key = false
             p += 1
-            esc ^= s[p] ==  '|'
+            esc ^= s[p] == '|'
 
         ld = '' # pad line with spaces
         for i in [0...d]
@@ -203,7 +203,8 @@ parse = (s) ->
     addLine = (d,k,v) ->
         if k?
             t = last stack
-            [undensed, t.undensed] = [t.undensed, false]
+            undensed = t.undensed
+            t.undensed = false
             if d > t.d and not undensed
                 stack.push
                     o: indent t, k, v
@@ -212,7 +213,7 @@ parse = (s) ->
                 if isArray(t.o) and last(t.o) == '.'
                     t.o.pop()
                     t.o.push []
-                while t.d > d
+                while t?.d > d
                     stack.pop()
                     t = last stack
                 insert t, k, v
@@ -317,7 +318,7 @@ parse = (s) ->
 
         line = lines[i]
 
-        [d, k, v, e] = inspect line
+        [d,k,v,e] = inspect line
         
         if k?
             if v? and (not e) and (v.substr(0,2) == '. ') # dense value

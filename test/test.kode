@@ -1,0 +1,960 @@
+path   = require 'path'
+fs     = require 'fs'
+noon   = require '../'
+
+▸ module interface
+
+    ▸ parse
+        typeof noon.parse       ▸ 'function'
+    ▸ stringify
+        typeof noon.stringify   ▸ 'function'
+    ▸ load
+        typeof noon.load        ▸ 'function'
+    ▸ save
+        typeof noon.save        ▸ 'function'
+
+# 000       0000000    0000000   0000000
+# 000      000   000  000   000  000   000
+# 000      000   000  000000000  000   000
+# 000      000   000  000   000  000   000
+# 0000000   0000000   000   000  0000000
+
+▸ load
+
+    testNoon = path.join __dirname, 'test.noon'
+
+    ▸ sync
+
+        r = noon.load testNoon
+        r.number.int ▸ 42
+
+    ▸ async
+
+        noon.load testNoon, (r) ->
+            r.number.int ▸ 42
+
+#  0000000   0000000   000   000  00000000
+# 000       000   000  000   000  000
+# 0000000   000000000   000 000   0000000
+#      000  000   000     000     000
+# 0000000   000   000      0      00000000
+
+▸ save
+
+    writeNoon = path.join __dirname, 'write.noon'
+    writeData = hello: 'world'
+
+    ▸ sync
+
+        try
+            fs.unlinkSync writeNoon
+        catch err
+            null
+
+        noon.save writeNoon, writeData
+
+        noon.load writeNoon ▸ writeData
+
+    ▸ async
+
+        try
+            fs.unlinkSync writeNoon
+        catch err
+            null
+
+        noon.save writeNoon, writeData, (err) ->
+
+            err ▸ null
+            noon.load writeNoon ▸ writeData
+
+###
+00000000    0000000   00000000    0000000  00000000
+000   000  000   000  000   000  000       000
+00000000   000000000  0000000    0000000   0000000
+000        000   000  000   000       000  000
+000        000   000  000   000  0000000   00000000
+###
+
+▸ parse
+
+    ▸ number
+
+        noon.parse "666" ▸ [666]
+
+        noon.parse "1.23" ▸ [1.23]
+
+        noon.parse "0.000" ▸ [0]
+
+        noon.parse "Infinity" ▸ [Infinity]
+
+        noon.parse """ 
+        42
+        66.0
+        0.42
+        66.60
+        Infinity
+        +20
+        -20
+        +0
+        -1.23
+        """ ▸ 
+        [42,66,0.42,66.6,Infinity,20,-20,0,-1.23]
+
+    ▸ bool
+
+        noon.parse "true" ▸ [true]
+
+        noon.parse """
+        true
+        false
+        """ ▸
+        [true,false]
+
+    ▸ null
+        noon.parse """
+        null
+        """ ▸ [null]
+
+    ▸ string
+
+        noon.parse "hello world" ▸ ['hello world']
+        noon.parse "| hello world |" ▸ [' hello world ']
+        noon.parse('| .  ... |  ') ▸ [' .  ... ']
+        noon.parse "|66.6000|" ▸ ['66.6000']
+        noon.parse "6.6.6" ▸ ['6.6.6']
+        noon.parse "^1.2" ▸ ['^1.2']
+        noon.parse "++2" ▸ ['++2']
+        noon.parse "+-0" ▸ ['+-0']
+        noon.parse('... \n line 1 \n line 2 \n ...') ▸ ['line 1\nline 2']
+
+    ▸ list
+        noon.parse("""
+        a
+        a1
+        a 1
+        """) ▸ ['a', 'a1', 'a 1']
+
+        noon.parse("""
+        ,
+        .
+        ;
+        :
+        ~
+        !
+        ?
+        @
+        |#
+        ||
+        """) ▸ [',' '.' ';' ':' '~' '!' '?' '@' '#' '']
+
+        noon.parse("""
+        key
+            ,
+            .
+            ;
+            :
+            ~
+            !
+            ?
+            @
+            |#
+            ||
+        """)  ▸ key:[',' '.' ';' ':' '~' '!' '?' '@' '#' '']
+
+    ▸ object
+        noon.parse """
+        a
+        b
+        c  3
+        """ ▸ a:null, b:null, c:3
+
+    ▸ nested lists
+        noon.parse """
+        a
+        b
+        .
+            c
+            .
+            .
+                .
+            d
+        .
+            e
+            .
+                f
+        """ ▸
+        [
+            'a'
+            'b'
+            ['c', [], [[]],'d']
+            ['e', ['f']]
+        ]
+
+    ▸ nested objects
+
+        noon.parse """
+        a
+        b
+            c
+            d
+                e  0
+            f   1
+        g
+        """ ▸
+            a:null
+            b:
+                c: null
+                d:
+                    e: 0
+                f: 1
+            g: null
+
+    ▸ complex object
+
+        noon.parse """
+        a
+            b
+              c
+            d
+        e f
+            g  h
+        1  one  two
+        j
+            .
+                k  l
+            .
+                .|  true|false
+        """ ▸
+            a:
+                b: ['c']
+                d: null
+            'e f':
+                g: 'h'
+            '1': 'one  two'
+            j: [{k: 'l'}, '.|':'true|false']
+       
+
+    ▸ spaces
+        o = {a: 1, b: 2}
+
+        noon.parse """
+        a  1
+        b  2
+        """ ▸ o
+
+        noon.parse """
+         a  1
+         b  2
+        """ ▸ o
+
+        noon.parse """
+            a  1
+            b  2
+        """ ▸ o
+
+        noon.parse """
+
+
+        a  1
+
+        b  2
+
+        """ ▸ o
+
+        noon.parse """
+        key      value   with    some    spaces   .
+        """ ▸
+        {key: "value   with    some    spaces   ."}
+
+    ▸ whitespace lines
+
+        o = {a: 1, b: 2}
+
+        noon.parse """
+
+        a  1
+
+        b  2
+
+        """ ▸ o
+
+        noon.parse """
+
+        a  1
+
+        b  2
+
+        """ ▸ o
+
+    ▸ dense notation
+
+        noon.parse """
+        a  . b .. c 1 .. d  2 .. e ... x y z  ... f .... null  null ... 3 .. g . h
+        b  . foo . bar
+            foo
+            bar
+        c  . foo .. bark
+            foo  bar
+        """ ▸
+            a:
+                b:
+                    c: 1
+                    d: 2
+                    e:
+                        x: 'y z'
+                        f:
+                            'null': null
+                        '3': null
+                    g: null
+                h: null
+            b: [ 'foo', 'bar', 'foo', 'bar' ]
+            c:
+                foo: 'bar'
+
+        noon.parse """
+        a  . b .. c 0
+        """ ▸
+            a:
+                b:
+                    c: 0
+
+        noon.parse """
+        a  . path ../some.file
+        """ ▸
+            a:
+                path: '../some.file'
+
+        noon.parse """
+        a  . ? some sentence. some other sentence. . A: next sentence...
+        """ ▸
+            a:
+                '?':  'some sentence. some other sentence.'
+                'A:': 'next sentence...'
+
+    ▸ dense escaped
+
+        noon.parse """
+        a  . x | 1| . y | 2 | . z |3 |
+        """ ▸
+            a:
+                x: ' 1'
+                y: ' 2 '
+                z: '3 '
+
+        noon.parse """
+        a  . | 1| . | 2 | . |3 |
+        """ ▸
+            a: [ ' 1', ' 2 ', '3 ']
+
+        noon.parse """
+        a  . | 1| a . | 2 | b . |3 | c
+        """ ▸
+            a:
+                ' 1':  'a'
+                ' 2 ': 'b'
+                '3 ':  'c'
+
+        noon.parse """
+        a  . | 1|   a | . | 2 | | b| . |3 | |c x
+        """ ▸
+            a:
+                ' 1':  'a '
+                ' 2 ': ' b'
+                '3 ':  'c x'
+
+    ▸ one line notation
+
+        noon.parse "key . a :: b . c :: d 1 :: e 2" ▸
+            key: ['a']
+            b:   ['c']
+            d:   1
+            e:   2
+
+        noon.parse "a . b .. c 4" ▸
+            a:
+                b:
+                    c: 4
+
+        noon.parse "a 1 :: b 2 :: c 5" ▸
+            a: 1
+            b: 2
+            c: 5
+
+        noon.parse "a:: b:: c 3:: d 4" ▸
+            a: null
+            b: null
+            c: 3
+            d: 4
+
+        noon.parse "a      :: b          :: c:: d 4" ▸
+            a: null
+            b: null
+            c: null
+            d: 4
+
+        noon.parse "a      :: b          :: c:: d  " ▸
+        ['a', 'b', 'c', 'd']
+
+        noon.parse "1 :: 2 :: 3 :: 4" ▸ [1,2,3,4]
+
+        noon.parse "a . 1 . 2 :: b . 6" ▸
+            a: [1,2]
+            b: [6]
+
+        noon.parse "a     .     1     .     2     :: b    .   7     " ▸
+            a: [1,2]
+            b: [7]
+
+    ▸ escape
+
+        noon.parse """
+         | 1|
+         |2 |
+         | 3 |
+        """ ▸ 
+        [' 1', '2 ', ' 3 ']
+
+        noon.parse """
+        a  | 1  1
+        b  | 2  2  |
+        c    3  3  |
+        d  ||
+        e  | |
+        f  |||
+        g  || | ||
+        h  |. . .
+        |i |        1
+        | j|        2
+        | k  k |    3
+        |l |        | l
+        | m  m |    m m  |
+        | n  n |    ||||
+        | o o |
+        | p   p
+        | q |  |
+        ||  |
+        |r|4
+        |s|| |
+        t  |5
+        |u |6
+        |.|  .
+        | |true
+        |#||#
+        """ ▸
+            a: ' 1  1'
+            b: ' 2  2  '
+            c: '3  3  '
+            d: ''
+            e: ' '
+            f: '|'
+            g: '| | |'
+            h: '. . .'
+            'i ': 1
+            ' j': 2
+            ' k  k ': 3
+            'l ': ' l'
+            ' m  m ': 'm m  '
+            ' n  n ': '||'
+            ' o o ': null
+            ' p   p': null
+            ' q ': ''
+            '': ''
+            'r': 4
+            's': ' '
+            't': '5'
+            'u ': 6
+            '.': '.'
+            ' ': true
+            '#': '#'
+            
+        noon.parse """
+        ||      ||
+        | |     | |
+        |  |    |  |
+        | . |   | . |
+        | .. |  | .. |
+        | ...   ||
+        | ....  |.|
+        | ..... |. |
+        | .     | . |
+        | ..    | .. |
+        """ ▸
+            ''       :''
+            ' '      :' '
+            '  '     :'  '
+            ' . '    :' . '
+            ' .. '   :' .. '
+            ' ...   ':''
+            ' ....  ':'.'
+            ' ..... ':'. '
+            ' .     ':'. '
+            ' ..    ':'.. '
+
+        noon.parse '... \n| 1 |\n | 2 \n  3  |\n  ...' ▸ [' 1 \n 2\n3  ']
+
+    ▸ comment
+
+        noon.parse """
+        # this is a comment
+        this is some data
+        """ ▸
+        ['this is some data']
+
+        noon.parse """
+        a  1
+            #foo
+        b  2
+        #b  3
+        c   4 # 5
+        d
+            6 # 7
+        #
+        ###
+        """ ▸
+            a: 1
+            b: 2
+            c: '4 # 5'
+            d: ['6 # 7']
+
+        noon.parse """
+        a  1
+        |#|
+            |#
+            | #
+        """ ▸
+            a: 1
+            '#': ['#', ' #']
+
+    ▸ empty string
+
+        noon.parse('') ▸ ''
+        noon.parse(' ') ▸ ''
+        noon.parse() ▸ ''
+
+    ▸ failure
+
+        noon.parse """
+        a   1
+        b   ...
+        c   2
+        """ ▸
+        undefined
+
+###
+ 0000000  000000000  00000000   000  000   000   0000000   000  00000000  000   000
+000          000     000   000  000  0000  000  000        000  000        000 000
+0000000      000     0000000    000  000 0 000  000  0000  000  000000      00000
+     000     000     000   000  000  000  0000  000   000  000  000          000
+0000000      000     000   000  000  000   000   0000000   000  000          000
+###
+
+▸ stringify
+
+    ▸ number
+
+        noon.stringify(42) ▸ '42'
+        noon.stringify(66.6000) ▸ '66.6'
+
+    ▸ bool
+
+        noon.stringify false ▸ 'false'
+
+        noon.stringify true ▸ 'true'
+
+        noon.stringify(['false', 'true', ' false', 'true  ']) ▸
+        """
+        false
+        true
+        | false|
+        |true  |
+        """
+
+    ▸ null
+
+        noon.stringify [null, ' null '] ▸
+        """
+        null
+        | null |
+        """
+
+    #  0000000  000000000  00000000   000  000   000   0000000   
+    # 000          000     000   000  000  0000  000  000        
+    # 0000000      000     0000000    000  000 0 000  000  0000  
+    #      000     000     000   000  000  000  0000  000   000  
+    # 0000000      000     000   000  000  000   000   0000000   
+    
+    ▸ string
+
+        noon.stringify "hello world"    ▸ 'hello world'
+        noon.stringify " .  ...  ||| "  ▸ '| .  ...  ||| |'
+        noon.stringify "66.6000"        ▸ '66.6000'
+        noon.stringify "1\n2\n3"        ▸ '...\n1\n2\n3\n...'
+
+    ▸ float
+        noon.stringify [0.24,66.6] ▸
+        """
+        0.24
+        66.6
+        """
+
+    ▸ list
+        noon.stringify ['a', 'a1', 'a 1'] ▸
+        """
+        a
+        a1
+        a 1
+        """
+
+    ▸ list of lists ...
+
+        noon.stringify [[1,2],[4,[5],[[6]]],[7],[],[[8,[9,[10,11],12]]]] ▸
+        """
+        .
+            1
+            2
+        .
+            4
+            .
+                5
+            .
+                .
+                    6
+        .
+            7
+        .
+        .
+            .
+                8
+                .
+                    9
+                    .
+                        10
+                        11
+                    12
+        """
+
+    ▸ object
+        noon.stringify {a:1, b:2, c:3} ▸
+        """
+        a   1
+        b   2
+        c   3
+        """
+
+        o = a: 1, b: 2
+        r = """
+        a   1
+        b   2
+        """
+        noon.stringify o ▸ r
+        noon.stringify(o, indent: '  ')  ▸ r
+        noon.stringify(o, indent: 2)  ▸ r
+
+        noon.stringify {key: "value   with    some    spaces  ."} ▸
+        """
+        key  value   with    some    spaces  .
+        """
+
+    # 00000000   0000000   0000000   0000000   00000000   00000000  
+    # 000       000       000       000   000  000   000  000       
+    # 0000000   0000000   000       000000000  00000000   0000000   
+    # 000            000  000       000   000  000        000       
+    # 00000000  0000000    0000000  000   000  000        00000000  
+    
+    ▸ escape
+
+        noon.stringify [
+            ''
+            ' '
+            '  '
+            ' . '
+            ' .. '
+            ' ... '
+            ' .'
+            ' ..'
+            ' ...'
+            '. '
+            '.. '
+            '... '
+            '|'
+            '||'
+            '#'
+            '# a'
+        ] ▸
+        """
+        ||
+        | |
+        |  |
+        | . |
+        | .. |
+        | ... |
+        | .|
+        | ..|
+        | ...|
+        |. |
+        |.. |
+        |... |
+        |||
+        ||||
+        |#|
+        |# a|
+        """
+
+        noon.stringify {
+            ''       :''
+            ' '      :' '
+            '  '     :'  '
+            ' . '    :' . '
+            ' .. '   :' .. '
+            ' ... '  :' .|. '
+            ' .'     :' .'
+            ' ..'    :' ..'
+            ' ...'   :' .|.'
+            '. '     :'. '
+            '.. '    :'.. '
+            '... '   :'.|. '
+            '.  .'   :'|'
+            '.   .'  :'||'
+            '#'      :'#'
+            '# a'    :'# b'
+
+        } ▸
+        """
+        ||      ||
+        | |     | |
+        |  |    |  |
+        | . |   | . |
+        | .. |  | .. |
+        | ... |  | .|. |
+        | .|    | .|
+        | ..|   | ..|
+        | ...|  | .|.|
+        |. |    |. |
+        |.. |   |.. |
+        |... |  |.|. |
+        |.  .|  |||
+        |.   .|  ||||
+        |#|     |#|
+        |# a|   |# b|
+        """
+
+        noon.stringify " 1 \n2 \n  3" ▸
+        '...\n| 1 |\n|2 |\n|  3|\n...'
+
+        noon.stringify o: " 1 \n2 \n  3" ▸
+        'o   ...\n| 1 |\n|2 |\n|  3|\n...'
+
+        noon.stringify a: ["a  b", "1   3", "   c    d  e   "] ▸
+        """
+        a
+            |a  b|
+            |1   3|
+            |   c    d  e   |
+        """
+
+    ▸ trim
+        o = a: 1, b: null, c: 2
+
+        noon.stringify o, align: false ▸
+        """
+        a  1
+        b
+        c  2
+        """
+        noon.stringify o, align: true ▸
+        """
+        a   1
+        b
+        c   2
+        """
+
+        noon.stringify {a: b: c: 1}, align: true ▸
+        """
+        a
+            b
+                c   1
+        """
+
+        noon.stringify {x: y: z: 1}, align: false ▸
+        """
+        x
+            y
+                z  1
+        """
+
+    ▸ maxalign
+        o = o: 1, ooOOoo: 2
+        noon.stringify o, maxalign: 2 ▸
+        """
+        o  1
+        ooOOoo  2
+        """
+        noon.stringify o, maxalign: 4 ▸
+        """
+        o   1
+        ooOOoo  2
+        """
+        noon.stringify o, maxalign: 8 ▸
+        """
+        o       1
+        ooOOoo  2
+        """
+
+        noon.stringify o, maxalign: 18 ▸
+        """
+        o       1
+        ooOOoo  2
+        """
+
+        t = foofoo:
+             barbarbar: 1
+             foo: 2
+
+        noon.stringify t ▸
+        """
+        foofoo
+            barbarbar   1
+            foo         2
+        """
+
+        noon.stringify t, indent: 3 ▸
+        """
+        foofoo
+           barbarbar   1
+           foo         2
+        """
+
+        t =
+            foobar:
+                barfoo: 1
+                bar: 2
+            foo:
+                bar: 1
+
+        noon.stringify t ▸
+        """
+        foobar
+                barfoo  1
+                bar     2
+        foo
+                bar  1
+        """
+
+    # 000  000   000  0000000    00000000  000   000  000000000  
+    # 000  0000  000  000   000  000       0000  000     000     
+    # 000  000 0 000  000   000  0000000   000 0 000     000     
+    # 000  000  0000  000   000  000       000  0000     000     
+    # 000  000   000  0000000    00000000  000   000     000     
+    
+    ▸ indent
+        o = a: b: c: 1
+        noon.stringify o, indent: 2, align: false ▸
+        """
+        a
+          b
+            c  1
+        """
+        noon.stringify o, indent: 4, align: false ▸
+        """
+        a
+            b
+                c  1
+        """
+        noon.stringify o, indent: 8, align: false ▸
+        """
+        a
+                b
+                        c  1
+        """
+        noon.stringify o, indent: '  ', align: false ▸
+        """
+        a
+          b
+            c  1
+        """
+        noon.stringify o, indent: '    ', align: false ▸
+        """
+        a
+            b
+                c  1
+        """
+        noon.stringify o, indent: '        ', align: false ▸
+        """
+        a
+                b
+                        c  1
+        """
+
+    ▸ comment
+
+        noon.stringify '#' ▸
+        "|#|"
+
+        noon.stringify '#foo' ▸
+        "|#foo|"
+
+        noon.stringify ['###', '#', '  # '] ▸
+        """
+        |###|
+        |#|
+        |  # |
+        """
+
+    ▸ json
+
+        noon.stringify {"a": "b"}, ext: '.json', indent: 8 ▸
+        """
+        {
+                "a": "b"
+        }
+        """
+
+    ▸ regexp
+        noon.stringify [ /^hello\sworld$/gi, /[\w\d]*/ ] ▸
+        """
+        ^hello\\sworld$
+        [\\w\\d]*
+        """
+
+    ▸ regexp values
+        result = noon.stringify {a: /^hello\sworld$/gi, b: /[\w\d]*/}
+        expctd = "a   ^hello\\sworld$\nb   [\\w\\d]*"
+        result ▸ expctd
+
+###
+ 0000000  000000000  00000000   000  000   000   0000000   000  00000000  000   000        00000000  000   000  000000000
+000          000     000   000  000  0000  000  000        000  000        000 000         000        000 000      000
+0000000      000     0000000    000  000 0 000  000  0000  000  000000      00000          0000000     00000       000
+     000     000     000   000  000  000  0000  000   000  000  000          000           000        000 000      000
+0000000      000     000   000  000  000   000   0000000   000  000          000           00000000  000   000     000
+###
+
+▸ stringify ext
+
+    o = a: 1, b: 2
+    
+    ▸ default
+
+        noon.stringify o ▸
+        """
+        a   1
+        b   2
+        """
+
+    ▸ noon
+
+        noon.stringify o, ext: '.noon' ▸
+        """
+        a   1
+        b   2
+        """
+
+    ▸ json
+
+        noon.stringify o, ext: '.json' ▸
+        """
+        {
+            "a": 1,
+            "b": 2
+        }
+        """

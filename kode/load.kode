@@ -8,14 +8,11 @@
 
 parseStr = (str, p, ext) ->
 
-    if str.length <= 0
-        return null
+    return null if str.length <= 0
 
-    extname = ext ? require('path').extname p
-    switch extname
-        when '.json' then JSON.parse str
-        else
-            require('./parse') str
+    switch ext ? require('path').extname p
+        '.json' ➜ JSON.parse str
+                ➜ require('./parse') str
 
 load = (p, ext, cb) ->
 

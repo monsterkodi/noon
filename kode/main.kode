@@ -7,9 +7,9 @@
 ###
 
 module.exports =
-    extnames:   ['.json','.noon']
-    extensions: [ 'json', 'noon']
-    save:      require './save'
-    load:      require './load'
-    parse:     require './parse'
-    stringify: require './stringify'
+    extnames:   ['.json' '.noon']
+    extensions: [ 'json'  'noon']
+    save:       require './save'
+    load:       require './load'
+    parse:      require './parse'
+    stringify:  require './stringify'

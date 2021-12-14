@@ -1,88 +1,82 @@
-// koffee 1.19.0
+// monsterkodi/kode 0.123.0
 
-/*
-000   000   0000000    0000000   000   000
-0000  000  000   000  000   000  0000  000
-000 0 000  000   000  000   000  000 0 000
-000  0000  000   000  000   000  000  0000
-000   000   0000000    0000000   000   000
- */
-var args, d, e, err, ext, fs, load, noon, o, pad, parse, path, ref, ref1, save, stringify,
-    indexOf = [].indexOf;
+var _k_ = {in: function (a,l) {return (typeof l === 'string' && typeof a === 'string' && a.length ? '' : []).indexOf.call(l,a) >= 0}}
 
-fs = require('fs');
+var fs, path, stringify, parse, load, save, noon, args, err, pad, ext, d, o
 
-path = require('path');
+fs = require('fs')
+path = require('path')
+stringify = require('./stringify')
+parse = require('./parse')
+load = require('./load')
+save = require('./save')
+noon = require('./main')
+args = require('karg')(`noon
+    file        . ? the file to convert             . * . = package.json
+    output      . ? output file or filetype         . = noon
+    indent      . ? indentation length              . = 4
+    align       . ? align values                    . = true
+    maxalign    . ? max align width, 0: no limit    . = 32
+    sort        . ? sort keys alphabetically        . = false
+    colors      . ? output with ansi colors         . = true
+    type        . ? input filetype
 
-stringify = require('./stringify');
+supported filetypes:
+    ${noon.extnames.join('\n    ')}
 
-parse = require('./parse');
+version   ${require(`${__dirname}/../package.json`).version}`)
 
-load = require('./load');
-
-save = require('./save');
-
-noon = require('./main');
-
-args = require('karg')("noon\n    file        . ? the file to convert             . * . = package.json\n    output      . ? output file or filetype         . = noon\n    indent      . ? indentation length              . = 4\n    align       . ? align values                    . = true\n    maxalign    . ? max align width, 0: no limit    . = 32\n    sort        . ? sort keys alphabetically        . = false\n    colors      . ? output with ansi colors         . = true\n    type        . ? input filetype\n\nsupported filetypes:\n    " + (noon.extnames.join('\n    ')) + "\n\nversion   " + (require(__dirname + "/../package.json").version));
-
-err = function(msg) {
-    console.log(("\n" + msg + "\n").red);
-    return process.exit();
-};
-
-pad = function(s, l) {
-    while (s.length < l) {
-        s += ' ';
-    }
-    return s;
-};
-
-if (args.file) {
-    ext = path.extname(args.file);
-    try {
-        d = load(args.file, args.type);
-    } catch (error) {
-        e = error;
-        err(e.stack);
-    }
-    if (ref = args.output, indexOf.call(noon.extensions, ref) >= 0) {
-        args.output = '.' + args.output;
-    }
-    if (ref1 = args.output, indexOf.call(noon.extnames, ref1) >= 0) {
-        if (args.output === '.noon') {
-            o = {
-                align: args.align,
-                indent: Math.max(1, args.indent),
-                maxalign: Math.max(0, args.maxalign),
-                colors: args.colors,
-                sort: args.sort
-            };
-        } else {
-            o = {
-                ext: args.output,
-                colors: args.colors,
-                indent: pad('', args.indent)
-            };
-        }
-        console.log(stringify(d, o));
-    } else {
-        if (path.extname(args.output) === '.noon') {
-            o = {
-                align: args.align,
-                indent: Math.max(1, args.indent),
-                maxalign: Math.max(0, args.maxalign),
-                colors: false,
-                sort: args.sort
-            };
-        } else {
-            o = {
-                indent: pad('', args.indent)
-            };
-        }
-        save(args.output, d, o);
-    }
+err = function (msg)
+{
+    console.log(("\n" + msg + "\n").red)
+    return process.exit()
 }
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibm9vbi5qcyIsInNvdXJjZVJvb3QiOiIuLi9jb2ZmZWUiLCJzb3VyY2VzIjpbIm5vb24uY29mZmVlIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUE7Ozs7Ozs7QUFBQSxJQUFBLHFGQUFBO0lBQUE7O0FBUUEsRUFBQSxHQUFZLE9BQUEsQ0FBUSxJQUFSOztBQUNaLElBQUEsR0FBWSxPQUFBLENBQVEsTUFBUjs7QUFDWixTQUFBLEdBQVksT0FBQSxDQUFRLGFBQVI7O0FBQ1osS0FBQSxHQUFZLE9BQUEsQ0FBUSxTQUFSOztBQUNaLElBQUEsR0FBWSxPQUFBLENBQVEsUUFBUjs7QUFDWixJQUFBLEdBQVksT0FBQSxDQUFRLFFBQVI7O0FBQ1osSUFBQSxHQUFZLE9BQUEsQ0FBUSxRQUFSOztBQVFaLElBQUEsR0FBTyxPQUFBLENBQVEsTUFBUixDQUFBLENBQWdCLGtnQkFBQSxHQVlsQixDQUFDLElBQUksQ0FBQyxRQUFRLENBQUMsSUFBZCxDQUFtQixRQUFuQixDQUFELENBWmtCLEdBWVcsZ0JBWlgsR0FjWixDQUFDLE9BQUEsQ0FBVyxTQUFELEdBQVcsa0JBQXJCLENBQXVDLENBQUMsT0FBekMsQ0FkSjs7QUFpQlAsR0FBQSxHQUFNLFNBQUMsR0FBRDtJQUNILE9BQUEsQ0FBQyxHQUFELENBQUssQ0FBQyxJQUFBLEdBQUssR0FBTCxHQUFTLElBQVYsQ0FBZSxDQUFDLEdBQXJCO1dBQ0MsT0FBTyxDQUFDLElBQVIsQ0FBQTtBQUZFOztBQUlOLEdBQUEsR0FBTSxTQUFDLENBQUQsRUFBSSxDQUFKO0FBQ0YsV0FBTSxDQUFDLENBQUMsTUFBRixHQUFXLENBQWpCO1FBQ0ksQ0FBQSxJQUFLO0lBRFQ7V0FFQTtBQUhFOztBQUtOLElBQUcsSUFBSSxDQUFDLElBQVI7SUFFSSxHQUFBLEdBQU0sSUFBSSxDQUFDLE9BQUwsQ0FBYSxJQUFJLENBQUMsSUFBbEI7QUFFTjtRQUNJLENBQUEsR0FBSSxJQUFBLENBQUssSUFBSSxDQUFDLElBQVYsRUFBZ0IsSUFBSSxDQUFDLElBQXJCLEVBRFI7S0FBQSxhQUFBO1FBRU07UUFDRixHQUFBLENBQUksQ0FBQyxDQUFDLEtBQU4sRUFISjs7SUFLQSxVQUFHLElBQUksQ0FBQyxNQUFMLEVBQUEsYUFBZSxJQUFJLENBQUMsVUFBcEIsRUFBQSxHQUFBLE1BQUg7UUFDSSxJQUFJLENBQUMsTUFBTCxHQUFjLEdBQUEsR0FBSSxJQUFJLENBQUMsT0FEM0I7O0lBR0EsV0FBRyxJQUFJLENBQUMsTUFBTCxFQUFBLGFBQWUsSUFBSSxDQUFDLFFBQXBCLEVBQUEsSUFBQSxNQUFIO1FBQ0ksSUFBRyxJQUFJLENBQUMsTUFBTCxLQUFlLE9BQWxCO1lBQ0ksQ0FBQSxHQUNJO2dCQUFBLEtBQUEsRUFBWSxJQUFJLENBQUMsS0FBakI7Z0JBQ0EsTUFBQSxFQUFZLElBQUksQ0FBQyxHQUFMLENBQVMsQ0FBVCxFQUFXLElBQUksQ0FBQyxNQUFoQixDQURaO2dCQUVBLFFBQUEsRUFBWSxJQUFJLENBQUMsR0FBTCxDQUFTLENBQVQsRUFBVyxJQUFJLENBQUMsUUFBaEIsQ0FGWjtnQkFHQSxNQUFBLEVBQVksSUFBSSxDQUFDLE1BSGpCO2dCQUlBLElBQUEsRUFBWSxJQUFJLENBQUMsSUFKakI7Y0FGUjtTQUFBLE1BQUE7WUFRSSxDQUFBLEdBQ0k7Z0JBQUEsR0FBQSxFQUFZLElBQUksQ0FBQyxNQUFqQjtnQkFDQSxNQUFBLEVBQVksSUFBSSxDQUFDLE1BRGpCO2dCQUVBLE1BQUEsRUFBWSxHQUFBLENBQUksRUFBSixFQUFPLElBQUksQ0FBQyxNQUFaLENBRlo7Y0FUUjs7UUFZQSxPQUFBLENBQUEsR0FBQSxDQUFJLFNBQUEsQ0FBVSxDQUFWLEVBQWEsQ0FBYixDQUFKLEVBYko7S0FBQSxNQUFBO1FBZUksSUFBRyxJQUFJLENBQUMsT0FBTCxDQUFhLElBQUksQ0FBQyxNQUFsQixDQUFBLEtBQTZCLE9BQWhDO1lBQ0ksQ0FBQSxHQUNJO2dCQUFBLEtBQUEsRUFBWSxJQUFJLENBQUMsS0FBakI7Z0JBQ0EsTUFBQSxFQUFZLElBQUksQ0FBQyxHQUFMLENBQVMsQ0FBVCxFQUFXLElBQUksQ0FBQyxNQUFoQixDQURaO2dCQUVBLFFBQUEsRUFBWSxJQUFJLENBQUMsR0FBTCxDQUFTLENBQVQsRUFBVyxJQUFJLENBQUMsUUFBaEIsQ0FGWjtnQkFHQSxNQUFBLEVBQVksS0FIWjtnQkFJQSxJQUFBLEVBQVksSUFBSSxDQUFDLElBSmpCO2NBRlI7U0FBQSxNQUFBO1lBUUksQ0FBQSxHQUNJO2dCQUFBLE1BQUEsRUFBWSxHQUFBLENBQUksRUFBSixFQUFPLElBQUksQ0FBQyxNQUFaLENBQVo7Y0FUUjs7UUFVQSxJQUFBLENBQUssSUFBSSxDQUFDLE1BQVYsRUFBa0IsQ0FBbEIsRUFBcUIsQ0FBckIsRUF6Qko7S0FaSiIsInNvdXJjZXNDb250ZW50IjpbIiMjI1xuMDAwICAgMDAwICAgMDAwMDAwMCAgICAwMDAwMDAwICAgMDAwICAgMDAwXG4wMDAwICAwMDAgIDAwMCAgIDAwMCAgMDAwICAgMDAwICAwMDAwICAwMDBcbjAwMCAwIDAwMCAgMDAwICAgMDAwICAwMDAgICAwMDAgIDAwMCAwIDAwMFxuMDAwICAwMDAwICAwMDAgICAwMDAgIDAwMCAgIDAwMCAgMDAwICAwMDAwXG4wMDAgICAwMDAgICAwMDAwMDAwICAgIDAwMDAwMDAgICAwMDAgICAwMDBcbiMjI1xuXG5mcyAgICAgICAgPSByZXF1aXJlICdmcydcbnBhdGggICAgICA9IHJlcXVpcmUgJ3BhdGgnXG5zdHJpbmdpZnkgPSByZXF1aXJlICcuL3N0cmluZ2lmeSdcbnBhcnNlICAgICA9IHJlcXVpcmUgJy4vcGFyc2UnXG5sb2FkICAgICAgPSByZXF1aXJlICcuL2xvYWQnXG5zYXZlICAgICAgPSByZXF1aXJlICcuL3NhdmUnXG5ub29uICAgICAgPSByZXF1aXJlICcuL21haW4nXG5cbiMgIDAwMDAwMDAgICAwMDAwMDAwMCAgICAwMDAwMDAwICAgIDAwMDAwMDBcbiMgMDAwICAgMDAwICAwMDAgICAwMDAgIDAwMCAgICAgICAgMDAwXG4jIDAwMDAwMDAwMCAgMDAwMDAwMCAgICAwMDAgIDAwMDAgIDAwMDAwMDBcbiMgMDAwICAgMDAwICAwMDAgICAwMDAgIDAwMCAgIDAwMCAgICAgICAwMDBcbiMgMDAwICAgMDAwICAwMDAgICAwMDAgICAwMDAwMDAwICAgMDAwMDAwMFxuXG5hcmdzID0gcmVxdWlyZSgna2FyZycpIFwiXCJcIlxubm9vblxuICAgIGZpbGUgICAgICAgIC4gPyB0aGUgZmlsZSB0byBjb252ZXJ0ICAgICAgICAgICAgIC4gKiAuID0gcGFja2FnZS5qc29uXG4gICAgb3V0cHV0ICAgICAgLiA/IG91dHB1dCBmaWxlIG9yIGZpbGV0eXBlICAgICAgICAgLiA9IG5vb25cbiAgICBpbmRlbnQgICAgICAuID8gaW5kZW50YXRpb24gbGVuZ3RoICAgICAgICAgICAgICAuID0gNFxuICAgIGFsaWduICAgICAgIC4gPyBhbGlnbiB2YWx1ZXMgICAgICAgICAgICAgICAgICAgIC4gPSB0cnVlXG4gICAgbWF4YWxpZ24gICAgLiA/IG1heCBhbGlnbiB3aWR0aCwgMDogbm8gbGltaXQgICAgLiA9IDMyXG4gICAgc29ydCAgICAgICAgLiA/IHNvcnQga2V5cyBhbHBoYWJldGljYWxseSAgICAgICAgLiA9IGZhbHNlXG4gICAgY29sb3JzICAgICAgLiA/IG91dHB1dCB3aXRoIGFuc2kgY29sb3JzICAgICAgICAgLiA9IHRydWVcbiAgICB0eXBlICAgICAgICAuID8gaW5wdXQgZmlsZXR5cGVcblxuc3VwcG9ydGVkIGZpbGV0eXBlczpcbiAgICAje25vb24uZXh0bmFtZXMuam9pbiAnXFxuICAgICd9XG5cbnZlcnNpb24gICAje3JlcXVpcmUoXCIje19fZGlybmFtZX0vLi4vcGFja2FnZS5qc29uXCIpLnZlcnNpb259XG5cIlwiXCJcblxuZXJyID0gKG1zZykgLT5cbiAgICBsb2cgKFwiXFxuXCIrbXNnK1wiXFxuXCIpLnJlZFxuICAgIHByb2Nlc3MuZXhpdCgpXG5cbnBhZCA9IChzLCBsKSAtPiBcbiAgICB3aGlsZSBzLmxlbmd0aCA8IGxcbiAgICAgICAgcyArPSAnICdcbiAgICBzXG4gICAgXG5pZiBhcmdzLmZpbGVcblxuICAgIGV4dCA9IHBhdGguZXh0bmFtZSBhcmdzLmZpbGVcblxuICAgIHRyeVxuICAgICAgICBkID0gbG9hZCBhcmdzLmZpbGUsIGFyZ3MudHlwZVxuICAgIGNhdGNoIGVcbiAgICAgICAgZXJyIGUuc3RhY2tcblxuICAgIGlmIGFyZ3Mub3V0cHV0IGluIG5vb24uZXh0ZW5zaW9uc1xuICAgICAgICBhcmdzLm91dHB1dCA9ICcuJythcmdzLm91dHB1dFxuXG4gICAgaWYgYXJncy5vdXRwdXQgaW4gbm9vbi5leHRuYW1lc1xuICAgICAgICBpZiBhcmdzLm91dHB1dCA9PSAnLm5vb24nXG4gICAgICAgICAgICBvPVxuICAgICAgICAgICAgICAgIGFsaWduOiAgICAgIGFyZ3MuYWxpZ25cbiAgICAgICAgICAgICAgICBpbmRlbnQ6ICAgICBNYXRoLm1heCAxIGFyZ3MuaW5kZW50XG4gICAgICAgICAgICAgICAgbWF4YWxpZ246ICAgTWF0aC5tYXggMCBhcmdzLm1heGFsaWduXG4gICAgICAgICAgICAgICAgY29sb3JzOiAgICAgYXJncy5jb2xvcnNcbiAgICAgICAgICAgICAgICBzb3J0OiAgICAgICBhcmdzLnNvcnRcbiAgICAgICAgZWxzZVxuICAgICAgICAgICAgbyA9XG4gICAgICAgICAgICAgICAgZXh0OiAgICAgICAgYXJncy5vdXRwdXRcbiAgICAgICAgICAgICAgICBjb2xvcnM6ICAgICBhcmdzLmNvbG9yc1xuICAgICAgICAgICAgICAgIGluZGVudDogICAgIHBhZCAnJyBhcmdzLmluZGVudFxuICAgICAgICBsb2cgc3RyaW5naWZ5IGQsIG9cbiAgICBlbHNlXG4gICAgICAgIGlmIHBhdGguZXh0bmFtZShhcmdzLm91dHB1dCkgPT0gJy5ub29uJ1xuICAgICAgICAgICAgbyA9XG4gICAgICAgICAgICAgICAgYWxpZ246ICAgICAgYXJncy5hbGlnblxuICAgICAgICAgICAgICAgIGluZGVudDogICAgIE1hdGgubWF4IDEgYXJncy5pbmRlbnRcbiAgICAgICAgICAgICAgICBtYXhhbGlnbjogICBNYXRoLm1heCAwIGFyZ3MubWF4YWxpZ25cbiAgICAgICAgICAgICAgICBjb2xvcnM6ICAgICBmYWxzZVxuICAgICAgICAgICAgICAgIHNvcnQ6ICAgICAgIGFyZ3Muc29ydFxuICAgICAgICBlbHNlXG4gICAgICAgICAgICBvID1cbiAgICAgICAgICAgICAgICBpbmRlbnQ6ICAgICBwYWQgJycgYXJncy5pbmRlbnRcbiAgICAgICAgc2F2ZSBhcmdzLm91dHB1dCwgZCwgb1xuIl19
-//# sourceURL=../coffee/noon.coffee
+pad = function (s, l)
+{
+    while (s.length < l)
+    {
+        s += ' '
+    }
+    return s
+}
+if (args.file)
+{
+    ext = path.extname(args.file)
+    try
+    {
+        d = load(args.file,args.type)
+    }
+    catch (e)
+    {
+        err(e.stack)
+    }
+    if (_k_.in(args.output,noon.extensions))
+    {
+        args.output = '.' + args.output
+    }
+    if (_k_.in(args.output,noon.extnames))
+    {
+        if (args.output === '.noon')
+        {
+            o = {align:args.align,indent:Math.max(1,args.indent),maxalign:Math.max(0,args.maxalign),colors:args.colors,sort:args.sort}
+        }
+        else
+        {
+            o = {ext:args.output,colors:args.colors,indent:pad('',args.indent)}
+        }
+        console.log(stringify(d,o))
+    }
+    else
+    {
+        if (path.extname(args.output) === '.noon')
+        {
+            o = {align:args.align,indent:Math.max(1,args.indent),maxalign:Math.max(0,args.maxalign),colors:false,sort:args.sort}
+        }
+        else
+        {
+            o = {indent:pad('',args.indent)}
+        }
+        save(args.output,d,o)
+    }
+}

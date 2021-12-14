@@ -87,12 +87,13 @@ stringify = (obj, options={}) ->
         if opt.align        
             maxKey = opt.indent
             if Object.keys(o).length > 1
-                for own k,v of o
-                    kl = parseInt(Math.ceil((k.length+2)/opt.indent)*opt.indent)
-                    maxKey = Math.max maxKey, kl
-                    if opt.maxalign and (maxKey > opt.maxalign)
-                        maxKey = opt.maxalign
-                        break
+                for k,v of o
+                    if o.hasOwnProperty k
+                        kl = parseInt(Math.ceil((k.length+2)/opt.indent)*opt.indent)
+                        maxKey = Math.max maxKey, kl
+                        if opt.maxalign and (maxKey > opt.maxalign)
+                            maxKey = opt.maxalign
+                            break
         l = []
         
         keyValue = (k,v) ->
@@ -125,8 +126,9 @@ stringify = (obj, options={}) ->
             for k in Object.keys(o).sort()
                 l.push keyValue k, o[k]
         else
-            for own k,v of o
-                l.push keyValue k, v
+            for k,v of o
+                if o.hasOwnProperty k
+                    l.push keyValue k, v
             
         l.join '\n'
 

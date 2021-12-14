@@ -1,225 +1,241 @@
-// koffee 1.19.0
+// monsterkodi/kode 0.123.0
 
-/*
- 0000000  000000000  00000000   000  000   000   0000000   000  00000000  000   000
-000          000     000   000  000  0000  000  000        000  000        000 000 
-0000000      000     0000000    000  000 0 000  000  0000  000  000000      00000  
-     000     000     000   000  000  000  0000  000   000  000  000          000   
-0000000      000     000   000  000  000   000   0000000   000  000          000
- */
-var defaults, pad, regs, stringify,
-    hasProp = Object.hasOwn,
-    indexOf = [].indexOf;
+var _k_ = {in: function (a,l) {return (typeof l === 'string' && typeof a === 'string' && a.length ? '' : []).indexOf.call(l,a) >= 0}, list: function (l) {return (l != null ? typeof l.length === 'number' ? l : [] : [])}}
 
-defaults = {
-    ext: '.noon',
-    indent: 4,
-    align: true,
-    maxalign: 32,
-    sort: false,
-    circular: false,
-    "null": false,
-    colors: false
-};
+var defaults, regs, pad, stringify
 
-regs = {
-    url: new RegExp('^(https?|git|file)(://)(\\S+)$'),
-    path: new RegExp('^([\\.\\/\\S]+)(\\/\\S+)$'),
-    semver: new RegExp('\\d+\\.\\d+\\.\\d+')
-};
+defaults = {ext:'.noon',indent:4,align:true,maxalign:32,sort:false,circular:false,null:false,colors:false}
+regs = {url:new RegExp('^(https?|git|file)(://)(\\S+)$'),path:new RegExp('^([\\.\\/\\S]+)(\\/\\S+)$'),semver:new RegExp('\\d+\\.\\d+\\.\\d+')}
 
-pad = function(s, l) {
-    while (s.length < l) {
-        s += ' ';
+pad = function (s, l)
+{
+    while (s.length < l)
+    {
+        s += ' '
     }
-    return s;
-};
+    return s
+}
 
-stringify = function(obj, options) {
-    var cs, def, escape, indstr, opt, pretty, s, toStr;
-    if (options == null) {
-        options = {};
-    }
-    def = function(o, d) {
-        var k, r, v;
-        r = {};
-        for (k in o) {
-            v = o[k];
-            r[k] = v;
+stringify = function (obj, options = {})
+{
+    var def, opt, cs, indstr, escape, pretty, toStr, s
+
+    def = function (o, d)
+    {
+        var r, k, v
+
+        r = {}
+        for (k in o)
+        {
+            v = o[k]
+            r[k] = v
         }
-        for (k in d) {
-            v = d[k];
-            if (r[k] == null) {
-                r[k] = v;
+        for (k in d)
+        {
+            v = d[k]
+            if (!(r[k] != null))
+            {
+                r[k] = v
             }
         }
-        return r;
-    };
-    opt = def(options, defaults);
-    if (opt.ext === '.json') {
-        cs = JSON.stringify(obj, null, opt.indent);
-        if (opt.colors) {
-            return require('klor').syntax({
-                text: cs,
-                ext: opt.ext
-            });
-        } else {
-            return cs;
+        return r
+    }
+    opt = def(options,defaults)
+    if (opt.ext === '.json')
+    {
+        cs = JSON.stringify(obj,null,opt.indent)
+        if (opt.colors)
+        {
+            return require('klor').syntax({text:cs,ext:opt.ext})
+        }
+        else
+        {
+            return cs
         }
     }
-    if (typeof opt.indent === 'string') {
-        opt.indent = opt.indent.length;
+    if (typeof(opt.indent) === 'string')
+    {
+        opt.indent = opt.indent.length
     }
-    indstr = pad('', opt.indent);
-    escape = function(k, arry) {
-        var es, ref, ref1, sp;
-        if (0 <= k.indexOf('\n')) {
-            sp = k.split('\n');
-            es = sp.map(function(s) {
-                return escape(s, arry);
-            });
-            es.unshift('...');
-            es.push('...');
-            return es.join('\n');
+    indstr = pad('',opt.indent)
+    escape = function (k, arry)
+    {
+        var sp, es
+
+        if (0 <= k.indexOf('\n'))
+        {
+            sp = k.split('\n')
+            es = sp.map(function (s)
+            {
+                return escape(s,arry)
+            })
+            es.unshift('...')
+            es.push('...')
+            return es.join('\n')
         }
-        if (k === '' || k === '...' || ((ref = k[0]) === ' ' || ref === '#' || ref === '|') || ((ref1 = k[k.length - 1]) === ' ' || ref1 === '#' || ref1 === '|')) {
-            k = '|' + k + '|';
-        } else if (arry && /\ \ /.test(k)) {
-            k = '|' + k + '|';
+        if (k === '' || k === '...' || _k_.in(k[0],[' ','#','|']) || _k_.in(k[k.length - 1],[' ','#','|']))
+        {
+            k = '|' + k + '|'
         }
-        return k;
-    };
-    pretty = function(o, ind, visited) {
-        var j, k, keyValue, kl, l, len, maxKey, ref, v;
-        if (opt.align) {
-            maxKey = opt.indent;
-            if (Object.keys(o).length > 1) {
-                for (k in o) {
-                    if (!hasProp(o, k)) continue;
-                    v = o[k];
-                    kl = parseInt(Math.ceil((k.length + 2) / opt.indent) * opt.indent);
-                    maxKey = Math.max(maxKey, kl);
-                    if (opt.maxalign && (maxKey > opt.maxalign)) {
-                        maxKey = opt.maxalign;
-                        break;
-                    }
-                }
-            }
+        else if (arry && /\ \ /.test(k))
+        {
+            k = '|' + k + '|'
         }
-        l = [];
-        keyValue = function(k, v) {
-            var i, ks, s, vs;
-            s = ind;
-            k = escape(k, true);
-            if (k.indexOf('  ') > 0 && k[0] !== '|') {
-                k = "|" + k + "|";
-            } else if (k[0] !== '|' && k[k.length - 1] === '|') {
-                k = '|' + k;
-            } else if (k[0] === '|' && k[k.length - 1] !== '|') {
-                k += '|';
-            }
-            if (opt.align) {
-                ks = pad(k, Math.max(maxKey, k.length + 2));
-                i = pad(ind + indstr, maxKey);
-            } else {
-                ks = pad(k, k.length + 2);
-                i = ind + indstr;
-            }
-            s += ks;
-            vs = toStr(v, i, false, visited);
-            if (vs[0] === '\n') {
-                while (s[s.length - 1] === ' ') {
-                    s = s.substr(0, s.length - 1);
-                }
-            }
-            s += vs;
-            while (s[s.length - 1] === ' ') {
-                s = s.substr(0, s.length - 1);
-            }
-            return s;
-        };
-        if (opt.sort) {
-            ref = Object.keys(o).sort();
-            for (j = 0, len = ref.length; j < len; j++) {
-                k = ref[j];
-                l.push(keyValue(k, o[k]));
-            }
-        } else {
-            for (k in o) {
-                if (!hasProp(o, k)) continue;
-                v = o[k];
-                l.push(keyValue(k, v));
-            }
-        }
-        return l.join('\n');
-    };
-    toStr = function(o, ind, arry, visited) {
-        var ref, ref1, s, t, v;
-        if (ind == null) {
-            ind = '';
-        }
-        if (arry == null) {
-            arry = false;
-        }
-        if (visited == null) {
-            visited = [];
-        }
-        if (o == null) {
-            if (o === null) {
-                return opt["null"] || arry && "null" || '';
-            }
-            if (o === void 0) {
-                return "undefined";
-            }
-            return '<?>';
-        }
-        switch (t = typeof o) {
-            case 'string':
-                return escape(o, arry);
-            case 'object':
-                if (opt.circular) {
-                    if (indexOf.call(visited, o) >= 0) {
-                        return '<v>';
-                    }
-                    visited.push(o);
-                }
-                if (((ref = o.constructor) != null ? ref.name : void 0) === 'Array') {
-                    s = ind !== '' && arry && '.' || '';
-                    if (o.length && ind !== '') {
-                        s += '\n';
-                    }
-                    s += ((function() {
-                        var j, len, results;
-                        results = [];
-                        for (j = 0, len = o.length; j < len; j++) {
-                            v = o[j];
-                            results.push(ind + toStr(v, ind + indstr, true, visited));
+        return k
+    }
+    pretty = function (o, ind, visited)
+    {
+        var maxKey, k, v, kl, l, keyValue
+
+        if (opt.align)
+        {
+            maxKey = opt.indent
+            if (Object.keys(o).length > 1)
+            {
+                for (k in o)
+                {
+                    v = o[k]
+                    if (o.hasOwnProperty(k))
+                    {
+                        kl = parseInt(Math.ceil((k.length + 2) / opt.indent) * opt.indent)
+                        maxKey = Math.max(maxKey,kl)
+                        if (opt.maxalign && (maxKey > opt.maxalign))
+                        {
+                            maxKey = opt.maxalign
+                            break
                         }
-                        return results;
-                    })()).join('\n');
-                } else if (((ref1 = o.constructor) != null ? ref1.name : void 0) === 'RegExp') {
-                    return o.source;
-                } else {
-                    s = (arry && '.\n') || ((ind !== '') && '\n' || '');
-                    s += pretty(o, ind, visited);
+                    }
                 }
-                return s;
-            default:
-                return String(o);
+            }
         }
-        return '<???>';
-    };
-    s = toStr(obj);
-    if (opt.colors) {
-        s = require('klor').syntax({
-            text: s,
-            ext: 'noon'
-        });
+        l = []
+        keyValue = function (k, v)
+        {
+            var s, ks, i, vs
+
+            s = ind
+            k = escape(k,true)
+            if (k.indexOf('  ') > 0 && k[0] !== '|')
+            {
+                k = `|${k}|`
+            }
+            else if (k[0] !== '|' && k[k.length - 1] === '|')
+            {
+                k = '|' + k
+            }
+            else if (k[0] === '|' && k[k.length - 1] !== '|')
+            {
+                k += '|'
+            }
+            if (opt.align)
+            {
+                ks = pad(k,Math.max(maxKey,k.length + 2))
+                i = pad(ind + indstr,maxKey)
+            }
+            else
+            {
+                ks = pad(k,k.length + 2)
+                i = ind + indstr
+            }
+            s += ks
+            vs = toStr(v,i,false,visited)
+            if (vs[0] === '\n')
+            {
+                while (s[s.length - 1] === ' ')
+                {
+                    s = s.substr(0,s.length - 1)
+                }
+            }
+            s += vs
+            while (s[s.length - 1] === ' ')
+            {
+                s = s.substr(0,s.length - 1)
+            }
+            return s
+        }
+        if (opt.sort)
+        {
+            var list = _k_.list(Object.keys(o).sort())
+            for (var _126_18_ = 0; _126_18_ < list.length; _126_18_++)
+            {
+                k = list[_126_18_]
+                l.push(keyValue(k,o[k]))
+            }
+        }
+        else
+        {
+            for (k in o)
+            {
+                v = o[k]
+                if (o.hasOwnProperty(k))
+                {
+                    l.push(keyValue(k,v))
+                }
+            }
+        }
+        return l.join('\n')
     }
-    return s;
-};
+    toStr = function (o, ind = '', arry = false, visited = [])
+    {
+        var t, _161_32_, s, v, _165_37_
 
-module.exports = stringify;
+        if (!(o != null))
+        {
+            if (o === null)
+            {
+                return opt.null || arry && "null" || ''
+            }
+            if (o === undefined)
+            {
+                return "undefined"
+            }
+            return '<?>'
+        }
+        switch (t = typeof(o))
+        {
+            case 'string':
+                return escape(o,arry)
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3RyaW5naWZ5LmpzIiwic291cmNlUm9vdCI6Ii4uL2NvZmZlZSIsInNvdXJjZXMiOlsic3RyaW5naWZ5LmNvZmZlZSJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBOzs7Ozs7O0FBQUEsSUFBQSw4QkFBQTtJQUFBOzs7QUFRQSxRQUFBLEdBQ0k7SUFBQSxHQUFBLEVBQVUsT0FBVjtJQUNBLE1BQUEsRUFBVSxDQURWO0lBRUEsS0FBQSxFQUFVLElBRlY7SUFHQSxRQUFBLEVBQVUsRUFIVjtJQUlBLElBQUEsRUFBVSxLQUpWO0lBS0EsUUFBQSxFQUFVLEtBTFY7SUFNQSxDQUFBLElBQUEsQ0FBQSxFQUFVLEtBTlY7SUFPQSxNQUFBLEVBQVUsS0FQVjs7O0FBVUosSUFBQSxHQUNJO0lBQUEsR0FBQSxFQUFRLElBQUksTUFBSixDQUFXLGdDQUFYLENBQVI7SUFDQSxJQUFBLEVBQVEsSUFBSSxNQUFKLENBQVcsMkJBQVgsQ0FEUjtJQUVBLE1BQUEsRUFBUSxJQUFJLE1BQUosQ0FBVyxvQkFBWCxDQUZSOzs7QUFJSixHQUFBLEdBQU0sU0FBQyxDQUFELEVBQUksQ0FBSjtBQUNGLFdBQU0sQ0FBQyxDQUFDLE1BQUYsR0FBVyxDQUFqQjtRQUNJLENBQUEsSUFBSztJQURUO1dBRUE7QUFIRTs7QUFLTixTQUFBLEdBQVksU0FBQyxHQUFELEVBQU0sT0FBTjtBQUVSLFFBQUE7O1FBRmMsVUFBUTs7SUFFdEIsR0FBQSxHQUFNLFNBQUMsQ0FBRCxFQUFHLENBQUg7QUFDRixZQUFBO1FBQUEsQ0FBQSxHQUFJO0FBQ0osYUFBQSxNQUFBOztZQUNJLENBQUUsQ0FBQSxDQUFBLENBQUYsR0FBTztBQURYO0FBRUEsYUFBQSxNQUFBOztZQUNJLElBQWdCLFlBQWhCO2dCQUFBLENBQUUsQ0FBQSxDQUFBLENBQUYsR0FBTyxFQUFQOztBQURKO2VBRUE7SUFORTtJQVFOLEdBQUEsR0FBTSxHQUFBLENBQUksT0FBSixFQUFhLFFBQWI7SUFRTixJQUFHLEdBQUcsQ0FBQyxHQUFKLEtB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T0FBMUI7b0JBQ0ksQ0FBQSxHQUFJLEdBQUEsS0FBSyxFQUFMLElBQVksSUFBWixJQUFxQixHQUFyQixJQUE0QjtvQkFDaEMsSUFBYSxDQUFDLENBQUMsTUFBRixJQUFhLEdBQUEsS0FBSyxFQUEvQjt3QkFBQSxDQUFBLElBQUssS0FBTDs7b0JBQ0EsQ0FBQSxJQUFLOztBQUFDOzZCQUFBLG1DQUFBOzt5Q0FBQSxHQUFBLEdBQUksS0FBQSxDQUFNLENBQU4sRUFBUSxHQUFBLEdBQUksTUFBWixFQUFtQixJQUFuQixFQUF3QixPQUF4QjtBQUFKOzt3QkFBRCxDQUFpRCxDQUFDLElBQWxELENBQXVELElBQXZELEVBSFQ7aUJBQUEsTUFJSywwQ0FBZ0IsQ0FBRSxjQUFmLEtBQXVCLFFBQTFCO0FBQ0QsMkJBQU8sQ0FBQyxDQUFDLE9BRFI7aUJBQUEsTUFBQTtvQkFHRCxDQUFBLEdBQUksQ0FBQyxJQUFBLElBQVMsS0FBVixDQUFBLElBQW9CLENBQUMsQ0FBQyxHQUFBLEtBQU8sRUFBUixDQUFBLElBQWdCLElBQWhCLElBQXdCLEVBQXpCO29CQUN4QixDQUFBLElBQUssTUFBQSxDQUFPLENBQVAsRUFBVSxHQUFWLEVBQWUsT0FBZixFQUpKOztBQUtMLHVCQUFPO0FBcEJmO0FBc0JRLHVCQUFPLE1BQUEsQ0FBTyxDQUFQO0FBdEJmO0FBdUJBLGVBQU87SUFoQ0g7SUFrQ1IsQ0FBQSxHQUFJLEtBQUEsQ0FBTSxHQUFOO0lBQ0osSUFBRyxHQUFHLENBQUMsTUFBUDtRQUNJLENBQUEsR0FBSSxPQUFBLENBQVEsTUFBUixDQUFlLENBQUMsTUFBaEIsQ0FBdUI7WUFBQSxJQUFBLEVBQUssQ0FBTDtZQUFRLEdBQUEsRUFBSSxNQUFaO1NBQXZCLEVBRFI7O1dBRUE7QUFsSlE7O0FBb0paLE1BQU0sQ0FBQyxPQUFQLEdBQWlCIiwic291cmNlc0NvbnRlbnQiOlsiIyMjXG4gMDAwMDAwMCAgMDAwMDAwMDAwICAwMDAwMDAwMCAgIDAwMCAgMDAwICAgMDAwICAgMDAwMDAwMCAgIDAwMCAgMDAwMDAwMDAgIDAwMCAgIDAwMFxuMDAwICAgICAgICAgIDAwMCAgICAgMDAwICAgMDAwICAwMDAgIDAwMDAgIDAwMCAgMDAwICAgICAgICAwMDAgIDAwMCAgICAgICAgMDAwIDAwMCBcbjAwMDAwMDAgICAgICAwMDAgICAgIDAwMDAwMDAgICAgMDAwICAwMDAgMCAwMDAgIDAwMCAgMDAwMCAgMDAwICAwMDAwMDAgICAgICAwMDAwMCAgXG4gICAgIDAwMCAgICAgMDAwICAgICAwMDAgICAwMDAgIDAwMCAgMDAwICAwMDAwICAwMDAgICAwMDAgIDAwMCAgMDAwICAgICAgICAgIDAwMCAgIFxuMDAwMDAwMCAgICAgIDAwMCAgICAgMDAwICAgMDAwICAwMDAgIDAwMCAgIDAwMCAgIDAwMDAwMDAgICAwMDAgIDAwMCAgICAgICAgICAwMDAgICBcbiMjI1xuXG5kZWZhdWx0cyA9XG4gICAgZXh0OiAgICAgICcubm9vbicgIyBvdXRwdXQgZm9ybWF0XG4gICAgaW5kZW50OiAgIDQgICAgICAgIyBudW1iZXIgb2Ygc3BhY2VzIHBlciBpbmRlbnQgbGV2ZWxcbiAgICBhbGlnbjogICAgdHJ1ZSAgICAjIHZlcnRpY2FsbHkgYWxpZ24gb2JqZWN0IHZhbHVlc1xuICAgIG1heGFsaWduOiAzMiAgICAgICMgbWF4aW1hbCBudW1iZXIgb2Ygc3BhY2VzIHdoZW4gYWxpZ25pbmdcbiAgICBzb3J0OiAgICAgZmFsc2UgICAjIHNvcnQgb2JqZWN0IGtleXMgYWxwaGFiZXRpY2FsbHlcbiAgICBjaXJjdWxhcjogZmFsc2UgICAjIGNoZWNrIGZvciBjaXJjdWxhciByZWZlcmVuY2VzIChleHBlbnNpdmUhKVxuICAgIG51bGw6ICAgICBmYWxzZSAgICMgb3V0cHV0IG51bGwgZGljdGlvbmFyeSB2YWx1ZXNcbiAgICBjb2xvcnM6ICAgZmFsc2UgICAjIGNvbG9yaXplIG91dHB1dCB3aXRoIGFuc2kgY29sb3JzXG4gICAgICAgICAgICAgICAgICAgICAgIyB0cnVlIGZvciBkZWZhdWx0IGNvbG9ycyBvciBjdXN0b20gZGljdGlvbmFyeVxuICAgIFxucmVncyA9IFxuICAgIHVybDogICAgbmV3IFJlZ0V4cCAnXihodHRwcz98Z2l0fGZpbGUpKDovLykoXFxcXFMrKSQnXG4gICAgcGF0aDogICBuZXcgUmVnRXhwICdeKFtcXFxcLlxcXFwvXFxcXFNdKykoXFxcXC9cXFxcUyspJCdcbiAgICBzZW12ZXI6IG5ldyBSZWdFeHAgJ1xcXFxkK1xcXFwuXFxcXGQrXFxcXC5cXFxcZCsnXG5cbnBhZCA9IChzLCBsKSAtPiBcbiAgICB3aGlsZSBzLmxlbmd0aCA8IGxcbiAgICAgICAgcyArPSAnICdcbiAgICBzXG4gICAgXG5zdHJpbmdpZnkgPSAob2JqLCBvcHRpb25zPXt9KSAtPlxuXG4gICAgZGVmID0gKG8sZCkgLT5cbiAgICAgICAgciA9IHt9XG4gICAgICAgIGZvciBrLHYgb2Ygb1xuICAgICAgICAgICAgcltrXSA9IHZcbiAgICAgICAgZm9yIGssdiBvZiBkXG4gICAgICAgICAgICByW2tdID0gdiBpZiBub3QgcltrXT9cbiAgICAgICAgclxuXG4gICAgb3B0ID0gZGVmIG9wdGlvbnMsIGRlZmF1bHRzXG4gICAgXG4gICAgIyAgICAgICAwMDAgICAwMDAwMDAwICAgMDAwMDAwMCAgIDAwMCAgIDAwMFxuICAgICMgICAgICAgMDAwICAwMDAgICAgICAgMDAwICAgMDAwICAwMDAwICAwMDBcbiAgICAjICAgICAgIDAwMCAgMDAwMDAwMCAgIDAwMCAgIDAwMCAgMDAwIDAgMDAwXG4gICAgIyAwMDAgICAwMDAgICAgICAgMDAwICAwMDAgICAwMDAgIDAwMCAgMDAwMFxuICAgICMgIDAwMDAwMDAgICAwMDAwMDAwICAgIDAwMDAwMDAgICAwMDAgICAwMDBcbiAgICAgICAgXG4gICAgaWYgb3B0LmV4dCA9PSAnLmpzb24nXG4gICAgICAgIGNzID0gSlNPTi5zdHJpbmdpZnkgb2JqLCBudWxsLCBvcHQuaW5kZW50XG4gICAgICAgIGlmIG9wdC5jb2xvcnNcbiAgICAgICAgICAgIHJldHVybiByZXF1aXJlKCdrbG9yJykuc3ludGF4IHRleHQ6Y3MsIGV4dDpvcHQuZXh0XG4gICAgICAgIGVsc2VcbiAgICAgICAgICAgIHJldHVybiBjc1xuICAgIFxuICAgIGlmIHR5cGVvZiBvcHQuaW5kZW50ID09ICdzdHJpbmcnIFxuICAgICAgICBvcHQuaW5kZW50ID0gb3B0LmluZGVudC5sZW5ndGhcbiAgICAgICAgXG4gICAgaW5kc3RyID0gcGFkICcnIG9wdC5pbmRlbnRcbiAgICAgICAgICAgIFxuICAgICMgMDAwMDAwMDAgICAwMDAwMDAwICAgMDAwMDAwMCAgIDAwMDAwMDAgICAwMDAwMDAwMCAgIDAwMDAwMDAwXG4gICAgIyAwMDAgICAgICAgMDAwICAgICAgIDAwMCAgICAgICAwMDAgICAwMDAgIDAwMCAgIDAwMCAgMDAwICAgICBcbiAgICAjIDAwMDAwMDAgICAwMDAwMDAwICAgMDAwICAgICAgIDAwMDAwMDAwMCAgMDAwMDAwMDAgICAwMDAwMDAwIFxuICAgICMgMDAwICAgICAgICAgICAgMDAwICAwMDAgICAgICAgMDAwICAgMDAwICAwMDAgICAgICAgIDAwMCAgICAgXG4gICAgIyAwMDAwMDAwMCAgMDAwMDAwMCAgICAwMDAwMDAwICAwMDAgICAwMDAgIDAwMCAgICAgICAgMDAwMDAwMDBcblxuICAgIGVzY2FwZSA9IChrLCBhcnJ5KSAtPlxuICAgICAgICBpZiAwIDw9IGsuaW5kZXhPZiAnXFxuJ1xuICAgICAgICAgICAgc3AgPSBrLnNwbGl0ICdcXG4nXG4gICAgICAgICAgICBlcyA9IHNwLm1hcCAocykgLT4gZXNjYXBlKHMsIGFycnkpXG4gICAgICAgICAgICBlcy51bnNoaWZ0ICcuLi4nXG4gICAgICAgICAgICBlcy5wdXNoICcuLi4nXG4gICAgICAgICAgICByZXR1cm4gZXMuam9pbiAnXFxuJ1xuICAgICAgICBpZiBrID09ICcnIG9yIGsgPT0gJy4uLicgb3Iga1swXSBpbiBbJyAnICcjJyAnfCddIG9yIGtbay5sZW5ndGgtMV0gaW4gWycgJyAnIycgJ3wnXSBcbiAgICAgICAgICAgIGsgPSAnfCcgKyBrICsgJ3wnXG4gICAgICAgIGVsc2UgaWYgYXJyeSBhbmQgL1xcIFxcIC8udGVzdCBrXG4gICAgICAgICAgICBrID0gJ3wnICsgayArICd8J1xuICAgICAgICBrXG4gICAgXG4gICAgIyAwMDAwMDAwMCAgIDAwMDAwMDAwICAgMDAwMDAwMDAgIDAwMDAwMDAwMCAgMDAwMDAwMDAwICAwMDAgICAwMDBcbiAgICAjIDAwMCAgIDAwMCAgMDAwICAgMDAwICAwMDAgICAgICAgICAgMDAwICAgICAgICAwMDAgICAgICAwMDAgMDAwIFxuICAgICMgMDAwMDAwMDAgICAwMDAwMDAwICAgIDAwMDAwMDAgICAgICAwMDAgICAgICAgIDAwMCAgICAgICAwMDAwMCAgXG4gICAgIyAwMDAgICAgICAgIDAwMCAgIDAwMCAgMDAwICAgICAgICAgIDAwMCAgICAgICAgMDAwICAgICAgICAwMDAgICBcbiAgICAjIDAwMCAgICAgICAgMDAwICAgMDAwICAwMDAwMDAwMCAgICAgMDAwICAgICAgICAwMDAgICAgICAgIDAwMCAgIFxuICAgIFxuICAgIHByZXR0eSA9IChvLCBpbmQsIHZpc2l0ZWQpIC0+XG4gICAgICAgIFxuICAgICAgICBpZiBvcHQuYWxpZ24gICAgICAgIFxuICAgICAgICAgICAgbWF4S2V5ID0gb3B0LmluZGVudFxuICAgICAgICAgICAgaWYgT2JqZWN0LmtleXMobykubGVuZ3RoID4gMVxuICAgICAgICAgICAgICAgIGZvciBvd24gayx2IG9mIG9cbiAgICAgICAgICAgICAgICAgICAga2wgPSBwYXJzZUludChNYXRoLmNlaWwoKGsubGVuZ3RoKzIpL29wdC5pbmRlbnQpKm9wdC5pbmRlbnQpXG4gICAgICAgICAgICAgICAgICAgIG1heEtleSA9IE1hdGgubWF4IG1heEtleSwga2xcbiAgICAgICAgICAgICAgICAgICAgaWYgb3B0Lm1heGFsaWduIGFuZCAobWF4S2V5ID4gb3B0Lm1heGFsaWduKVxuICAgICAgICAgICAgICAgICAgICAgICAgbWF4S2V5ID0gb3B0Lm1heGFsaWduXG4gICAgICAgICAgICAgICAgICAgICAgICBicmVha1xuICAgICAgICBsID0gW11cbiAgICAgICAgXG4gICAgICAgIGtleVZhbHVlID0gKGssdikgLT5cbiAgICAgICAgICAgIHMgPSBpbmRcbiAgICAgICAgICAgIGsgPSBlc2NhcGUgaywgdHJ1ZVxuICAgICAgICAgICAgaWYgay5pbmRleE9mKCcgICcpID4gMCBhbmQga1swXSAhPSAnfCdcbiAgICAgICAgICAgICAgICBrID0gXCJ8I3trfXxcIlxuICAgICAgICAgICAgZWxzZSBpZiBrWzBdICE9ICd8JyBhbmQga1trLmxlbmd0aC0xXSA9PSAnfCdcbiAgICAgICAgICAgICAgICBrID0gJ3wnICsga1xuICAgICAgICAgICAgZWxzZSBpZiBrWzBdID09ICd8JyBhbmQga1trLmxlbmd0aC0xXSAhPSAnfCdcbiAgICAgICAgICAgICAgICBrICs9ICd8J1xuICAgICAgICAgICAgXG4gICAgICAgICAgICBpZiBvcHQuYWxpZ25cbiAgICAgICAgICAgICAgICBrcyA9IHBhZCBrLCBNYXRoLm1heCBtYXhLZXksIGsubGVuZ3RoKzJcbiAgICAgICAgICAgICAgICBpICA9IHBhZCBpbmQraW5kc3RyLCBtYXhLZXlcbiAgICAgICAgICAgIGVsc2VcbiAgICAgICAgICAgICAgICBrcyA9IHBhZCBrLCBrLmxlbmd0aCsyXG4gICAgICAgICAgICAgICAgaSAgPSBpbmQraW5kc3RyXG4gICAgICAgICAgICBzICs9IGtzXG4gICAgICAgICAgICB2cyA9IHRvU3RyIHYsIGksIGZhbHNlLCB2aXNpdGVkXG4gICAgICAgICAgICBpZiB2c1swXSA9PSAnXFxuJ1xuICAgICAgICAgICAgICAgIHdoaWxlIHNbcy5sZW5ndGgtMV0gPT0gJyAnXG4gICAgICAgICAgICAgICAgICAgIHMgPSBzLnN1YnN0ciAwLCBzLmxlbmd0aC0xICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgcyArPSB2c1xuICAgICAgICAgICAgd2hpbGUgc1tzLmxlbmd0aC0xXSA9PSAnICdcbiAgICAgICAgICAgICAgICBzID0gcy5zdWJzdHIgMCwgcy5sZW5ndGgtMVxuICAgICAgICAgICAgc1xuXG4gICAgICAgIGlmIG9wdC5zb3J0XG4gICAgICAgICAgICBmb3IgayBpbiBPYmplY3Qua2V5cyhvKS5zb3J0KClcbiAgICAgICAgICAgICAgICBsLnB1c2gga2V5VmFsdWUgaywgb1trXVxuICAgICAgICBlbHNlXG4gICAgICAgICAgICBmb3Igb3duIGssdiBvZiBvXG4gICAgICAgICAgICAgICAgbC5wdXNoIGtleVZhbHVlIGssIHZcbiAgICAgICAgICAgIFxuICAgICAgICBsLmpvaW4gJ1xcbidcblxuICAgICMgMDAwMDAwMDAwICAgMDAwMDAwMCAgICAwMDAwMDAwICAwMDAwMDAwMDAgIDAwMDAwMDAwIFxuICAgICMgICAgMDAwICAgICAwMDAgICAwMDAgIDAwMCAgICAgICAgICAwMDAgICAgIDAwMCAgIDAwMFxuICAgICMgICAgMDAwICAgICAwMDAgICAwMDAgIDAwMDAwMDAgICAgICAwMDAgICAgIDAwMDAwMDAgIFxuICAgICMgICAgMDAwICAgICAwMDAgICAwMDAgICAgICAgMDAwICAgICAwMDAgICAgIDAwMCAgIDAwMFxuICAgICMgICAgMDAwICAgICAgMDAwMDAwMCAgIDAwMDAwMDAgICAgICAwMDAgICAgIDAwMCAgIDAwMFxuICAgIFxuICAgIHRvU3RyID0gKG8sIGluZD0nJywgYXJyeT1mYWxzZSwgdmlzaXRlZD1bXSkgLT5cbiAgICAgICAgXG4gICAgICAgIGlmIG5vdCBvPyBcbiAgICAgICAgICAgIGlmIG8gPT0gbnVsbFxuICAgICAgICAgICAgICAgIHJldHVybiBvcHQubnVsbCBvciBhcnJ5IGFuZCBcIm51bGxcIiBvciAnJ1xuICAgICAgICAgICAgaWYgbyA9PSB1bmRlZmluZWRcbiAgICAgICAgICAgICAgICByZXR1cm4gXCJ1bmRlZmluZWRcIlxuICAgICAgICAgICAgcmV0dXJuICc8Pz4nXG4gICAgICAgICAgICBcbiAgICAgICAgc3dpdGNoIHQgPSB0eXBlb2Ygb1xuICAgICAgICAgICAgXG4gICAgICAgICAgICB3aGVuICdzdHJpbmcnIFxuICAgICAgICAgICAgICAgIHJldHVybiBlc2NhcGUgbywgYXJyeVxuICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgd2hlbiAnb2JqZWN0J1xuICAgICAgICAgICAgICAgIGlmIG9wdC5jaXJjdWxhclxuICAgICAgICAgICAgICAgICAgICBpZiBvIGluIHZpc2l0ZWRcbiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiAnPHY+J1xuICAgICAgICAgICAgICAgICAgICB2aXNpdGVkLnB1c2ggb1xuICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICBpZiBvLmNvbnN0cnVjdG9yPy5uYW1lID09ICdBcnJheSdcbiAgICAgICAgICAgICAgICAgICAgcyA9IGluZCE9JycgYW5kIGFycnkgYW5kICcuJyBvciAnJ1xuICAgICAgICAgICAgICAgICAgICBzICs9ICdcXG4nIGlmIG8ubGVuZ3RoIGFuZCBpbmQhPScnXG4gICAgICAgICAgICAgICAgICAgIHMgKz0gKGluZCt0b1N0cih2LGluZCtpbmRzdHIsdHJ1ZSx2aXNpdGVkKSBmb3IgdiBpbiBvKS5qb2luICdcXG4nXG4gICAgICAgICAgICAgICAgZWxzZSBpZiBvLmNvbnN0cnVjdG9yPy5uYW1lID09ICdSZWdFeHAnXG4gICAgICAgICAgICAgICAgICAgIHJldHVybiBvLnNvdXJjZVxuICAgICAgICAgICAgICAgIGVsc2VcbiAgICAgICAgICAgICAgICAgICAgcyA9IChhcnJ5IGFuZCAnLlxcbicpIG9yICgoaW5kICE9ICcnKSBhbmQgJ1xcbicgb3IgJycpXG4gICAgICAgICAgICAgICAgICAgIHMgKz0gcHJldHR5IG8sIGluZCwgdmlzaXRlZFxuICAgICAgICAgICAgICAgIHJldHVybiBzXG4gICAgICAgICAgICBlbHNlXG4gICAgICAgICAgICAgICAgcmV0dXJuIFN0cmluZyBvXG4gICAgICAgIHJldHVybiAnPD8/Pz4nXG5cbiAgICBzID0gdG9TdHIgb2JqXG4gICAgaWYgb3B0LmNvbG9yc1xuICAgICAgICBzID0gcmVxdWlyZSgna2xvcicpLnN5bnRheCB0ZXh0OnMsIGV4dDonbm9vbidcbiAgICBzXG5cbm1vZHVsZS5leHBvcnRzID0gc3RyaW5naWZ5XG4iXX0=
-//# sourceURL=../coffee/stringify.coffee
+            case 'object':
+                if (opt.circular)
+                {
+                    if (_k_.in(o,visited))
+                    {
+                        return '<v>'
+                    }
+                    visited.push(o)
+                }
+                if ((o.constructor != null ? o.constructor.name : undefined) === 'Array')
+                {
+                    s = ind !== '' && arry && '.' || ''
+                    if (o.length && ind !== '')
+                    {
+                        s += '\n'
+                    }
+                    s += (function () { var result = []; var list = _k_.list(o); for (var _164_69_ = 0; _164_69_ < list.length; _164_69_++)  { v = list[_164_69_];result.push(ind + toStr(v,ind + indstr,true,visited))  } return result }).bind(this)().join('\n')
+                }
+                else if ((o.constructor != null ? o.constructor.name : undefined) === 'RegExp')
+                {
+                    return o.source
+                }
+                else
+                {
+                    s = (arry && '.\n') || ((ind !== '') && '\n' || '')
+                    s += pretty(o,ind,visited)
+                }
+                return s
+
+            default:
+                return String(o)
+        }
+
+        return '<???>'
+    }
+    s = toStr(obj)
+    if (opt.colors)
+    {
+        s = require('klor').syntax({text:s,ext:'noon'})
+    }
+    return s
+}
+module.exports = stringify

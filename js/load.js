@@ -1,50 +1,55 @@
-// koffee 1.19.0
+// monsterkodi/kode 0.123.0
 
-/*
-000       0000000    0000000   0000000
-000      000   000  000   000  000   000
-000      000   000  000000000  000   000
-000      000   000  000   000  000   000
-0000000   0000000   000   000  0000000
- */
-var load, parseStr;
+var _k_
 
-parseStr = function(str, p, ext) {
-    var extname;
-    if (str.length <= 0) {
-        return null;
+var parseStr, load
+
+
+parseStr = function (str, p, ext)
+{
+    if (str.length <= 0)
+    {
+        return null
     }
-    extname = ext != null ? ext : require('path').extname(p);
-    switch (extname) {
+    switch ((ext != null ? ext : require('path').extname(p)))
+    {
         case '.json':
-            return JSON.parse(str);
+            return JSON.parse(str)
+
         default:
-            return require('./parse')(str);
+            return require('./parse')(str)
     }
-};
 
-load = function(p, ext, cb) {
-    var fs, str;
-    fs = require('fs');
-    if ('function' === typeof ext) {
-        cb = ext;
+}
+
+load = function (p, ext, cb)
+{
+    var fs, str
+
+    fs = require('fs')
+    if ('function' === typeof(ext))
+    {
+        cb = ext
     }
-    if ('function' === typeof cb) {
-        return fs.readFile(p, 'utf8', function(e, str) {
-            if (e != null) {
-                console.error("error reading file: " + p, e);
-                return cb(null);
-            } else {
-                return cb(parseStr(str, p, ext));
+    if ('function' === typeof(cb))
+    {
+        return fs.readFile(p,'utf8',function (e, str)
+        {
+            if ((e != null))
+            {
+                console.error(`error reading file: ${p}`,e)
+                return cb(null)
             }
-        });
-    } else {
-        str = fs.readFileSync(p, 'utf8');
-        return parseStr(str, p, ext);
+            else
+            {
+                return cb(parseStr(str,p,ext))
+            }
+        })
     }
-};
-
-module.exports = load;
-
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibG9hZC5qcyIsInNvdXJjZVJvb3QiOiIuLi9jb2ZmZWUiLCJzb3VyY2VzIjpbImxvYWQuY29mZmVlIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUE7Ozs7Ozs7QUFBQSxJQUFBOztBQVFBLFFBQUEsR0FBVyxTQUFDLEdBQUQsRUFBTSxDQUFOLEVBQVMsR0FBVDtBQUVQLFFBQUE7SUFBQSxJQUFHLEdBQUcsQ0FBQyxNQUFKLElBQWMsQ0FBakI7QUFDSSxlQUFPLEtBRFg7O0lBR0EsT0FBQSxpQkFBVSxNQUFNLE9BQUEsQ0FBUSxNQUFSLENBQWUsQ0FBQyxPQUFoQixDQUF3QixDQUF4QjtBQUNoQixZQUFPLE9BQVA7QUFBQSxhQUNTLE9BRFQ7bUJBQ3NCLElBQUksQ0FBQyxLQUFMLENBQVcsR0FBWDtBQUR0QjttQkFHUSxPQUFBLENBQVEsU0FBUixDQUFBLENBQW1CLEdBQW5CO0FBSFI7QUFOTzs7QUFXWCxJQUFBLEdBQU8sU0FBQyxDQUFELEVBQUksR0FBSixFQUFTLEVBQVQ7QUFFSCxRQUFBO0lBQUEsRUFBQSxHQUFLLE9BQUEsQ0FBUSxJQUFSO0lBRUwsSUFBWSxVQUFBLEtBQWMsT0FBTyxHQUFqQztRQUFBLEVBQUEsR0FBSyxJQUFMOztJQUVBLElBQUcsVUFBQSxLQUFjLE9BQU8sRUFBeEI7ZUFFSSxFQUFFLENBQUMsUUFBSCxDQUFZLENBQVosRUFBZSxNQUFmLEVBQXVCLFNBQUMsQ0FBRCxFQUFJLEdBQUo7WUFDbkIsSUFBRyxTQUFIO2dCQUNHLE9BQUEsQ0FBQyxLQUFELENBQU8sc0JBQUEsR0FBdUIsQ0FBOUIsRUFBbUMsQ0FBbkM7dUJBQ0MsRUFBQSxDQUFHLElBQUgsRUFGSjthQUFBLE1BQUE7dUJBSUksRUFBQSxDQUFHLFFBQUEsQ0FBUyxHQUFULEVBQWMsQ0FBZCxFQUFpQixHQUFqQixDQUFILEVBSko7O1FBRG1CLENBQXZCLEVBRko7S0FBQSxNQUFBO1FBU0ksR0FBQSxHQUFNLEVBQUUsQ0FBQyxZQUFILENBQWdCLENBQWhCLEVBQW1CLE1BQW5CO2VBRU4sUUFBQSxDQUFTLEdBQVQsRUFBYyxDQUFkLEVBQWlCLEdBQWpCLEVBWEo7O0FBTkc7O0FBbUJQLE1BQU0sQ0FBQyxPQUFQLEdBQWlCIiwic291cmNlc0NvbnRlbnQiOlsiIyMjXG4wMDAgICAgICAgMDAwMDAwMCAgICAwMDAwMDAwICAgMDAwMDAwMFxuMDAwICAgICAgMDAwICAgMDAwICAwMDAgICAwMDAgIDAwMCAgIDAwMFxuMDAwICAgICAgMDAwICAgMDAwICAwMDAwMDAwMDAgIDAwMCAgIDAwMFxuMDAwICAgICAgMDAwICAgMDAwICAwMDAgICAwMDAgIDAwMCAgIDAwMFxuMDAwMDAwMCAgIDAwMDAwMDAgICAwMDAgICAwMDAgIDAwMDAwMDBcbiMjI1xuXG5wYXJzZVN0ciA9IChzdHIsIHAsIGV4dCkgLT5cblxuICAgIGlmIHN0ci5sZW5ndGggPD0gMFxuICAgICAgICByZXR1cm4gbnVsbFxuXG4gICAgZXh0bmFtZSA9IGV4dCA/IHJlcXVpcmUoJ3BhdGgnKS5leHRuYW1lIHBcbiAgICBzd2l0Y2ggZXh0bmFtZVxuICAgICAgICB3aGVuICcuanNvbicgdGhlbiBKU09OLnBhcnNlIHN0clxuICAgICAgICBlbHNlXG4gICAgICAgICAgICByZXF1aXJlKCcuL3BhcnNlJykgc3RyXG5cbmxvYWQgPSAocCwgZXh0LCBjYikgLT5cblxuICAgIGZzID0gcmVxdWlyZSAnZnMnXG5cbiAgICBjYiA9IGV4dCBpZiAnZnVuY3Rpb24nID09IHR5cGVvZiBleHRcblxuICAgIGlmICdmdW5jdGlvbicgPT0gdHlwZW9mIGNiXG5cbiAgICAgICAgZnMucmVhZEZpbGUgcCwgJ3V0ZjgnLCAoZSwgc3RyKSAtPlxuICAgICAgICAgICAgaWYgZT9cbiAgICAgICAgICAgICAgICBlcnJvciBcImVycm9yIHJlYWRpbmcgZmlsZTogI3twfVwiLCBlXG4gICAgICAgICAgICAgICAgY2IgbnVsbFxuICAgICAgICAgICAgZWxzZVxuICAgICAgICAgICAgICAgIGNiIHBhcnNlU3RyIHN0ciwgcCwgZXh0XG4gICAgZWxzZVxuICAgICAgICBzdHIgPSBmcy5yZWFkRmlsZVN5bmMgcCwgJ3V0ZjgnXG5cbiAgICAgICAgcGFyc2VTdHIgc3RyLCBwLCBleHRcblxubW9kdWxlLmV4cG9ydHMgPSBsb2FkXG4iXX0=
-//# sourceURL=../coffee/load.coffee
+    else
+    {
+        str = fs.readFileSync(p,'utf8')
+        return parseStr(str,p,ext)
+    }
+}
+module.exports = load

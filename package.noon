@@ -1,5 +1,5 @@
 name            noon
-version         3.6.0
+version         4.1.0
 description     no ordinary object notation
 keywords
                 noon
@@ -17,12 +17,11 @@ repository      github:monsterkodi/noon
 bugs
                 url  https://github.com/monsterkodi/noon/issues
 scripts
-                test  mocha -c --require koffee/js/register ./test/test.coffee
-homepage        https://www.npmjs.com/package/noon
+                build   kode -Ho js kode/*.kode
+                test    kode -t test/test.kode
+                watch   kode -wt test/test.kode kode/*.kode
 dependencies
-                karg  ^1.26.0
-                klor  ^2.16.1
+                karg  monsterkodi/karg
+                klor  monsterkodi/klor
 devDependencies
-                chai    ^4.3.4
-                koffee  ^1.19.0
-                mocha   ^9.1.3
+                kode  monsterkodi/kode

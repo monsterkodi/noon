@@ -19,7 +19,6 @@ Whitespace is preferred over other control characters:
 
 * [package](https://github.com/monsterkodi/noon/blob/master/package.noon)
 * [language](https://github.com/monsterkodi/language-noon/blob/master/grammars/noon.noon)
-* [urtil](https://github.com/monsterkodi/urtil/blob/gh-pages/examples/example)
 * [font](https://github.com/monsterkodi/salter/blob/master/font.noon)
 * [menu](https://github.com/monsterkodi/kaligraf/blob/master/coffee/menu.noon)
 
@@ -220,12 +219,9 @@ noon.save 'noext', data, ext: 'noon'
 Don't use it if you can't live with the limitations mentioned above.  
 
 [![npm package][npm-image]][npm-url] 
-[![Build Status][travis-image]][travis-url] 
 [![downloads][downloads-image]][downloads-url] 
 
 [npm-image]:https://img.shields.io/npm/v/noon.svg
 [npm-url]:http://npmjs.org/package/noon
-[travis-image]:https://travis-ci.org/monsterkodi/noon.svg?branch=master
-[travis-url]:https://travis-ci.org/monsterkodi/noon
 [downloads-image]:https://img.shields.io/npm/dm/noon.svg
 [downloads-url]:https://www.npmtrends.com/noon

@@ -1,40 +1,34 @@
-// koffee 1.19.0
+// monsterkodi/kode 0.123.0
 
-/*
- 0000000   0000000   000   000  00000000
-000       000   000  000   000  000
-0000000   000000000   000 000   0000000
-     000  000   000     000     000
-0000000   000   000      0      00000000
- */
-var save;
+var _k_
 
-save = function(p, data, strOpt, cb) {
-    var fs, path, str, stringify;
-    fs = require('fs');
-    path = require('path');
-    stringify = require('./stringify');
-    if ('function' === typeof strOpt) {
-        cb = strOpt;
-        strOpt = {};
-    } else {
-        if (strOpt != null) {
-            strOpt;
-        } else {
-            strOpt = {};
-        }
+var save
+
+
+save = function (p, data, strOpt, cb)
+{
+    var fs, path, stringify, str
+
+    fs = require('fs')
+    path = require('path')
+    stringify = require('./stringify')
+    if ('function' === typeof(strOpt))
+    {
+        cb = strOpt
+        strOpt = {}
     }
-    str = stringify(data, Object.assign({
-        ext: path.extname(p)
-    }, strOpt));
-    if ('function' === typeof cb) {
-        return fs.writeFile(p, str, cb);
-    } else {
-        return fs.writeFileSync(p, str);
+    else
+    {
+        strOpt = (strOpt != null ? strOpt : {})
     }
-};
-
-module.exports = save;
-
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2F2ZS5qcyIsInNvdXJjZVJvb3QiOiIuLi9jb2ZmZWUiLCJzb3VyY2VzIjpbInNhdmUuY29mZmVlIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUE7Ozs7Ozs7QUFBQSxJQUFBOztBQVFBLElBQUEsR0FBTyxTQUFDLENBQUQsRUFBSSxJQUFKLEVBQVUsTUFBVixFQUFrQixFQUFsQjtBQUVILFFBQUE7SUFBQSxFQUFBLEdBQWEsT0FBQSxDQUFRLElBQVI7SUFDYixJQUFBLEdBQWEsT0FBQSxDQUFRLE1BQVI7SUFDYixTQUFBLEdBQWEsT0FBQSxDQUFRLGFBQVI7SUFFYixJQUFHLFVBQUEsS0FBYyxPQUFPLE1BQXhCO1FBQ0ksRUFBQSxHQUFLO1FBQ0wsTUFBQSxHQUFTLEdBRmI7S0FBQSxNQUFBOztZQUlJOztZQUFBLFNBQVU7U0FKZDs7SUFNQSxHQUFBLEdBQU0sU0FBQSxDQUFVLElBQVYsRUFBZ0IsTUFBTSxDQUFDLE1BQVAsQ0FBYztRQUFBLEdBQUEsRUFBSSxJQUFJLENBQUMsT0FBTCxDQUFhLENBQWIsQ0FBSjtLQUFkLEVBQW1DLE1BQW5DLENBQWhCO0lBRU4sSUFBRyxVQUFBLEtBQWMsT0FBTyxFQUF4QjtlQUVJLEVBQUUsQ0FBQyxTQUFILENBQWEsQ0FBYixFQUFnQixHQUFoQixFQUFxQixFQUFyQixFQUZKO0tBQUEsTUFBQTtlQU1JLEVBQUUsQ0FBQyxhQUFILENBQWlCLENBQWpCLEVBQW9CLEdBQXBCLEVBTko7O0FBZEc7O0FBc0JQLE1BQU0sQ0FBQyxPQUFQLEdBQWlCIiwic291cmNlc0NvbnRlbnQiOlsiIyMjXG4gMDAwMDAwMCAgIDAwMDAwMDAgICAwMDAgICAwMDAgIDAwMDAwMDAwXG4wMDAgICAgICAgMDAwICAgMDAwICAwMDAgICAwMDAgIDAwMFxuMDAwMDAwMCAgIDAwMDAwMDAwMCAgIDAwMCAwMDAgICAwMDAwMDAwXG4gICAgIDAwMCAgMDAwICAgMDAwICAgICAwMDAgICAgIDAwMFxuMDAwMDAwMCAgIDAwMCAgIDAwMCAgICAgIDAgICAgICAwMDAwMDAwMFxuIyMjXG5cbnNhdmUgPSAocCwgZGF0YSwgc3RyT3B0LCBjYikgLT5cblxuICAgIGZzICAgICAgICAgPSByZXF1aXJlICdmcydcbiAgICBwYXRoICAgICAgID0gcmVxdWlyZSAncGF0aCdcbiAgICBzdHJpbmdpZnkgID0gcmVxdWlyZSAnLi9zdHJpbmdpZnknXG5cbiAgICBpZiAnZnVuY3Rpb24nID09IHR5cGVvZiBzdHJPcHRcbiAgICAgICAgY2IgPSBzdHJPcHRcbiAgICAgICAgc3RyT3B0ID0ge31cbiAgICBlbHNlXG4gICAgICAgIHN0ck9wdCA/PSB7fVxuXG4gICAgc3RyID0gc3RyaW5naWZ5IGRhdGEsIE9iamVjdC5hc3NpZ24gZXh0OnBhdGguZXh0bmFtZShwKSwgc3RyT3B0XG5cbiAgICBpZiAnZnVuY3Rpb24nID09IHR5cGVvZiBjYlxuXG4gICAgICAgIGZzLndyaXRlRmlsZSBwLCBzdHIsIGNiXG5cbiAgICBlbHNlXG5cbiAgICAgICAgZnMud3JpdGVGaWxlU3luYyBwLCBzdHJcblxubW9kdWxlLmV4cG9ydHMgPSBzYXZlXG4iXX0=
-//# sourceURL=../coffee/save.coffee
+    str = stringify(data,Object.assign({ext:path.extname(p),strOpt:strOpt}))
+    if ('function' === typeof(cb))
+    {
+        return fs.writeFile(p,str,cb)
+    }
+    else
+    {
+        return fs.writeFileSync(p,str)
+    }
+}
+module.exports = save
