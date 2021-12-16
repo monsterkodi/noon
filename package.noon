@@ -1,5 +1,5 @@
 name            noon
-version         4.2.0
+version         4.3.0
 description     no ordinary object notation
 keywords
                 noon
@@ -7,19 +7,17 @@ keywords
                 notation
 author          monsterkodi
 license         Unlicense
-main            js/main.js
+scripts
+                build   ./node_modules/.bin/kode -Ho js kode/*.kode
+                test    ./node_modules/.bin/kode -t test/test.kode
+                watch   ./node_modules/.bin/kode -wt test/test.kode kode/*.kode
 files
                 bin/noon
                 js/*.js
+main            js/main.js
 bin
                 noon  ./bin/noon
 repository      github:monsterkodi/noon
-bugs
-                url  https://github.com/monsterkodi/noon/issues
-scripts
-                build   kode -Ho js kode/*.kode
-                test    kode -t test/test.kode
-                watch   kode -wt test/test.kode kode/*.kode
 dependencies
                 karg  monsterkodi/karg
                 klor  monsterkodi/klor
