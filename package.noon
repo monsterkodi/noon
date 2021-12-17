@@ -1,5 +1,5 @@
 name            noon
-version         4.3.0
+version         4.4.0
 description     no ordinary object notation
 keywords
                 noon
@@ -9,7 +9,7 @@ author          monsterkodi
 license         Unlicense
 scripts
                 build   ./node_modules/.bin/kode -Ho js kode/*.kode
-                test    ./node_modules/.bin/kode -t test/test.kode
+                test    ./node_modules/.bin/kode -t kode/*.kode test/test.kode
                 watch   ./node_modules/.bin/kode -wt test/test.kode kode/*.kode
 files
                 bin/noon

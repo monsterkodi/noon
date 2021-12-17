@@ -1,4 +1,4 @@
-// monsterkodi/kode 0.133.0
+// monsterkodi/kode 0.139.0
 
 var _k_ = {in: function (a,l) {return (typeof l === 'string' && typeof a === 'string' && a.length ? '' : []).indexOf.call(l,a) >= 0}}
 
@@ -12,14 +12,14 @@ load = require('./load')
 save = require('./save')
 noon = require('./main')
 args = require('karg')(`noon
-    file        . ? the file to convert             . * . = package.json
-    output      . ? output file or filetype         . = noon
-    indent      . ? indentation length              . = 4
-    align       . ? align values                    . = true
-    maxalign    . ? max align width, 0: no limit    . = 32
-    sort        . ? sort keys alphabetically        . = false
-    colors      . ? output with ansi colors         . = true
-    type        . ? input filetype
+    file        the file to convert             = package.json *
+    output      output file or filetype         = noon
+    indent      indentation length              = 4
+    align       align values                    = true
+    maxalign    max align width, 0: no limit    = 32
+    sort        sort keys alphabetically        = false
+    colors      output with ansi colors         = true
+    type        input filetype
 
 supported filetypes:
     ${noon.extnames.join('\n    ')}

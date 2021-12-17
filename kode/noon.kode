@@ -22,14 +22,14 @@ noon      = require './main'
 
 args = require('karg') """
 noon
-    file        . ? the file to convert             . * . = package.json
-    output      . ? output file or filetype         . = noon
-    indent      . ? indentation length              . = 4
-    align       . ? align values                    . = true
-    maxalign    . ? max align width, 0: no limit    . = 32
-    sort        . ? sort keys alphabetically        . = false
-    colors      . ? output with ansi colors         . = true
-    type        . ? input filetype
+    file        the file to convert             = package.json *
+    output      output file or filetype         = noon
+    indent      indentation length              = 4
+    align       align values                    = true
+    maxalign    max align width, 0: no limit    = 32
+    sort        sort keys alphabetically        = false
+    colors      output with ansi colors         = true
+    type        input filetype
 
 supported filetypes:
     #{noon.extnames.join '\n    '}
