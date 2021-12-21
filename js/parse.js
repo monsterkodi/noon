@@ -1,4 +1,4 @@
-// monsterkodi/kode 0.139.0
+// monsterkodi/kode 0.172.0
 
 var _k_ = {list: function (l) {return (l != null ? typeof l.length === 'number' ? l : [] : [])}}
 
@@ -7,7 +7,7 @@ var parse
 
 parse = function (s)
 {
-    var EMPTY, NEWLINE, FLOAT, INT, last, isArray, undense, leadingSpaces, lines, stack, makeObject, key, values, value, insert, indent, addLine, inspect, p, e, i, line, d, k, v, ud, dd, dk, dv, oi, lineFail, vl, l, r
+    var addLine, d, dd, dk, dv, e, EMPTY, FLOAT, i, indent, insert, inspect, INT, isArray, k, key, l, last, leadingSpaces, line, lineFail, lines, makeObject, NEWLINE, oi, p, r, stack, ud, undense, v, value, values, vl
 
     if (!s)
     {
@@ -31,7 +31,7 @@ parse = function (s)
     }
     undense = function (d, s)
     {
-        var sl, sd, p, l, key, esc, pp, ld, i, t
+        var esc, i, key, l, ld, p, pp, sd, sl, t
 
         sl = s.length
         sd = d
@@ -116,7 +116,7 @@ parse = function (s)
     stack = [{o:[],d:leadingSpaces}]
     makeObject = function (t)
     {
-        var o, i, b
+        var b, i, o
 
         o = {}
         var list = _k_.list(t.o)
@@ -205,7 +205,7 @@ parse = function (s)
     }
     indent = function (t, k, v)
     {
-        var o, l
+        var l, o
 
         o = []
         if ((v != null))
@@ -279,7 +279,7 @@ parse = function (s)
     }
     inspect = function (l)
     {
-        var p, d, k, escl, escr, v
+        var d, escl, escr, k, p, v
 
         p = 0
         while (l[p] === ' ')

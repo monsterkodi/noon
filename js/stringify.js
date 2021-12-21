@@ -1,8 +1,8 @@
-// monsterkodi/kode 0.139.0
+// monsterkodi/kode 0.172.0
 
 var _k_ = {in: function (a,l) {return (typeof l === 'string' && typeof a === 'string' && a.length ? '' : []).indexOf.call(l,a) >= 0}, list: function (l) {return (l != null ? typeof l.length === 'number' ? l : [] : [])}}
 
-var defaults, regs, pad, stringify
+var defaults, pad, regs, stringify
 
 defaults = {ext:'.noon',indent:4,align:true,maxalign:32,sort:false,circular:false,null:false,colors:false}
 regs = {url:new RegExp('^(https?|git|file)(://)(\\S+)$'),path:new RegExp('^([\\.\\/\\S]+)(\\/\\S+)$'),semver:new RegExp('\\d+\\.\\d+\\.\\d+')}
@@ -18,11 +18,11 @@ pad = function (s, l)
 
 stringify = function (obj, options = {})
 {
-    var def, opt, cs, indstr, escape, pretty, toStr, s
+    var cs, def, escape, indstr, opt, pretty, s, toStr
 
     def = function (o, d)
     {
-        var r, k, v
+        var k, r, v
 
         r = {}
         for (k in o)
@@ -53,14 +53,14 @@ stringify = function (obj, options = {})
             return cs
         }
     }
-    if (typeof(opt.indent) == 'string')
+    if (typeof(opt.indent) === 'string')
     {
         opt.indent = opt.indent.length
     }
     indstr = pad('',opt.indent)
     escape = function (k, arry)
     {
-        var sp, es
+        var es, sp
 
         if (0 <= k.indexOf('\n'))
         {
@@ -85,7 +85,7 @@ stringify = function (obj, options = {})
     }
     pretty = function (o, ind, visited)
     {
-        var maxKey, k, v, kl, l, keyValue
+        var k, keyValue, kl, l, maxKey, v
 
         if (opt.align)
         {
@@ -111,7 +111,7 @@ stringify = function (obj, options = {})
         l = []
         keyValue = function (k, v)
         {
-            var s, ks, i, vs
+            var i, ks, s, vs
 
             s = ind
             k = escape(k,true)
@@ -177,7 +177,7 @@ stringify = function (obj, options = {})
     }
     toStr = function (o, ind = '', arry = false, visited = [])
     {
-        var t, _161_32_, s, v, _165_37_
+        var s, t, v, _161_32_, _165_37_
 
         if (!(o != null))
         {

@@ -1,8 +1,8 @@
-// monsterkodi/kode 0.139.0
+// monsterkodi/kode 0.172.0
 
 var _k_
 
-var parseStr, load
+var load, parseStr
 
 
 parseStr = function (str, p, ext)
@@ -27,11 +27,11 @@ load = function (p, ext, cb)
     var fs, str
 
     fs = require('fs')
-    if (typeof(ext) == 'function')
+    if (typeof(ext) === 'function')
     {
         cb = ext
     }
-    if (typeof(cb) == 'function')
+    if (typeof(cb) === 'function')
     {
         return fs.readFile(p,'utf8',function (e, str)
         {
