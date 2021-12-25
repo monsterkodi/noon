@@ -1,4 +1,4 @@
-// monsterkodi/kode 0.172.0
+// monsterkodi/kode 0.223.0
 
 var _k_ = {list: function (l) {return (l != null ? typeof l.length === 'number' ? l : [] : [])}}
 
@@ -77,7 +77,7 @@ parse = function (s)
             esc ^= s[p] === '|'
         }
         ld = ''
-        for (i = 0; i < d; i++)
+        for (var _63_18_ = i = 0, _63_22_ = d; (_63_18_ <= _63_22_ ? i < d : i > d); (_63_18_ <= _63_22_ ? ++i : --i))
         {
             ld += ' '
         }
@@ -396,7 +396,7 @@ parse = function (s)
     while (i < lines.length)
     {
         line = lines[i]
-        var _321_18_ = inspect(line) ; d = _321_18_[0]        ; k = _321_18_[1]        ; v = _321_18_[2]        ; e = _321_18_[3]
+        var _321_18_ = inspect(line); d = _321_18_[0]; k = _321_18_[1]; v = _321_18_[2]; e = _321_18_[3]
 
         if ((k != null))
         {
@@ -408,7 +408,7 @@ parse = function (s)
                 for (var _329_22_ = 0; _329_22_ < list.length; _329_22_++)
                 {
                     e = list[_329_22_]
-                    var _330_31_ = inspect(e) ; dd = _330_31_[0]                    ; dk = _330_31_[1]                    ; dv = _330_31_[2]
+                    var _330_31_ = inspect(e); dd = _330_31_[0]; dk = _330_31_[1]; dv = _330_31_[2]
 
                     addLine(dd,dk,dv)
                 }

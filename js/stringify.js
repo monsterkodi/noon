@@ -1,4 +1,4 @@
-// monsterkodi/kode 0.172.0
+// monsterkodi/kode 0.223.0
 
 var _k_ = {in: function (a,l) {return (typeof l === 'string' && typeof a === 'string' && a.length ? '' : []).indexOf.call(l,a) >= 0}, list: function (l) {return (l != null ? typeof l.length === 'number' ? l : [] : [])}}
 
@@ -77,7 +77,7 @@ stringify = function (obj, options = {})
         {
             k = '|' + k + '|'
         }
-        else if (arry && /\ \ /.test(k))
+        else if (arry && /\s\s/.test(k))
         {
             k = '|' + k + '|'
         }
@@ -212,7 +212,7 @@ stringify = function (obj, options = {})
                     {
                         s += '\n'
                     }
-                    s += (function () { var result = []; var list = _k_.list(o); for (var _164_69_ = 0; _164_69_ < list.length; _164_69_++)  { v = list[_164_69_];result.push(ind + toStr(v,ind + indstr,true,visited))  } return result }).bind(this)().join('\n')
+                    s += (function () { var _164__69_ = []; var list = _k_.list(o); for (var _164_69_ = 0; _164_69_ < list.length; _164_69_++)  { v = list[_164_69_];_164__69_.push(ind + toStr(v,ind + indstr,true,visited))  } return _164__69_ }).bind(this)().join('\n')
                 }
                 else if ((o.constructor != null ? o.constructor.name : undefined) === 'RegExp')
                 {
