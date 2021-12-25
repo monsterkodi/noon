@@ -22,15 +22,22 @@ load = (p, ext, cb) ->
 
     if cb is 'function'
 
-        fs.readFile p, 'utf8', (e, str) ->
-            if e?
-                error "error reading file: #{p}", e
-                cb null
-            else
-                cb parseStr str, p, ext
+        try
+            fs.readFile p, 'utf8', (e, str) ->
+                if e?
+                    error "error reading file: #{p}", e
+                    cb null
+                else
+                    cb parseStr str, p, ext
+        catch err
+            error "error reading file: #{p}", err
+            cb null
     else
-        str = fs.readFileSync p, 'utf8'
-
-        parseStr str, p, ext
+        try
+            str = fs.readFileSync p, 'utf8'
+            parseStr str, p, ext
+        catch err
+            error "error reading file: #{p}", err
+            null
 
 module.exports = load

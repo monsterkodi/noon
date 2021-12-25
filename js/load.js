@@ -33,23 +33,39 @@ load = function (p, ext, cb)
     }
     if (typeof(cb) === 'function')
     {
-        return fs.readFile(p,'utf8',function (e, str)
+        try
         {
-            if ((e != null))
+            return fs.readFile(p,'utf8',function (e, str)
             {
-                console.error(`error reading file: ${p}`,e)
-                return cb(null)
-            }
-            else
-            {
-                return cb(parseStr(str,p,ext))
-            }
-        })
+                if ((e != null))
+                {
+                    console.error(`error reading file: ${p}`,e)
+                    return cb(null)
+                }
+                else
+                {
+                    return cb(parseStr(str,p,ext))
+                }
+            })
+        }
+        catch (err)
+        {
+            console.error(`error reading file: ${p}`,err)
+            return cb(null)
+        }
     }
     else
     {
-        str = fs.readFileSync(p,'utf8')
-        return parseStr(str,p,ext)
+        try
+        {
+            str = fs.readFileSync(p,'utf8')
+            return parseStr(str,p,ext)
+        }
+        catch (err)
+        {
+            console.error(`error reading file: ${p}`,err)
+            return null
+        }
     }
 }
 module.exports = load
