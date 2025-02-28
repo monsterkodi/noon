@@ -1,6 +1,5 @@
 
-![icon](./img/icon.png)
-
+![icon](https://raw.githubusercontent.com/monsterkodi/noon/refs/heads/master/img/noon.png)
 ![noon](./img/noon.png)
 
 ### noon
