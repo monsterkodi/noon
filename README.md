@@ -1,5 +1,5 @@
 
-![Logo](img/logo.png)
+![Logo](img/icon.png)
 ![noon](img/noon.png)
 
 ### noon
