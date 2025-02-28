@@ -1,6 +1,6 @@
 
-![Logo](img/icon.png)
-![noon](img/noon.png)
+![Logo](https://raw.githubusercontent.com/monsterkodi/noon/master/img/icon.png)
+![noon](https://raw.githubusercontent.com/monsterkodi/noon/master/img/noon.png)
 
 ### noon
 
